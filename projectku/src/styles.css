@@ -7411,6 +7411,113 @@ body::after,
   height: 26px !important;
 }
 
+/* Final typing reset pass: finished text visibly disappears before the next loop. */
+.typeLine {
+  overflow: hidden;
+}
+
+.typeText {
+  display: inline-block;
+  min-width: 1ch;
+  clip-path: inset(-0.18em -0.2em -0.22em 0);
+  transition:
+    opacity 360ms var(--ease),
+    filter 460ms var(--ease),
+    transform 460ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    clip-path 500ms cubic-bezier(0.5, 0, 0.1, 1);
+  will-change: opacity, filter, transform, clip-path;
+}
+
+.typeLine--complete .typeText {
+  filter: saturate(118%);
+  transform: translate3d(0, 0, 0);
+}
+
+.typeLine--reset .typeText {
+  opacity: 0 !important;
+  filter: blur(8px) saturate(72%) !important;
+  transform: translate3d(12px, -7px, 0) scale(0.985) !important;
+  clip-path: inset(-0.18em -0.2em -0.22em 100%) !important;
+}
+
+.typeLine--reset .caret {
+  opacity: 0 !important;
+  animation: none !important;
+  transform: translate3d(10px, -4px, 0) scaleY(0.55);
+  transition:
+    opacity 240ms var(--ease),
+    transform 360ms var(--ease);
+}
+
+.typingCode {
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.typingCode::after {
+  content: "";
+  position: absolute;
+  inset: -1px 0;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0;
+  transform: translate3d(-24%, 0, 0);
+  background:
+    linear-gradient(90deg, transparent 0%, rgba(52, 211, 153, 0.16) 45%, rgba(244, 244, 245, 0.34) 50%, rgba(52, 211, 153, 0.12) 56%, transparent 100%);
+  mix-blend-mode: screen;
+}
+
+.typingCodeVisible {
+  clip-path: inset(0 0 0 0);
+  transition:
+    opacity 360ms var(--ease),
+    filter 520ms var(--ease),
+    transform 560ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    clip-path 640ms cubic-bezier(0.5, 0, 0.1, 1);
+  will-change: opacity, filter, transform, clip-path;
+}
+
+.typingCode--complete .typingCodeVisible {
+  filter: saturate(126%) contrast(106%);
+}
+
+.typingCode--reset .typingCodeVisible,
+.typingCode--fade .typingCodeVisible {
+  opacity: 0 !important;
+  filter: blur(10px) saturate(70%) !important;
+  transform: translate3d(10px, -10px, 0) scale(0.982) !important;
+  clip-path: inset(0 0 0 100%) !important;
+}
+
+.typingCode--reset::after,
+.typingCode--fade::after {
+  opacity: 0.9;
+  transform: translate3d(122%, 0, 0);
+  transition:
+    transform 640ms cubic-bezier(0.5, 0, 0.1, 1),
+    opacity 220ms var(--ease);
+}
+
+.typingCode--reset .typingCursor,
+.typingCode--fade .typingCursor {
+  opacity: 0 !important;
+  animation: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .typeText,
+  .typingCodeVisible {
+    transition: none !important;
+    transform: none !important;
+    filter: none !important;
+    clip-path: none !important;
+  }
+
+  .typingCode::after {
+    content: none !important;
+  }
+}
+
 .navV2Icon,
 .navV2MobileText {
   display: none;

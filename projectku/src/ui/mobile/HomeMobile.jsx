@@ -41,64 +41,60 @@ function useRotatingTypewriter(
   phrases,
   {
     typeMs = 36,
-    deleteMs = 22,
-    pauseMs = 1100,
+    pauseMs = 820,
+    resetMs = 520,
     startDelayMs = 420,
   } = {}
 ) {
   const [text, setText] = useState("");
   const [idx, setIdx] = useState(0);
-  const [deleting, setDeleting] = useState(false);
+  const [phase, setPhase] = useState("typing");
 
   useEffect(() => {
     if (!phrases?.length) {
       setText("");
+      setPhase("typing");
       return;
     }
 
+    const phrase = phrases[idx] ?? "";
+
     if (prefersReducedMotion()) {
-      setText(phrases[0] ?? "");
+      setText(phrase);
+      setPhase("complete");
       return;
     }
 
     let timeoutId = 0;
-    let pauseTimeoutId = 0;
-    const phrase = phrases[idx] ?? "";
 
-    timeoutId = window.setTimeout(
-      () => {
-        if (!deleting) {
-          const next = phrase.slice(0, text.length + 1);
-          setText(next);
-          if (next.length >= phrase.length) {
-            pauseTimeoutId = window.setTimeout(() => setDeleting(true), pauseMs);
-          }
-        } else {
-          const next = text.slice(0, Math.max(0, text.length - 1));
-          setText(next);
-          if (next.length === 0) {
-            setDeleting(false);
-            setIdx((v) => (v + 1) % phrases.length);
-          }
-        }
-      },
-      text.length === 0 && !deleting ? startDelayMs : deleting ? deleteMs : typeMs
-    );
+    if (text.length < phrase.length) {
+      setPhase("typing");
+      timeoutId = window.setTimeout(() => {
+        setText(phrase.slice(0, text.length + 1));
+      }, text.length === 0 ? startDelayMs : typeMs);
+    } else {
+      setPhase("complete");
+      timeoutId = window.setTimeout(() => {
+        setPhase("reset");
+        timeoutId = window.setTimeout(() => {
+          setText("");
+          setIdx((v) => (v + 1) % phrases.length);
+          setPhase("typing");
+        }, resetMs);
+      }, pauseMs);
+    }
 
-    return () => {
-      if (timeoutId) window.clearTimeout(timeoutId);
-      if (pauseTimeoutId) window.clearTimeout(pauseTimeoutId);
-    };
-  }, [phrases, idx, deleting, text, typeMs, deleteMs, pauseMs, startDelayMs]);
+    return () => window.clearTimeout(timeoutId);
+  }, [phrases, idx, text, typeMs, pauseMs, resetMs, startDelayMs]);
 
-  return text;
+  return { text, phase };
 }
 
 function RotatingTypeLine({ phrases = ROLE_PHRASES }) {
-  const typedRole = useRotatingTypewriter(phrases);
+  const { text: typedRole, phase } = useRotatingTypewriter(phrases);
   return (
-    <p className="typeLine">
-      {typedRole}
+    <p className={`typeLine typeLine--${phase}`}>
+      <span className="typeText">{typedRole}</span>
       <span className="caret" aria-hidden="true" />
     </p>
   );
