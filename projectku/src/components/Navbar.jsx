@@ -1,11 +1,24 @@
 import { useEffect, useMemo, useRef, useState } from "react";
+import { Briefcase, GraduationCap, HelpCircle, Home, User } from "lucide-react";
 
 const navItems = [
-  { href: "#home", label: "Home", id: "home" },
-  { href: "#about", label: "About", id: "about" },
-  { href: "#education", label: "Education", id: "education" },
-  { href: "#portfolio", label: "Portfolio", id: "portfolio" },
-  { href: "#faq", label: "FAQ", id: "faq" },
+  { href: "#home", label: "Home", mobileLabel: "Home", id: "home", Icon: Home },
+  { href: "#about", label: "About", mobileLabel: "Profile", id: "about", Icon: User },
+  {
+    href: "#education",
+    label: "Education",
+    mobileLabel: "Learn",
+    id: "education",
+    Icon: GraduationCap,
+  },
+  {
+    href: "#portfolio",
+    label: "Portfolio",
+    mobileLabel: "Builds",
+    id: "portfolio",
+    Icon: Briefcase,
+  },
+  { href: "#faq", label: "FAQ", mobileLabel: "FAQ", id: "faq", Icon: HelpCircle },
 ];
 
 function getHashId() {
@@ -190,9 +203,12 @@ export default function Navbar({ endSlot = null }) {
                 key={item.href}
                 href={item.href}
                 className={["navV2Link", isActive ? "isActive" : ""].join(" ")}
+                aria-label={item.label}
                 aria-current={isActive ? "page" : undefined}
               >
-                {item.label}
+                <item.Icon className="navV2Icon" aria-hidden="true" strokeWidth={2.15} />
+                <span className="navV2Text">{item.label}</span>
+                <span className="navV2MobileText">{item.mobileLabel}</span>
               </a>
             );
           })}

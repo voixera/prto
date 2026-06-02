@@ -108,3 +108,892 @@ html {
 .uiMobile .navV2Links {
   padding-right: 4px;
 }
+
+/* Final handheld pass: compact nav, calmer shine, readable developer UI */
+.uiMobile {
+  --mobile-surface: rgba(8, 10, 12, 0.82);
+  --mobile-surface-strong: rgba(5, 5, 6, 0.94);
+  --mobile-border: rgba(255, 255, 255, 0.11);
+  --mobile-border-active: rgba(52, 211, 153, 0.34);
+  --mobile-text-soft: rgba(244, 244, 245, 0.68);
+  --mobile-text: rgba(248, 250, 252, 0.94);
+}
+
+@media (max-width: 768px) {
+  .siteOverlay {
+    perspective: none !important;
+  }
+
+  .siteOverlay::after {
+    opacity: 0.34 !important;
+  }
+
+  .siteOverlayStage {
+    inset: 0 !important;
+    transform: none !important;
+  }
+
+  .siteOverlayLayer--gridDepth,
+  .siteOverlayLayer--tileField,
+  .siteOverlayLayer--horizon,
+  .siteOverlay > .siteOverlayLayer--flow {
+    display: none !important;
+  }
+
+  .siteOverlayStage .siteOverlayLayer--grid {
+    opacity: 0.09 !important;
+    transform: none !important;
+    background-size: 44px 44px !important;
+    animation: none !important;
+  }
+}
+
+.uiMobile .container {
+  width: min(100% - 28px, var(--container));
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.uiMobile .navV2 {
+  padding: calc(7px + var(--safe-top)) 10px 0;
+  background: transparent !important;
+}
+
+.uiMobile .navV2.navV2--hidden {
+  transform: translate3d(0, calc(-100% - 12px), 0);
+  filter: none;
+  opacity: 0;
+}
+
+.uiMobile .navV2::before {
+  content: none !important;
+  display: none !important;
+}
+
+.uiMobile .navV2Inner {
+  width: min(100%, 440px);
+  min-height: 0;
+  padding: 0 !important;
+  margin: 0 auto;
+  justify-content: center;
+}
+
+.uiMobile .navV2Inner::before {
+  content: none !important;
+  display: none !important;
+}
+
+.uiMobile .navV2Links {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 3px;
+  padding: 4px !important;
+  border-radius: 8px !important;
+  border: 1px solid var(--mobile-border) !important;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.02)),
+    var(--mobile-surface-strong) !important;
+  box-shadow:
+    0 12px 32px rgba(0, 0, 0, 0.42),
+    inset 0 1px 0 rgba(255, 255, 255, 0.055) !important;
+  overflow: hidden !important;
+  scrollbar-width: none;
+}
+
+.uiMobile .navV2Links::-webkit-scrollbar {
+  display: none;
+}
+
+.uiMobile .navV2Links::after,
+.uiMobile .btn2::after,
+.uiMobile .welcomeEnter::after,
+.uiMobile .aboutDiscordBtn::after,
+.uiMobile .iconBtn::after,
+.uiMobile .pillLink::after,
+.uiMobile .segBtn::after,
+.uiMobile .scrollTopBtn::after,
+.uiMobile .welcomeIconBtn::after,
+.uiMobile .welcomeSwatch::after,
+.uiMobile .eduRibbonChip::after {
+  content: none !important;
+  display: none !important;
+  animation: none !important;
+}
+
+.uiMobile .navV2Link {
+  min-width: 0;
+  min-height: 44px;
+  padding: 6px 2px !important;
+  border-radius: 6px !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 3px;
+  color: rgba(244, 244, 245, 0.58) !important;
+  font-size: 0.63rem !important;
+  line-height: 1;
+  font-weight: 800;
+  letter-spacing: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  transition:
+    color 180ms var(--ease),
+    background 180ms var(--ease),
+    transform 220ms var(--ease);
+}
+
+.uiMobile .navV2Icon {
+  display: block;
+  width: 17px;
+  height: 17px;
+}
+
+.uiMobile .navV2Text {
+  display: none;
+}
+
+.uiMobile .navV2MobileText {
+  display: block;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.uiMobile .navV2Link:hover,
+.uiMobile .navV2Link.isActive {
+  transform: none;
+  color: var(--mobile-text) !important;
+  background:
+    linear-gradient(180deg, rgba(52, 211, 153, 0.16), rgba(52, 211, 153, 0.055)),
+    rgba(255, 255, 255, 0.035) !important;
+}
+
+.uiMobile .navV2Link.isActive::after,
+.uiMobile .navV2Link:focus-visible::after {
+  content: none !important;
+  display: none !important;
+}
+
+.uiMobile .navSpacer {
+  height: calc(66px + var(--safe-top));
+}
+
+.uiMobile #home,
+.uiMobile #about,
+.uiMobile #education,
+.uiMobile #portfolio,
+.uiMobile #faq {
+  scroll-margin-top: calc(82px + var(--safe-top));
+}
+
+.uiMobile .welcomeScreen {
+  padding-top: calc(18px + var(--safe-top));
+  padding-bottom: calc(26px + var(--safe-bottom));
+}
+
+.uiMobile .welcomeThemeScene::after {
+  animation: none !important;
+  opacity: 0.16 !important;
+}
+
+.uiMobile .welcomeInner {
+  width: min(100%, 420px) !important;
+  gap: 11px !important;
+}
+
+.uiMobile .welcomeLoader {
+  width: 82px;
+  height: 82px;
+  margin-bottom: 0;
+  animation: none !important;
+}
+
+.uiMobile .welcomeLoader::before {
+  opacity: 0.34;
+  filter: blur(16px);
+}
+
+.uiMobile .welcomeLoaderRing {
+  animation-duration: 1.9s !important;
+}
+
+.uiMobile .welcomeTitle {
+  max-width: 16ch !important;
+  gap: 3px !important;
+}
+
+.uiMobile .welcomeTitleTop {
+  font-size: clamp(2.1rem, 11vw, 3.15rem) !important;
+  line-height: 0.96 !important;
+}
+
+.uiMobile .welcomeTitleBottom {
+  font-size: clamp(2.2rem, 11.4vw, 3.25rem) !important;
+  line-height: 0.98 !important;
+}
+
+.uiMobile .welcomeLead {
+  max-width: 32ch;
+  margin: 0;
+  color: var(--mobile-text-soft) !important;
+  font-size: 0.82rem;
+  line-height: 1.55;
+}
+
+.uiMobile .welcomeAuto {
+  width: min(270px, 76vw);
+}
+
+.uiMobile .welcomeStatus {
+  max-width: 30ch;
+  font-size: 0.76rem;
+  line-height: 1.45;
+}
+
+.uiMobile .heroV2 {
+  padding: calc(82px + var(--safe-top)) 0 56px !important;
+}
+
+.uiMobile .heroV2Inner--developer {
+  gap: 22px;
+  align-items: start;
+}
+
+.uiMobile .heroLeftV2 {
+  max-width: none;
+}
+
+.uiMobile .heroEyebrow {
+  font-size: 0.69rem;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+
+.uiMobile .heroTitle {
+  max-width: 10.5ch;
+  margin-top: 12px;
+  font-size: clamp(2.48rem, 13.6vw, 3.48rem) !important;
+  line-height: 0.98;
+}
+
+.uiMobile .typeLine {
+  min-height: 24px;
+  margin-top: 12px;
+  font-size: 0.82rem;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.uiMobile .heroSubtitle {
+  margin-top: 14px;
+  color: var(--mobile-text-soft);
+  font-size: 0.94rem !important;
+  line-height: 1.66;
+}
+
+.uiMobile .chipRow {
+  margin-top: 16px;
+  gap: 7px;
+}
+
+.uiMobile .chip,
+.uiMobile .tag,
+.uiMobile .eduRibbonChip,
+.uiMobile .pillLink {
+  border-radius: 6px !important;
+  border-color: var(--mobile-border) !important;
+  background: rgba(12, 14, 16, 0.74) !important;
+  box-shadow: none !important;
+}
+
+.uiMobile .chip {
+  padding: 7px 8px !important;
+  font-size: 0.7rem !important;
+}
+
+.uiMobile .heroButtons {
+  gap: 9px;
+  margin-top: 16px;
+}
+
+.uiMobile .btn2,
+.uiMobile .welcomeEnter,
+.uiMobile .aboutDiscordBtn,
+.uiMobile .iconBtn,
+.uiMobile .pillLink,
+.uiMobile .segBtn,
+.uiMobile .scrollTopBtn,
+.uiMobile .welcomeIconBtn,
+.uiMobile .welcomeSwatch,
+.uiMobile .eduRibbonChip {
+  overflow: hidden !important;
+  border-radius: 8px !important;
+  border-color: var(--mobile-border) !important;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.018)),
+    var(--mobile-surface) !important;
+  box-shadow:
+    0 12px 28px rgba(0, 0, 0, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.045) !important;
+  text-shadow: none !important;
+}
+
+.uiMobile .btn2,
+.uiMobile .pillLink {
+  min-height: 46px;
+}
+
+.uiMobile .btn2:hover,
+.uiMobile .welcomeEnter:hover,
+.uiMobile .aboutDiscordBtn:hover,
+.uiMobile .iconBtn:hover,
+.uiMobile .pillLink:hover,
+.uiMobile .segBtn:hover,
+.uiMobile .scrollTopBtn:hover,
+.uiMobile .welcomeIconBtn:hover,
+.uiMobile .eduRibbonChip:hover,
+.uiMobile .segBtn.isActive,
+.uiMobile .pillLinkPrimary {
+  transform: none !important;
+  border-color: var(--mobile-border-active) !important;
+  background:
+    linear-gradient(180deg, rgba(52, 211, 153, 0.11), rgba(52, 211, 153, 0.028)),
+    var(--mobile-surface) !important;
+  box-shadow:
+    0 12px 28px rgba(0, 0, 0, 0.3),
+    inset 0 0 0 1px rgba(52, 211, 153, 0.08) !important;
+}
+
+.uiMobile .iconRow {
+  gap: 9px;
+}
+
+.uiMobile .iconBtn {
+  width: 43px !important;
+  height: 43px !important;
+}
+
+.uiMobile .heroWorkbench {
+  border-radius: 8px !important;
+  border-color: var(--mobile-border) !important;
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.28) !important;
+}
+
+.uiMobile .heroWorkbenchTop,
+.uiMobile .cardTerminalTop {
+  min-height: 38px;
+  padding: 0 11px;
+}
+
+.uiMobile .heroWorkbenchTitle {
+  max-width: 17ch;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.uiMobile .heroWorkbenchBody,
+.uiMobile .cardTerminalBody {
+  padding: 14px !important;
+  font-size: clamp(0.64rem, 2.7vw, 0.72rem) !important;
+  line-height: 1.72 !important;
+}
+
+.uiMobile .typingCode {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.uiMobile .aboutV2,
+.uiMobile .eduV2,
+.uiMobile .showcase,
+.uiMobile .faq {
+  padding: 58px 0 !important;
+}
+
+.uiMobile .aboutSectionHeadCentered {
+  text-align: left;
+  padding: 0;
+  margin-bottom: 16px;
+}
+
+.uiMobile .kickerV2 {
+  font-size: 0.72rem;
+}
+
+.uiMobile .aboutSectionTitle,
+.uiMobile .h2V2,
+.uiMobile .showcaseTitle {
+  font-size: clamp(1.72rem, 8.2vw, 2.2rem) !important;
+  line-height: 1.08;
+}
+
+.uiMobile .aboutHeaderRow {
+  padding: 0 !important;
+}
+
+.uiMobile .aboutHeaderMain {
+  align-items: stretch;
+}
+
+.uiMobile .aboutHeaderTop {
+  flex-direction: row !important;
+  align-items: center !important;
+  gap: 12px !important;
+}
+
+.uiMobile .aboutHeaderAvatarWrap {
+  width: 76px !important;
+  height: 76px !important;
+  flex: 0 0 76px;
+  border-radius: 8px !important;
+}
+
+.uiMobile .aboutHeaderAvatarInner,
+.uiMobile .aboutHeaderAvatarInner .avatar,
+.uiMobile .aboutHeaderAvatarInner .avatarImg,
+.uiMobile .aboutHeaderAvatarInner .avatarInner {
+  border-radius: 8px !important;
+}
+
+.uiMobile .aboutHeaderInfo {
+  min-width: 0;
+  text-align: left !important;
+  justify-items: start !important;
+  gap: 5px;
+}
+
+.uiMobile .aboutHeaderName {
+  font-size: clamp(1.34rem, 6.7vw, 1.72rem) !important;
+  line-height: 1.08 !important;
+  overflow-wrap: anywhere;
+}
+
+.uiMobile .aboutHeaderMeta {
+  font-size: 0.76rem !important;
+  line-height: 1.45 !important;
+}
+
+.uiMobile .aboutHeaderLocation {
+  justify-content: flex-start !important;
+  font-size: 0.78rem !important;
+  line-height: 1.35;
+}
+
+.uiMobile .aboutHeaderActions {
+  margin-top: 14px;
+  padding-top: 13px !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.09);
+}
+
+.uiMobile .aboutHeaderIcons {
+  justify-content: flex-start !important;
+  gap: 9px !important;
+}
+
+.uiMobile .aboutHeaderActions .iconBtn,
+.uiMobile .aboutHeaderIcons .iconBtn,
+.uiMobile .aboutHeaderIcons .aboutDiscordBtn {
+  width: 43px !important;
+  height: 43px !important;
+  min-width: 43px !important;
+  min-height: 43px !important;
+  border-radius: 8px !important;
+}
+
+.uiMobile .aboutLead {
+  margin-top: 18px;
+  padding-left: 12px !important;
+  color: var(--mobile-text-soft);
+  font-size: 0.94rem;
+  line-height: 1.72;
+}
+
+.uiMobile .aboutQuote {
+  margin-top: 14px;
+  padding: 15px !important;
+  border-radius: 8px !important;
+}
+
+.uiMobile .aboutQuoteText {
+  font-size: 0.88rem !important;
+  line-height: 1.65 !important;
+}
+
+.uiMobile .eduTimeline {
+  margin-top: 22px;
+}
+
+.uiMobile .eduItem {
+  padding: 16px 0 !important;
+}
+
+.uiMobile .eduContent {
+  padding-bottom: 16px !important;
+}
+
+.uiMobile .eduPeriod {
+  font-size: 0.76rem !important;
+}
+
+.uiMobile .eduTitle {
+  font-size: 0.98rem !important;
+  line-height: 1.32 !important;
+}
+
+.uiMobile .eduSubtitle,
+.uiMobile .eduDetails {
+  font-size: 0.86rem !important;
+}
+
+.uiMobile .statsRow {
+  gap: 10px;
+}
+
+.uiMobile .statCard {
+  grid-template-columns: 40px minmax(0, 1fr) auto;
+  gap: 11px;
+  padding: 13px !important;
+  border-radius: 8px !important;
+}
+
+.uiMobile .statIcon {
+  width: 40px !important;
+  height: 40px !important;
+  border-radius: 8px !important;
+}
+
+.uiMobile .statIcon svg {
+  width: 20px;
+  height: 20px;
+}
+
+.uiMobile .statLabel {
+  font-size: 0.66rem;
+  letter-spacing: 0.04em;
+}
+
+.uiMobile .statHelper {
+  margin-top: 4px;
+  font-size: 0.76rem;
+  line-height: 1.35;
+}
+
+.uiMobile .statValue {
+  font-size: 1.52rem !important;
+}
+
+.uiMobile .showcaseCenter {
+  margin-top: 32px;
+  margin-bottom: 16px;
+  gap: 12px;
+}
+
+.uiMobile .showcaseDesc,
+.uiMobile .faqHeader .muted {
+  font-size: 0.92rem;
+  line-height: 1.65;
+}
+
+.uiMobile .segmented {
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 6px !important;
+  padding: 5px !important;
+  border-radius: 8px !important;
+}
+
+.uiMobile .segBtn {
+  min-height: 44px !important;
+  padding: 8px 7px !important;
+  border-radius: 6px !important;
+  font-size: 0.74rem !important;
+}
+
+.uiMobile .segIcon svg {
+  width: 16px;
+  height: 16px;
+}
+
+.uiMobile .showcaseBody {
+  margin-top: 18px;
+}
+
+.uiMobile .cardGrid,
+.uiMobile .galleryGrid,
+.uiMobile .groupGrid {
+  gap: 11px;
+}
+
+.uiMobile .card,
+.uiMobile .techCard,
+.uiMobile .galleryItem,
+.uiMobile .groupCard,
+.uiMobile .faqItem,
+.uiMobile .statCard {
+  border-radius: 8px !important;
+  border-color: var(--mobile-border) !important;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.052), rgba(255, 255, 255, 0.018)),
+    rgba(10, 11, 12, 0.78) !important;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.24) !important;
+}
+
+.uiMobile .card:hover,
+.uiMobile .techCard:hover,
+.uiMobile .galleryItem:hover,
+.uiMobile .groupCard:hover,
+.uiMobile .faqItem:hover,
+.uiMobile .statCard:hover {
+  transform: none !important;
+}
+
+.uiMobile .cardThumb,
+.uiMobile .galleryThumb,
+.uiMobile .cardTerminalPreview {
+  aspect-ratio: 16 / 9;
+  border-radius: 8px 8px 0 0 !important;
+}
+
+.uiMobile .cardBody {
+  padding: 14px 14px 10px !important;
+}
+
+.uiMobile .cardMeta {
+  gap: 8px;
+  margin-bottom: 11px;
+  font-size: 0.66rem;
+  line-height: 1.25;
+}
+
+.uiMobile .h3 {
+  font-size: 1.08rem !important;
+  line-height: 1.25;
+}
+
+.uiMobile .cardBody > .muted {
+  font-size: 0.88rem;
+  line-height: 1.58;
+}
+
+.uiMobile .cardShowcase {
+  margin-top: 11px;
+  gap: 7px;
+}
+
+.uiMobile .cardShowcaseItem {
+  font-size: 0.8rem;
+  line-height: 1.45;
+}
+
+.uiMobile .tagRow {
+  gap: 6px;
+}
+
+.uiMobile .tag {
+  padding: 6px 7px !important;
+  font-size: 0.68rem !important;
+}
+
+.uiMobile .cardFooter {
+  padding: 0 14px 14px !important;
+}
+
+.uiMobile .pillLink {
+  gap: 7px;
+  padding: 9px 10px !important;
+  font-size: 0.8rem;
+}
+
+.uiMobile .pillLinkHost {
+  font-size: 0.68rem;
+}
+
+.uiMobile .techGrid {
+  gap: 10px;
+}
+
+.uiMobile .techCard {
+  min-height: 68px !important;
+  padding: 12px !important;
+  gap: 10px;
+}
+
+.uiMobile .techIcon {
+  width: 38px !important;
+  height: 38px !important;
+  border-radius: 8px !important;
+}
+
+.uiMobile .techIcon svg,
+.uiMobile .techIcon img {
+  width: 24px !important;
+  height: 24px !important;
+}
+
+.uiMobile .techName {
+  font-size: 0.82rem;
+  line-height: 1.25;
+}
+
+.uiMobile .groupCard {
+  padding: 15px !important;
+  gap: 12px;
+}
+
+.uiMobile .groupIcon {
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+}
+
+.uiMobile .groupLabel {
+  font-size: clamp(1.56rem, 9vw, 2.1rem) !important;
+}
+
+.uiMobile .groupLead,
+.uiMobile .groupDescription p {
+  font-size: 0.88rem !important;
+  line-height: 1.6;
+}
+
+.uiMobile .groupInfoGrid {
+  grid-template-columns: 1fr !important;
+}
+
+.uiMobile .groupInfoGrid div {
+  border-radius: 8px;
+  padding: 11px;
+}
+
+.uiMobile .groupFocusList li {
+  border-radius: 6px;
+  font-size: 0.72rem;
+}
+
+.uiMobile .groupJoin {
+  width: 100%;
+  min-width: 0;
+  justify-content: space-between;
+  border-radius: 8px;
+}
+
+.uiMobile .groupJoin span:last-child {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.uiMobile .faq {
+  padding-bottom: 76px !important;
+}
+
+.uiMobile .faqGrid {
+  gap: 10px;
+}
+
+.uiMobile .faqItem {
+  padding: 13px 14px !important;
+}
+
+.uiMobile .faqQ {
+  align-items: flex-start;
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+
+.uiMobile .faqQ::after {
+  flex: 0 0 28px;
+  width: 28px !important;
+  height: 28px !important;
+  border-radius: 6px !important;
+}
+
+.uiMobile .faqA {
+  font-size: 0.86rem;
+  line-height: 1.62;
+}
+
+.uiMobile .nowPlayingToast {
+  top: calc(68px + var(--safe-top));
+  right: calc(10px + var(--safe-right));
+  width: min(154px, calc(100vw - 22px));
+  padding: 7px 8px;
+  border-radius: 8px !important;
+}
+
+.uiMobile .nowPlayingToastKicker {
+  gap: 5px;
+  margin-bottom: 4px;
+  font-size: 0.62rem;
+}
+
+.uiMobile .nowPlayingToastIcon {
+  width: 17px;
+  height: 17px;
+  border-radius: 5px;
+}
+
+.uiMobile .nowPlayingToastTitle {
+  font-size: 0.78rem;
+  line-height: 1.26;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.uiMobile .nowPlayingToastDetail {
+  display: none;
+}
+
+.uiMobile .scrollTopBtn {
+  width: 46px;
+  height: 46px;
+  right: calc(12px + var(--safe-right));
+  bottom: calc(12px + var(--safe-bottom));
+}
+
+@media (max-width: 380px) {
+  .uiMobile .container {
+    width: min(100% - 22px, var(--container));
+  }
+
+  .uiMobile .navV2 {
+    padding-left: 7px;
+    padding-right: 7px;
+  }
+
+  .uiMobile .navV2Link {
+    font-size: 0.58rem !important;
+  }
+
+  .uiMobile .navV2Icon {
+    width: 16px;
+    height: 16px;
+  }
+
+  .uiMobile .heroTitle {
+    font-size: clamp(2.22rem, 13vw, 2.78rem) !important;
+  }
+
+  .uiMobile .aboutHeaderTop {
+    align-items: flex-start !important;
+  }
+
+  .uiMobile .aboutHeaderAvatarWrap {
+    width: 68px !important;
+    height: 68px !important;
+    flex-basis: 68px;
+  }
+
+  .uiMobile .statCard {
+    grid-template-columns: 36px minmax(0, 1fr);
+  }
+
+  .uiMobile .statValue {
+    grid-column: 2;
+    justify-self: start;
+    margin-top: -2px;
+  }
+}

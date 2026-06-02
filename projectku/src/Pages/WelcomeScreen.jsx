@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef } from "react";
 
-const AUTO_ENTER_DELAY_MS = 4800;
+const AUTO_ENTER_DELAY_MS = 4200;
 
 const PALETTES = [
   {
@@ -520,12 +520,16 @@ export default function WelcomeScreen({ entered = false, onEnter }) {
           <span className="welcomeLoaderCore" />
         </div>
 
-        <p className="welcomeKicker">Faisal Riza Portfolio</p>
+        <p className="welcomeKicker">Audrey Faisal Riza / Developer Portfolio</p>
 
         <h1 className="welcomeTitle">
-          <span className="welcomeTitleTop">Loading</span>
-          <span className="welcomeTitleBottom welcomeAccent">Portfolio</span>
+          <span className="welcomeTitleTop">Compiling</span>
+          <span className="welcomeTitleBottom welcomeAccent">Dev Workspace</span>
         </h1>
+
+        <p className="welcomeLead">
+          Loading React builds, bot work, scripting notes, and project previews.
+        </p>
 
         <div
           className="welcomeActions welcomeAuto"
@@ -535,7 +539,7 @@ export default function WelcomeScreen({ entered = false, onEnter }) {
             <span className="welcomeProgressFill" />
           </div>
           <p className="welcomeStatus muted" aria-live="polite">
-            Preparing the page and music...
+            Mounting sections, warming assets, starting the soundtrack...
           </p>
         </div>
       </div>

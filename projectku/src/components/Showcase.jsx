@@ -460,15 +460,15 @@ export default function Showcase({
   const stats = useMemo(() => {
     return [
       {
-        label: "TOTAL PROJECTS",
+        label: "SHIPPED BUILDS",
         value: projects.length,
-        helper: "Innovative web solutions crafted",
+        helper: "Web apps, bots, and scripting experiments",
         icon: "code",
       },
       {
-        label: "YEARS OF EXPERIENCE",
+        label: "YEARS BUILDING",
         value: yearsExperience,
-        helper: "Continuous learning journey",
+        helper: "Learning by shipping real interfaces",
         icon: "globe",
       },
     ];
@@ -492,12 +492,12 @@ export default function Showcase({
         <div className="showcaseCenter">
           <Reveal>
             <h2 className="showcaseTitle">
-              Portfolio <span className="accentText">Showcase</span>
+              Developer <span className="accentText">Builds</span>
             </h2>
           </Reveal>
           <Reveal delayMs={80}>
             <p className="showcaseDesc">
-              Explore my journey through projects and technical expertise. Each section represents a milestone in my continuous learning path.
+              A focused look at shipped projects, UI experiments, community work, and the stack I keep sharpening.
             </p>
           </Reveal>
         </div>

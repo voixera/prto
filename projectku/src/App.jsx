@@ -83,8 +83,16 @@ export default function App() {
     detail: "",
   });
   const audioPlayerRef = useRef(null);
+  const siteOverlayRef = useRef(null);
   const hideNowPlayingTimerRef = useRef(0);
   const lastAnnouncedTrackIdRef = useRef(null);
+  const overlayMotionRef = useRef({
+    currentX: 0,
+    currentY: 0,
+    targetX: 0,
+    targetY: 0,
+    raf: 0,
+  });
 
   const showNowPlayingToast = (title, detail) => {
     if (hideNowPlayingTimerRef.current) {
@@ -155,10 +163,100 @@ export default function App() {
     );
   }, [entered, playerSnapshot]);
 
+  useEffect(() => {
+    const overlay = siteOverlayRef.current;
+    if (!overlay || liteFx || prefersReducedMotion()) return undefined;
+
+    const motion = overlayMotionRef.current;
+    const clamp = (value) => Math.max(-1, Math.min(1, value));
+
+    const renderMotion = () => {
+      motion.currentX += (motion.targetX - motion.currentX) * 0.08;
+      motion.currentY += (motion.targetY - motion.currentY) * 0.08;
+
+      overlay.style.setProperty("--bgMoveX", `${motion.currentX * 30}px`);
+      overlay.style.setProperty("--bgMoveY", `${motion.currentY * 22}px`);
+      overlay.style.setProperty("--bgStageX", `${motion.currentX * -8}px`);
+      overlay.style.setProperty("--bgStageY", `${motion.currentY * -4}px`);
+      overlay.style.setProperty("--bgDepthX", `${motion.currentX * 6}px`);
+      overlay.style.setProperty("--bgDepthY", `${motion.currentY * 4}px`);
+      overlay.style.setProperty("--bgTileX", `${motion.currentX * 3}px`);
+      overlay.style.setProperty("--bgTileY", `${motion.currentY * 2}px`);
+      overlay.style.setProperty("--bgHorizonX", `${motion.currentX * -5}px`);
+      overlay.style.setProperty("--bgHorizonY", `${motion.currentY * -5}px`);
+      overlay.style.setProperty("--bgDotsX", `${motion.currentX * -12}px`);
+      overlay.style.setProperty("--bgDotsY", `${motion.currentY * -9}px`);
+      overlay.style.setProperty("--bgDotsXAlt", `${motion.currentX * 8}px`);
+      overlay.style.setProperty("--bgDotsYAlt", `${motion.currentY * 6}px`);
+      overlay.style.setProperty("--bgFlowX", `${motion.currentX * 6}px`);
+      overlay.style.setProperty("--bgFlowY", `${motion.currentY * 5}px`);
+      overlay.style.setProperty("--bgTiltX", `${motion.currentY * -3.6}deg`);
+      overlay.style.setProperty("--bgTiltY", `${motion.currentX * 4.8}deg`);
+      overlay.style.setProperty("--bgPointerX", `${50 + motion.currentX * 30}%`);
+      overlay.style.setProperty("--bgPointerY", `${50 + motion.currentY * 24}%`);
+
+      const settled =
+        Math.abs(motion.targetX - motion.currentX) < 0.002 &&
+        Math.abs(motion.targetY - motion.currentY) < 0.002;
+
+      if (settled) {
+        motion.raf = 0;
+        return;
+      }
+
+      motion.raf = requestAnimationFrame(renderMotion);
+    };
+
+    const queueMotion = () => {
+      if (!motion.raf) motion.raf = requestAnimationFrame(renderMotion);
+    };
+
+    const handlePointerMove = (event) => {
+      const x = event.clientX / Math.max(window.innerWidth, 1);
+      const y = event.clientY / Math.max(window.innerHeight, 1);
+      motion.targetX = clamp((x - 0.5) * 2);
+      motion.targetY = clamp((y - 0.5) * 2);
+      queueMotion();
+    };
+
+    const resetMotion = () => {
+      motion.targetX = 0;
+      motion.targetY = 0;
+      queueMotion();
+    };
+
+    window.addEventListener("pointermove", handlePointerMove, { passive: true });
+    window.addEventListener("blur", resetMotion);
+    document.addEventListener("mouseleave", resetMotion);
+
+    return () => {
+      window.removeEventListener("pointermove", handlePointerMove);
+      window.removeEventListener("blur", resetMotion);
+      document.removeEventListener("mouseleave", resetMotion);
+      if (motion.raf) {
+        cancelAnimationFrame(motion.raf);
+        motion.raf = 0;
+      }
+    };
+  }, [liteFx]);
+
   return (
     <>
-      <div className={`siteOverlay${liteFx ? " siteOverlay--lite" : ""}`} aria-hidden="true">
-        <div className="siteOverlayLayer siteOverlayLayer--grid" />
+      <div
+        ref={siteOverlayRef}
+        className={`siteOverlay${liteFx ? " siteOverlay--lite" : ""}`}
+        aria-hidden="true"
+      >
+        <div className="siteOverlayStage">
+          <div className="siteOverlayLayer siteOverlayLayer--grid" />
+          <div className="siteOverlayLayer siteOverlayLayer--gridDepth" />
+          <div className="siteOverlayLayer siteOverlayLayer--tileField">
+            {Array.from({ length: 14 }, (_, index) => (
+              <span className="siteOverlayTile" key={index} />
+            ))}
+          </div>
+          <div className="siteOverlayLayer siteOverlayLayer--horizon" />
+        </div>
         <div className="siteOverlayLayer siteOverlayLayer--dots" />
         <div className="siteOverlayLayer siteOverlayLayer--theme" />
         <div className="siteOverlayLayer siteOverlayLayer--glow" />

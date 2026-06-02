@@ -290,8 +290,8 @@ export default function HomeDesktop({ rootClassName = "homeRoot homeRoot--deskto
 
             <Reveal delayMs={60}>
               <h1 className="heroTitle">
-                <span className="heroTitleTop edgyText">Tech</span>
-                <span className="heroTitleBottom accentText">Enthusiast</span>
+                <span className="heroTitleTop edgyText">Full Stack</span>
+                <span className="heroTitleBottom accentText">Developer</span>
               </h1>
             </Reveal>
 
@@ -365,7 +365,7 @@ export default function HomeDesktop({ rootClassName = "homeRoot homeRoot--deskto
                 <span className="heroWorkbenchDot" />
                 <span className="heroWorkbenchDot" />
                 <span className="heroWorkbenchDot" />
-                <span className="heroWorkbenchTitle">portfolio.local</span>
+                <span className="heroWorkbenchTitle">developer.profile.js</span>
               </div>
               <div className="heroWorkbenchBody">
                 <TypingCodeBlock profile={profile} />
@@ -656,7 +656,7 @@ export default function HomeDesktop({ rootClassName = "homeRoot homeRoot--deskto
             <div className="faqHeader">
               <h2 className="h2V2">FAQ</h2>
               <p className="muted">
-                A few common questions about the role and projects.
+                Quick notes about how I build, ship, and choose tools.
               </p>
             </div>
           </Reveal>
