@@ -1237,22 +1237,21 @@
   }
 
   .welcomeLoader {
-    width: 92px;
-    height: 92px;
+    width: min(310px, 92vw);
+    height: auto;
     margin-bottom: 2px;
   }
 
-  .welcomeLoaderRing {
-    inset: 7px;
+  .welcomeBootBody {
+    padding: 12px 11px 14px;
   }
 
-  .welcomeLoaderRingDelay {
-    inset: 19px;
+  .welcomeBootCommand {
+    font-size: 0.78rem;
   }
 
-  .welcomeLoaderCore {
-    width: 26px;
-    height: 26px;
+  .welcomeBootSteps span {
+    font-size: 0.58rem;
   }
 
   .welcomeKicker {
@@ -1311,12 +1310,7 @@
 
 @media (max-width: 380px) {
   .welcomeLoader {
-    width: 82px;
-    height: 82px;
-  }
-
-  .welcomeLoaderRingDelay {
-    inset: 17px;
+    width: min(292px, 92vw);
   }
 
   .welcomeTitleTop {

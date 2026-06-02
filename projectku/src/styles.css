@@ -7148,10 +7148,29 @@ body::after,
   inset: 0;
   display: block;
   white-space: pre-wrap;
+  transition:
+    opacity 420ms var(--ease),
+    filter 520ms var(--ease),
+    transform 520ms var(--ease);
+  transform-origin: left top;
 }
 
 .typingCodeVisible::first-line {
   color: #ffffff;
+}
+
+.typingCode--complete .typingCodeVisible {
+  filter: saturate(112%);
+}
+
+.typingCode--fade .typingCodeVisible {
+  opacity: 0;
+  filter: blur(8px) saturate(78%);
+  transform: translate3d(0, -8px, 0) scale(0.985);
+}
+
+.typingCode--fade .typingCursor {
+  opacity: 0;
 }
 
 .typingCursor {
@@ -7774,8 +7793,8 @@ html body .welcomeScreen .welcomeInner {
   position: relative;
   display: grid;
   place-items: center;
-  width: clamp(92px, 12vw, 128px);
-  height: clamp(92px, 12vw, 128px);
+  width: min(360px, 86vw);
+  height: auto;
   margin-bottom: clamp(4px, 1.2vh, 12px);
   animation: welcomeFloat 5.8s ease-in-out infinite;
 }
@@ -7783,46 +7802,146 @@ html body .welcomeScreen .welcomeInner {
 .welcomeLoader::before {
   content: "";
   position: absolute;
-  inset: 22%;
-  border-radius: 999px;
-  background: rgba(52, 211, 153, 0.2);
-  filter: blur(22px);
-  opacity: 0.8;
-}
-
-.welcomeLoaderRing {
-  position: absolute;
-  inset: 7px;
-  border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-top-color: rgba(167, 243, 208, 0.95);
-  border-right-color: rgba(52, 211, 153, 0.36);
-  animation: welcomeLoaderSpin 1.35s linear infinite;
-}
-
-.welcomeLoaderRingDelay {
-  inset: 21px;
-  border-top-color: rgba(96, 165, 250, 0.88);
-  border-right-color: rgba(167, 243, 208, 0.24);
-  animation-duration: 1.9s;
-  animation-direction: reverse;
-}
-
-.welcomeLoaderCore {
-  position: relative;
-  z-index: 2;
-  display: grid;
-  place-items: center;
-  width: clamp(24px, 3vw, 34px);
-  height: clamp(24px, 3vw, 34px);
+  inset: 12px 12%;
+  z-index: -1;
   border-radius: 999px;
   background:
-    radial-gradient(circle at 35% 32%, #ecfdf5 0 9%, #a7f3d0 10% 26%, transparent 27%),
-    rgba(52, 211, 153, 0.16);
-  border: 1px solid rgba(167, 243, 208, 0.48);
+    radial-gradient(circle at 35% 45%, rgba(52, 211, 153, 0.34), transparent 58%),
+    radial-gradient(circle at 72% 52%, rgba(96, 165, 250, 0.2), transparent 62%);
+  filter: blur(24px);
+  opacity: 0.5;
+}
+
+.welcomeBootCard {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.065), rgba(255, 255, 255, 0.018)),
+    rgba(5, 8, 10, 0.9);
   box-shadow:
-    0 0 0 8px rgba(52, 211, 153, 0.08),
-    0 0 40px rgba(52, 211, 153, 0.22);
+    0 18px 52px rgba(0, 0, 0, 0.36),
+    inset 0 1px 0 rgba(255, 255, 255, 0.055);
+}
+
+.welcomeBootCard::before {
+  content: "";
+  position: absolute;
+  inset: 31px 0 3px;
+  pointer-events: none;
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.028) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(52, 211, 153, 0.03) 1px, transparent 1px);
+  background-size: 100% 20px, 40px 100%;
+  opacity: 0.7;
+}
+
+.welcomeBootTop {
+  position: relative;
+  z-index: 1;
+  min-height: 31px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 0 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.09);
+  background: rgba(0, 0, 0, 0.22);
+}
+
+.welcomeBootDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: rgba(244, 244, 245, 0.72);
+}
+
+.welcomeBootDot:nth-child(2) {
+  background: #34d399;
+}
+
+.welcomeBootDot:nth-child(3) {
+  background: #60a5fa;
+}
+
+.welcomeBootFile {
+  margin-left: auto;
+  color: rgba(226, 232, 240, 0.62);
+  font: 800 0.7rem/1 ui-monospace, "SFMono-Regular", Consolas, monospace;
+  letter-spacing: 0.02em;
+}
+
+.welcomeBootBody {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 12px;
+  padding: 15px 14px 17px;
+}
+
+.welcomeBootCommand {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  gap: 8px;
+  color: #f8fafc;
+  font: 850 0.96rem/1.2 ui-monospace, "SFMono-Regular", Consolas, monospace;
+}
+
+.welcomeBootPrompt {
+  color: #34d399;
+}
+
+.welcomeBootPath {
+  color: rgba(167, 243, 208, 0.84);
+}
+
+.welcomeBootText {
+  min-width: 0;
+  color: rgba(248, 250, 252, 0.9);
+}
+
+.welcomeBootCursor {
+  width: 8px;
+  height: 1.05em;
+  border-radius: 2px;
+  background: #34d399;
+  box-shadow: 0 0 18px rgba(52, 211, 153, 0.4);
+  animation: welcomeCursorBlink 1.05s steps(2, end) infinite;
+}
+
+.welcomeBootSteps {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 7px;
+}
+
+.welcomeBootSteps span {
+  min-width: 0;
+  padding: 7px 8px;
+  border-radius: 7px;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  background: rgba(255, 255, 255, 0.035);
+  color: rgba(226, 232, 240, 0.66);
+  font: 850 0.67rem/1 ui-monospace, "SFMono-Regular", Consolas, monospace;
+  text-transform: uppercase;
+}
+
+.welcomeBootProgress {
+  position: absolute;
+  left: 0;
+  right: auto;
+  bottom: 0;
+  z-index: 2;
+  width: 100%;
+  height: 2px;
+  transform: scaleX(0);
+  transform-origin: left center;
+  background: linear-gradient(90deg, #34d399, #a7f3d0, #60a5fa);
+  box-shadow: 0 0 22px rgba(52, 211, 153, 0.42);
+  animation: welcomeBootLoad var(--welcome-auto-delay) linear both;
 }
 
 .welcomeKicker {
@@ -7927,6 +8046,23 @@ html body .welcomeScreen .welcomeIconBtn svg {
   }
 }
 
+@keyframes welcomeBootLoad {
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes welcomeCursorBlink {
+  0%,
+  48% {
+    opacity: 1;
+  }
+  49%,
+  100% {
+    opacity: 0.18;
+  }
+}
+
 @keyframes welcomeLoaderSpin {
   to {
     transform: rotate(360deg);
@@ -7957,13 +8093,20 @@ html body .welcomeScreen .welcomeIconBtn svg {
 
 @media (prefers-reduced-motion: reduce) {
   .welcomeLoader,
-  .welcomeLoaderRing,
+  .welcomeBootCard::before,
+  .welcomeBootCursor,
+  .welcomeBootProgress,
   .welcomeThemeScene::after {
     animation: none !important;
   }
 
-  .welcomeProgressFill {
+  .welcomeProgressFill,
+  .welcomeBootProgress {
     animation-duration: 900ms !important;
+  }
+
+  .typingCodeVisible {
+    transition: none !important;
   }
 }
 

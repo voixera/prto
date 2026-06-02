@@ -157,11 +157,15 @@ html {
 .uiMobile .navV2 {
   padding: calc(7px + var(--safe-top)) 10px 0;
   background: transparent !important;
+  transition:
+    opacity 260ms var(--ease),
+    filter 300ms var(--ease),
+    transform 360ms cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 .uiMobile .navV2.navV2--hidden {
-  transform: translate3d(0, calc(-100% - 12px), 0);
-  filter: none;
+  transform: translate3d(0, calc(-100% - 16px), 0) scale(0.965);
+  filter: blur(10px) saturate(80%);
   opacity: 0;
 }
 
@@ -199,6 +203,19 @@ html {
     inset 0 1px 0 rgba(255, 255, 255, 0.055) !important;
   overflow: hidden !important;
   scrollbar-width: none;
+  transform-origin: 50% 0%;
+  transition:
+    opacity 250ms var(--ease),
+    filter 280ms var(--ease),
+    transform 340ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.uiMobile .navV2:not(.navV2--hidden) .navV2Links {
+  animation: mobileNavDockIn 420ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.uiMobile .navV2.navV2--hidden .navV2Links {
+  animation: mobileNavDockOut 260ms ease both;
 }
 
 .uiMobile .navV2Links::-webkit-scrollbar {
@@ -304,19 +321,56 @@ html {
 }
 
 .uiMobile .welcomeLoader {
-  width: 82px;
-  height: 82px;
+  width: min(310px, 92vw);
+  height: auto;
   margin-bottom: 0;
   animation: none !important;
 }
 
 .uiMobile .welcomeLoader::before {
+  inset: 10px 12%;
   opacity: 0.34;
-  filter: blur(16px);
+  filter: blur(18px);
 }
 
-.uiMobile .welcomeLoaderRing {
-  animation-duration: 1.9s !important;
+.uiMobile .welcomeBootCard {
+  border-radius: 8px;
+}
+
+.uiMobile .welcomeBootTop {
+  min-height: 29px;
+  padding: 0 10px;
+}
+
+.uiMobile .welcomeBootFile {
+  font-size: 0.64rem;
+}
+
+.uiMobile .welcomeBootBody {
+  gap: 10px;
+  padding: 12px 11px 14px;
+}
+
+.uiMobile .welcomeBootCommand {
+  gap: 6px;
+  font-size: 0.78rem;
+  justify-content: flex-start;
+}
+
+.uiMobile .welcomeBootText {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.uiMobile .welcomeBootSteps {
+  gap: 6px;
+}
+
+.uiMobile .welcomeBootSteps span {
+  padding: 6px 5px;
+  border-radius: 6px;
+  font-size: 0.58rem;
 }
 
 .uiMobile .welcomeTitle {
@@ -995,5 +1049,36 @@ html {
     grid-column: 2;
     justify-self: start;
     margin-top: -2px;
+  }
+}
+
+@keyframes mobileNavDockIn {
+  from {
+    opacity: 0;
+    filter: blur(10px) saturate(82%);
+    transform: translate3d(0, -12px, 0) scale(0.96);
+  }
+  60% {
+    opacity: 1;
+    filter: blur(0) saturate(112%);
+    transform: translate3d(0, 2px, 0) scale(1.012);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0) saturate(100%);
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+@keyframes mobileNavDockOut {
+  from {
+    opacity: 1;
+    filter: blur(0) saturate(100%);
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  to {
+    opacity: 0;
+    filter: blur(10px) saturate(80%);
+    transform: translate3d(0, -14px, 0) scale(0.965);
   }
 }

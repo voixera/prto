@@ -515,20 +515,39 @@ export default function WelcomeScreen({ entered = false, onEnter }) {
       <WelcomeThemeScene />
       <div className="container welcomeInner">
         <div className="welcomeLoader" aria-hidden="true">
-          <span className="welcomeLoaderRing" />
-          <span className="welcomeLoaderRing welcomeLoaderRingDelay" />
-          <span className="welcomeLoaderCore" />
+          <div className="welcomeBootCard">
+            <div className="welcomeBootTop">
+              <span className="welcomeBootDot" />
+              <span className="welcomeBootDot" />
+              <span className="welcomeBootDot" />
+              <span className="welcomeBootFile">profile.build</span>
+            </div>
+            <div className="welcomeBootBody">
+              <div className="welcomeBootCommand">
+                <span className="welcomeBootPrompt">$</span>
+                <span className="welcomeBootPath">afr</span>
+                <span className="welcomeBootText">ship portfolio</span>
+                <span className="welcomeBootCursor" />
+              </div>
+              <div className="welcomeBootSteps">
+                <span>react</span>
+                <span>bots</span>
+                <span>lua</span>
+              </div>
+            </div>
+            <span className="welcomeBootProgress" />
+          </div>
         </div>
 
-        <p className="welcomeKicker">Audrey Faisal Riza / Developer Portfolio</p>
+        <p className="welcomeKicker">Audrey Faisal Riza / source preview</p>
 
         <h1 className="welcomeTitle">
-          <span className="welcomeTitleTop">Compiling</span>
-          <span className="welcomeTitleBottom welcomeAccent">Dev Workspace</span>
+          <span className="welcomeTitleTop">Building</span>
+          <span className="welcomeTitleBottom welcomeAccent">Faisal.dev</span>
         </h1>
 
         <p className="welcomeLead">
-          Loading React builds, bot work, scripting notes, and project previews.
+          A quick boot through web builds, Discord bots, Lua scripts, and the UI experiments behind them.
         </p>
 
         <div
@@ -539,7 +558,7 @@ export default function WelcomeScreen({ entered = false, onEnter }) {
             <span className="welcomeProgressFill" />
           </div>
           <p className="welcomeStatus muted" aria-live="polite">
-            Mounting sections, warming assets, starting the soundtrack...
+            Bundling projects, syncing stack notes, cueing the soundtrack...
           </p>
         </div>
       </div>
