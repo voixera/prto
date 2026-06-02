@@ -1008,6 +1008,76 @@ html {
   bottom: calc(12px + var(--safe-bottom));
 }
 
+/* Mobile matte pass: remove glossy shine while keeping depth and focus states. */
+.uiMobile .navV2Links,
+.uiMobile .btn2,
+.uiMobile .welcomeEnter,
+.uiMobile .aboutDiscordBtn,
+.uiMobile .iconBtn,
+.uiMobile .pillLink,
+.uiMobile .segBtn,
+.uiMobile .scrollTopBtn,
+.uiMobile .welcomeIconBtn,
+.uiMobile .welcomeSwatch,
+.uiMobile .eduRibbonChip,
+.uiMobile .chip,
+.uiMobile .tag,
+.uiMobile .card,
+.uiMobile .techCard,
+.uiMobile .galleryItem,
+.uiMobile .groupCard,
+.uiMobile .faqItem,
+.uiMobile .statCard {
+  background: rgba(8, 9, 10, 0.88) !important;
+  border-color: rgba(255, 255, 255, 0.115) !important;
+  box-shadow:
+    0 12px 26px rgba(0, 0, 0, 0.28),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.026) !important;
+}
+
+.uiMobile .btn2::before,
+.uiMobile .welcomeEnter::before,
+.uiMobile .aboutDiscordBtn::before,
+.uiMobile .iconBtn::before,
+.uiMobile .pillLink::before,
+.uiMobile .segBtn::before,
+.uiMobile .scrollTopBtn::before,
+.uiMobile .welcomeIconBtn::before,
+.uiMobile .welcomeSwatch::before,
+.uiMobile .eduRibbonChip::before,
+.uiMobile .card::before,
+.uiMobile .card::after,
+.uiMobile .techCard::before,
+.uiMobile .galleryItem::before,
+.uiMobile .groupCard::before,
+.uiMobile .faqItem::before,
+.uiMobile .statCard::before {
+  content: none !important;
+  display: none !important;
+  animation: none !important;
+  opacity: 0 !important;
+}
+
+.uiMobile .navV2Link:hover,
+.uiMobile .navV2Link.isActive,
+.uiMobile .btn2:hover,
+.uiMobile .welcomeEnter:hover,
+.uiMobile .aboutDiscordBtn:hover,
+.uiMobile .iconBtn:hover,
+.uiMobile .pillLink:hover,
+.uiMobile .segBtn:hover,
+.uiMobile .scrollTopBtn:hover,
+.uiMobile .welcomeIconBtn:hover,
+.uiMobile .eduRibbonChip:hover,
+.uiMobile .segBtn.isActive,
+.uiMobile .pillLinkPrimary {
+  background: rgba(18, 28, 24, 0.92) !important;
+  border-color: rgba(52, 211, 153, 0.26) !important;
+  box-shadow:
+    0 12px 26px rgba(0, 0, 0, 0.3),
+    inset 0 0 0 1px rgba(52, 211, 153, 0.07) !important;
+}
+
 @media (max-width: 380px) {
   .uiMobile .container {
     width: min(100% - 22px, var(--container));

@@ -5,7 +5,7 @@ import AvatarPlaceholder from "../../components/AvatarPlaceholder";
 import AnimatedProfileMeta from "../../components/AnimatedProfileMeta";
 import EducationTimeline from "../../components/EducationTimeline";
 import TypingCodeBlock from "../../components/TypingCodeBlock";
-import { GithubIcon, LinkedinIcon, MailIcon as MailIcon2 } from "../../components/Icons";
+import { LinkedinIcon, MailIcon as MailIcon2 } from "../../components/Icons";
 import { profile } from "../../content/profile";
 
 const ROLE_PHRASES = ["Fullstack Developer", "Web Development", "Roblox Studio Scripting", "Discord Bot Development", "Cybersecurity Beginner"];
@@ -28,7 +28,6 @@ function ArrowUpRightIcon() {
 
 function socialIcon(label) {
   const lower = label.toLowerCase();
-  if (lower.includes("github")) return GithubIcon;
   if (lower.includes("linkedin")) return LinkedinIcon;
   if (lower.includes("email") || lower.includes("mail")) return MailIcon2;
   return null;
@@ -108,8 +107,11 @@ function RotatingTypeLine({ phrases = ROLE_PHRASES }) {
 export default function HomeMobile() {
   const aboutText = useMemo(() => profile.about.join(" "), []);
   const aboutBadges = useMemo(() => profile.aboutBadges?.slice(0, 3) ?? [], []);
-  const githubLink = useMemo(
-    () => profile.socials.find((item) => item.label.toLowerCase().includes("github")),
+  const visibleSocials = useMemo(
+    () =>
+      profile.socials
+        .filter((item) => !item.label.toLowerCase().includes("github"))
+        .slice(0, 2),
     []
   );
 
@@ -179,25 +181,12 @@ export default function HomeMobile() {
                     <ArrowUpRightIcon />
                   </span>
                 </a>
-                {githubLink ? (
-                  <a
-                    className="btn2 btn2Ghost"
-                    href={githubLink.href}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    GitHub{" "}
-                    <span className="btnIcon" aria-hidden="true">
-                      <GithubIcon title="GitHub" />
-                    </span>
-                  </a>
-                ) : null}
               </div>
             </Reveal>
 
             <Reveal delayMs={210}>
               <div className="iconRow" aria-label="Sosial">
-                {profile.socials.slice(0, 3).map((s) => {
+                {visibleSocials.map((s) => {
                   const Icon = socialIcon(s.label);
                   return (
                     <a
@@ -304,7 +293,7 @@ export default function HomeMobile() {
 
                   <div className="aboutHeaderActions" aria-label="Social actions">
                     <div className="aboutHeaderIcons">
-                      {profile.socials.slice(0, 3).map((s) => {
+                      {visibleSocials.map((s) => {
                         const Icon = socialIcon(s.label);
                         return (
                           <a

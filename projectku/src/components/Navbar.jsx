@@ -14,7 +14,7 @@ const navItems = [
   {
     href: "#portfolio",
     label: "Portfolio",
-    mobileLabel: "Builds",
+    mobileLabel: "Projects",
     id: "portfolio",
     Icon: Briefcase,
   },
