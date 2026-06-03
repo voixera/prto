@@ -1163,3 +1163,42 @@ html {
     transform: translate3d(0, -48px, 0) scale(0.9);
   }
 }
+
+/* Final mobile polish: circular profile photo and readable chain shine. */
+.uiMobile .heroTitle {
+  overflow: visible;
+}
+
+.uiMobile .heroTitle::after {
+  width: 70%;
+  height: calc(100% + 0.18em);
+  animation-duration: 5.2s;
+}
+
+.uiMobile .heroTitleChain::after {
+  animation-duration: 5.2s;
+}
+
+.uiMobile .aboutHeaderAvatarWrap {
+  border-radius: 999px !important;
+  overflow: visible !important;
+}
+
+.uiMobile .aboutHeaderAvatarWrap::before,
+.uiMobile .aboutHeaderAvatarWrap::after {
+  border-radius: 999px !important;
+}
+
+.uiMobile .aboutHeaderAvatarInner,
+.uiMobile .aboutHeaderAvatarInner .avatar,
+.uiMobile .aboutHeaderAvatarInner .avatarImg,
+.uiMobile .aboutHeaderAvatarInner .avatarInner {
+  border-radius: 999px !important;
+  overflow: hidden !important;
+}
+
+.uiMobile .aboutHeaderActions .iconBtn,
+.uiMobile .aboutHeaderIcons .iconBtn,
+.uiMobile .aboutHeaderIcons .aboutDiscordBtn {
+  border-radius: 8px !important;
+}

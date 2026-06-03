@@ -146,8 +146,15 @@ export default function HomeMobile() {
 
             <Reveal delayMs={60}>
               <h1 className="heroTitle">
-                <span className="heroTitleTop edgyText">Full Stack</span>
-                <span className="heroTitleBottom accentText">Developer</span>
+                <span className="heroTitleTop edgyText heroTitleChain" data-text="Full Stack">
+                  Full Stack
+                </span>
+                <span
+                  className="heroTitleBottom accentText heroTitleChain heroTitleChain--follow"
+                  data-text="Developer"
+                >
+                  Developer
+                </span>
               </h1>
             </Reveal>
 
@@ -181,7 +188,7 @@ export default function HomeMobile() {
             </Reveal>
 
             <Reveal delayMs={210}>
-              <div className="iconRow" aria-label="Sosial">
+              <div className="iconRow" aria-label="Social">
                 {visibleSocials.map((s) => {
                   const Icon = socialIcon(s.label);
                   return (
@@ -223,13 +230,6 @@ export default function HomeMobile() {
           <Reveal>
             <div className="aboutHeaderCard" aria-label="About header">
               <div className="aboutHeaderCover" aria-hidden="true" />
-              <div
-                className="aboutSectionHead aboutSectionHeadCentered"
-                aria-label="About section title"
-              >
-                <p className="kickerV2">Profile</p>
-                <h3 className="aboutSectionTitle">Developer Profile</h3>
-              </div>
               <div className="aboutHeaderRow">
                 <div className="aboutHeaderMain" aria-label="Profile">
                   <div className="aboutHeaderTop">
@@ -378,7 +378,7 @@ export default function HomeMobile() {
               <p className="kickerV2">Education</p>
             </Reveal>
             <Reveal delayMs={70}>
-              <h2 className="h2V2">Riwayat Edukasi</h2>
+              <h2 className="h2V2">Education History</h2>
             </Reveal>
             <Reveal delayMs={110}>
               <div className="eduRibbon" aria-label="Education highlights">

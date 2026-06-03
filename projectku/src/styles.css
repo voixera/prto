@@ -7411,6 +7411,190 @@ body::after,
   height: 26px !important;
 }
 
+/* Final welcome + hero shine polish */
+html body .welcomeScreen {
+  background:
+    linear-gradient(180deg, rgba(0, 0, 0, 0.78), rgba(5, 8, 10, 0.96)),
+    linear-gradient(115deg, rgba(52, 211, 153, 0.07), transparent 38%, rgba(96, 165, 250, 0.055) 68%, transparent),
+    #050505 !important;
+}
+
+html body .welcomeScreen .welcomeThemeScene::before {
+  inset: clamp(14px, 2vw, 28px) !important;
+  border-radius: 8px !important;
+  border-color: rgba(255, 255, 255, 0.075) !important;
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.028) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(52, 211, 153, 0.026) 1px, transparent 1px) !important;
+  background-size: 44px 44px !important;
+  opacity: 0.58 !important;
+}
+
+html body .welcomeScreen .welcomeThemeScene::after {
+  background:
+    linear-gradient(105deg, transparent 28%, rgba(52, 211, 153, 0.1) 45%, rgba(248, 250, 252, 0.11) 50%, transparent 64%) !important;
+  opacity: 0.32 !important;
+  animation: welcomeWorkspaceScan 6.2s ease-in-out infinite !important;
+}
+
+html body .welcomeScreen .welcomeInner {
+  width: min(760px, calc(100vw - 48px)) !important;
+  gap: clamp(12px, 2vh, 18px) !important;
+}
+
+html body .welcomeScreen .welcomeBootCard {
+  border-radius: 8px !important;
+  border-color: rgba(255, 255, 255, 0.13) !important;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.052), rgba(255, 255, 255, 0.014)),
+    rgba(3, 6, 8, 0.94) !important;
+  box-shadow:
+    0 18px 46px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.052) !important;
+}
+
+html body .welcomeScreen .welcomeBootFile,
+html body .welcomeScreen .welcomeKicker,
+html body .welcomeScreen .welcomeBootCommand {
+  letter-spacing: 0 !important;
+}
+
+html body .welcomeScreen .welcomeKicker {
+  color: rgba(167, 243, 208, 0.78) !important;
+  font: 800 clamp(0.74rem, 1.4vw, 0.88rem)/1.35 ui-monospace, "SFMono-Regular", Consolas, monospace !important;
+}
+
+html body .welcomeScreen .welcomeTitle {
+  max-width: 760px !important;
+}
+
+html body .welcomeScreen .welcomeTitleTop {
+  color: rgba(248, 250, 252, 0.92) !important;
+  font-size: clamp(2.65rem, 6.2vw, 5.2rem) !important;
+  line-height: 0.94 !important;
+}
+
+html body .welcomeScreen .welcomeTitleBottom {
+  color: #a7f3d0 !important;
+  font-size: clamp(3.1rem, 7.5vw, 6.4rem) !important;
+  line-height: 0.9 !important;
+}
+
+html body .welcomeScreen .welcomeLead {
+  max-width: 56ch !important;
+  color: rgba(226, 232, 240, 0.7) !important;
+}
+
+html body .welcomeScreen .welcomeStatus {
+  color: rgba(226, 232, 240, 0.62) !important;
+}
+
+.heroTitle {
+  position: relative;
+  overflow: visible;
+  isolation: isolate;
+}
+
+.heroTitle::after {
+  content: "";
+  position: absolute;
+  left: -14%;
+  top: 0.06em;
+  z-index: 2;
+  width: 56%;
+  height: calc(100% + 0.16em);
+  pointer-events: none;
+  background:
+    linear-gradient(105deg, transparent 18%, rgba(52, 211, 153, 0.08) 42%, rgba(248, 250, 252, 0.26) 50%, rgba(167, 243, 208, 0.12) 58%, transparent 78%);
+  transform: translate3d(-140%, 0, 0) skewX(-16deg);
+  mix-blend-mode: screen;
+  opacity: 0;
+  animation: heroChainRail 4.8s cubic-bezier(0.5, 0, 0.1, 1) infinite;
+}
+
+.heroTitleChain {
+  position: relative !important;
+  display: block !important;
+  width: max-content;
+  max-width: 100%;
+  overflow: visible;
+}
+
+.heroTitleChain::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  background:
+    linear-gradient(100deg, transparent 0%, transparent 34%, rgba(248, 250, 252, 0.96) 46%, rgba(167, 243, 208, 0.98) 51%, rgba(96, 165, 250, 0.62) 58%, transparent 72%, transparent 100%);
+  background-size: 240% 100%;
+  background-position: 150% 50%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  opacity: 0;
+  filter: drop-shadow(0 0 14px rgba(52, 211, 153, 0.22));
+  animation: heroTextChainShine 4.8s cubic-bezier(0.5, 0, 0.1, 1) infinite;
+}
+
+.heroTitleChain--follow::after {
+  animation-delay: 420ms;
+}
+
+@keyframes heroChainRail {
+  0%,
+  16% {
+    opacity: 0;
+    transform: translate3d(-140%, 0, 0) skewX(-16deg);
+  }
+  28% {
+    opacity: 0.8;
+  }
+  52% {
+    opacity: 0.7;
+    transform: translate3d(146%, 0, 0) skewX(-16deg);
+  }
+  64%,
+  100% {
+    opacity: 0;
+    transform: translate3d(166%, 0, 0) skewX(-16deg);
+  }
+}
+
+@keyframes heroTextChainShine {
+  0%,
+  14% {
+    opacity: 0;
+    background-position: 150% 50%;
+  }
+  24% {
+    opacity: 1;
+  }
+  47% {
+    opacity: 0.86;
+    background-position: -70% 50%;
+  }
+  58%,
+  100% {
+    opacity: 0;
+    background-position: -92% 50%;
+  }
+}
+
+@keyframes welcomeWorkspaceScan {
+  0%,
+  100% {
+    opacity: 0.18;
+    transform: translate3d(-28%, 0, 0);
+  }
+  48% {
+    opacity: 0.36;
+    transform: translate3d(18%, 0, 0);
+  }
+}
+
 /* Final typing reset pass: finished text visibly disappears before the next loop. */
 .typeLine {
   overflow: hidden;

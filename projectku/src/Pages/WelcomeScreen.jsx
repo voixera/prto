@@ -520,18 +520,18 @@ export default function WelcomeScreen({ entered = false, onEnter }) {
               <span className="welcomeBootDot" />
               <span className="welcomeBootDot" />
               <span className="welcomeBootDot" />
-              <span className="welcomeBootFile">profile.build</span>
+              <span className="welcomeBootFile">afr.workspace</span>
             </div>
             <div className="welcomeBootBody">
               <div className="welcomeBootCommand">
                 <span className="welcomeBootPrompt">$</span>
-                <span className="welcomeBootPath">afr</span>
-                <span className="welcomeBootText">ship portfolio</span>
+                <span className="welcomeBootPath">~/portfolio</span>
+                <span className="welcomeBootText">open workspace</span>
                 <span className="welcomeBootCursor" />
               </div>
               <div className="welcomeBootSteps">
-                <span>react</span>
-                <span>bots</span>
+                <span>next.js</span>
+                <span>discord</span>
                 <span>lua</span>
               </div>
             </div>
@@ -539,15 +539,15 @@ export default function WelcomeScreen({ entered = false, onEnter }) {
           </div>
         </div>
 
-        <p className="welcomeKicker">Audrey Faisal Riza / source preview</p>
+        <p className="welcomeKicker">Audrey Faisal Riza / workspace preview</p>
 
         <h1 className="welcomeTitle">
-          <span className="welcomeTitleTop">Building</span>
+          <span className="welcomeTitleTop">Opening</span>
           <span className="welcomeTitleBottom welcomeAccent">Faisal.dev</span>
         </h1>
 
         <p className="welcomeLead">
-          A quick boot through web builds, Discord bots, Lua scripts, and the UI experiments behind them.
+          Web builds, Discord bots, Lua scripts, and the experiments that made it past the scratchpad.
         </p>
 
         <div
@@ -558,7 +558,7 @@ export default function WelcomeScreen({ entered = false, onEnter }) {
             <span className="welcomeProgressFill" />
           </div>
           <p className="welcomeStatus muted" aria-live="polite">
-            Bundling projects, syncing stack notes, cueing the soundtrack...
+            Warming the workspace, project notes, and soundtrack...
           </p>
         </div>
       </div>

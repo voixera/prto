@@ -288,8 +288,15 @@ export default function HomeDesktop({ rootClassName = "homeRoot homeRoot--deskto
 
             <Reveal delayMs={60}>
               <h1 className="heroTitle">
-                <span className="heroTitleTop edgyText">Full Stack</span>
-                <span className="heroTitleBottom accentText">Developer</span>
+                <span className="heroTitleTop edgyText heroTitleChain" data-text="Full Stack">
+                  Full Stack
+                </span>
+                <span
+                  className="heroTitleBottom accentText heroTitleChain heroTitleChain--follow"
+                  data-text="Developer"
+                >
+                  Developer
+                </span>
               </h1>
             </Reveal>
 
