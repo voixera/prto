@@ -5,7 +5,7 @@ import AvatarPlaceholder from "../../components/AvatarPlaceholder";
 import AnimatedProfileMeta from "../../components/AnimatedProfileMeta";
 import EducationTimeline from "../../components/EducationTimeline";
 import TypingCodeBlock from "../../components/TypingCodeBlock";
-import { LinkedinIcon, MailIcon as MailIcon2 } from "../../components/Icons";
+import { GithubIcon, LinkedinIcon, MailIcon as MailIcon2 } from "../../components/Icons";
 import { profile } from "../../content/profile";
 
 const ROLE_PHRASES = ["Fullstack Developer", "Web Development", "Roblox Studio Scripting", "Discord Bot Development", "Cybersecurity Beginner"];
@@ -28,6 +28,7 @@ function ArrowUpRightIcon() {
 
 function socialIcon(label) {
   const lower = label.toLowerCase();
+  if (lower.includes("github")) return GithubIcon;
   if (lower.includes("linkedin")) return LinkedinIcon;
   if (lower.includes("email") || lower.includes("mail")) return MailIcon2;
   return null;
@@ -104,10 +105,7 @@ export default function HomeMobile() {
   const aboutText = useMemo(() => profile.about.join(" "), []);
   const aboutBadges = useMemo(() => profile.aboutBadges?.slice(0, 3) ?? [], []);
   const visibleSocials = useMemo(
-    () =>
-      profile.socials
-        .filter((item) => !item.label.toLowerCase().includes("github"))
-        .slice(0, 2),
+    () => profile.socials.slice(0, 3),
     []
   );
 
