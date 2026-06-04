@@ -10182,3 +10182,213 @@ html body .welcomeScreen.welcomeScreenMinimal::after {
 html body .welcomeScreenMinimal .welcomeMinimalTrack {
   background: rgba(255, 255, 255, 0.105) !important;
 }
+
+/* Animated emerald wave background */
+html body {
+  background: #020605 !important;
+}
+
+.animatedWaveBackground {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+  isolation: isolate;
+  background:
+    radial-gradient(900px 620px at 50% 105%, rgba(16, 185, 129, 0.095), transparent 68%),
+    radial-gradient(720px 520px at 86% 18%, rgba(8, 145, 178, 0.08), transparent 70%),
+    linear-gradient(180deg, #020605 0%, #04110d 46%, #010403 100%);
+}
+
+.app {
+  position: relative;
+  z-index: 1;
+  isolation: isolate;
+}
+
+.animatedWaveBackground::before,
+.animatedWaveBackground::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.animatedWaveBackground::before {
+  z-index: 4;
+  background:
+    radial-gradient(circle at 50% 48%, transparent 0 34%, rgba(0, 0, 0, 0.26) 74%, rgba(0, 0, 0, 0.64) 100%),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.16), transparent 28%, rgba(0, 0, 0, 0.46));
+}
+
+.animatedWaveBackground::after {
+  z-index: 1;
+  opacity: 0.22;
+  background-image:
+    linear-gradient(90deg, rgba(20, 184, 166, 0.045) 1px, transparent 1px),
+    linear-gradient(0deg, rgba(255, 255, 255, 0.026) 1px, transparent 1px);
+  background-size: 76px 76px;
+  mask-image: radial-gradient(circle at 50% 50%, #000 0 38%, transparent 78%);
+}
+
+.waveAmbient,
+.waveLayer,
+.waveSheen {
+  position: absolute;
+  display: block;
+  pointer-events: none;
+  will-change: transform, opacity;
+  transform: translate3d(0, 0, 0);
+}
+
+.waveAmbient {
+  z-index: 0;
+  width: 72vw;
+  height: 72vw;
+  min-width: 620px;
+  min-height: 620px;
+  border-radius: 999px;
+  filter: blur(58px);
+  opacity: 0.32;
+  mix-blend-mode: screen;
+}
+
+.waveAmbientA {
+  left: -18vw;
+  top: -24vh;
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.24), transparent 68%);
+  animation: waveAmbientA 34s ease-in-out infinite;
+}
+
+.waveAmbientB {
+  right: -20vw;
+  bottom: -30vh;
+  background: radial-gradient(circle, rgba(8, 145, 178, 0.2), transparent 70%);
+  animation: waveAmbientB 40s ease-in-out infinite;
+}
+
+.waveLayer {
+  z-index: 2;
+  left: -22vw;
+  width: 144vw;
+  height: 48vh;
+  border-radius: 50%;
+  filter: blur(34px);
+  mix-blend-mode: screen;
+}
+
+.waveLayerA {
+  top: 16vh;
+  opacity: 0.3;
+  background:
+    radial-gradient(ellipse at 26% 52%, rgba(16, 185, 129, 0.28), transparent 52%),
+    radial-gradient(ellipse at 72% 48%, rgba(20, 184, 166, 0.2), transparent 56%),
+    linear-gradient(90deg, transparent, rgba(16, 185, 129, 0.13), transparent);
+  animation: waveFlowA 28s ease-in-out infinite;
+}
+
+.waveLayerB {
+  top: 38vh;
+  opacity: 0.24;
+  background:
+    radial-gradient(ellipse at 30% 50%, rgba(6, 95, 70, 0.3), transparent 54%),
+    radial-gradient(ellipse at 78% 54%, rgba(8, 145, 178, 0.2), transparent 58%),
+    linear-gradient(100deg, transparent, rgba(20, 184, 166, 0.12), transparent);
+  animation: waveFlowB 36s ease-in-out infinite;
+}
+
+.waveLayerC {
+  top: 62vh;
+  opacity: 0.18;
+  background:
+    radial-gradient(ellipse at 40% 56%, rgba(167, 243, 208, 0.14), transparent 48%),
+    radial-gradient(ellipse at 70% 42%, rgba(16, 185, 129, 0.18), transparent 60%),
+    linear-gradient(88deg, transparent, rgba(8, 145, 178, 0.11), transparent);
+  animation: waveFlowC 44s ease-in-out infinite;
+}
+
+.waveSheen {
+  z-index: 3;
+  left: -28vw;
+  top: 54vh;
+  width: 156vw;
+  height: 18vh;
+  border-radius: 50%;
+  opacity: 0.14;
+  filter: blur(20px);
+  background: linear-gradient(90deg, transparent, rgba(167, 243, 208, 0.25), transparent);
+  mix-blend-mode: screen;
+  animation: waveSheenFlow 32s ease-in-out infinite;
+}
+
+@keyframes waveAmbientA {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); opacity: 0.26; }
+  50% { transform: translate3d(9vw, 5vh, 0) scale(1.1); opacity: 0.36; }
+}
+
+@keyframes waveAmbientB {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1.04); opacity: 0.22; }
+  50% { transform: translate3d(-8vw, -4vh, 0) scale(1.16); opacity: 0.32; }
+}
+
+@keyframes waveFlowA {
+  0%, 100% { transform: translate3d(-5vw, 1vh, 0) rotate(-7deg) scale(1); }
+  50% { transform: translate3d(7vw, -2vh, 0) rotate(-3deg) scale(1.08); }
+}
+
+@keyframes waveFlowB {
+  0%, 100% { transform: translate3d(6vw, 0, 0) rotate(5deg) scale(1.04); }
+  50% { transform: translate3d(-7vw, 3vh, 0) rotate(1deg) scale(1.12); }
+}
+
+@keyframes waveFlowC {
+  0%, 100% { transform: translate3d(-4vw, 2vh, 0) rotate(-2deg) scale(1.02); }
+  50% { transform: translate3d(5vw, -1vh, 0) rotate(2deg) scale(1.1); }
+}
+
+@keyframes waveSheenFlow {
+  0%, 100% { transform: translate3d(-8vw, 0, 0) rotate(-5deg); opacity: 0.1; }
+  50% { transform: translate3d(8vw, -2vh, 0) rotate(-2deg); opacity: 0.18; }
+}
+
+@media (max-width: 768px) {
+  .animatedWaveBackground {
+    background:
+      radial-gradient(520px 420px at 50% 92%, rgba(16, 185, 129, 0.11), transparent 68%),
+      linear-gradient(180deg, #020605 0%, #04100d 58%, #010403 100%);
+  }
+
+  .animatedWaveBackground::after {
+    background-size: 54px 54px;
+    opacity: 0.16;
+  }
+
+  .waveAmbient {
+    min-width: 420px;
+    min-height: 420px;
+    filter: blur(44px);
+  }
+
+  .waveLayer {
+    width: 160vw;
+    left: -34vw;
+    height: 38vh;
+    filter: blur(28px);
+  }
+
+  .waveLayerC,
+  .waveSheen {
+    opacity: 0.1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .waveAmbient,
+  .waveLayer,
+  .waveSheen {
+    animation: none !important;
+  }
+}
