@@ -1,6 +1,6 @@
-import { useCallback, useEffect, useMemo, useRef } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
-const AUTO_ENTER_DELAY_MS = 4200;
+const LOADING_TICK_MS = 28;
 
 const PALETTES = [
   {
@@ -454,18 +454,11 @@ function applyBackgroundVars(palette = MONOCHROME_THEME) {
   root.dataset.palette = activePalette.id;
 }
 
-function WelcomeThemeScene() {
-  return (
-    <div className="welcomeThemeScene" aria-hidden="true">
-      <div className="welcomeThemeGlow welcomeThemeGlowLeft" />
-      <div className="welcomeThemeGlow welcomeThemeGlowRight" />
-    </div>
-  );
-}
-
 export default function WelcomeScreen({ entered = false, onEnter }) {
   const defaultPalette = useMemo(() => MONOCHROME_THEME, []);
   const didEnterRef = useRef(false);
+  const [progress, setProgress] = useState(1);
+  const loadingComplete = progress >= 100;
 
   useEffect(() => {
     applyBackgroundVars(defaultPalette);
@@ -476,91 +469,88 @@ export default function WelcomeScreen({ entered = false, onEnter }) {
   }, [entered]);
 
   const requestEnter = useCallback(() => {
+    if (!loadingComplete) return;
     if (didEnterRef.current) return;
     didEnterRef.current = true;
     onEnter?.();
-  }, [onEnter]);
+  }, [loadingComplete, onEnter]);
 
   useEffect(() => {
-    if (entered || typeof window === "undefined") return;
+    if (entered || loadingComplete || typeof window === "undefined") return;
 
-    const reduceMotion =
-      window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
-    const timer = window.setTimeout(
-      requestEnter,
-      reduceMotion ? 900 : AUTO_ENTER_DELAY_MS
-    );
+    const timer = window.setInterval(() => {
+      setProgress((current) => Math.min(current + 1, 100));
+    }, LOADING_TICK_MS);
+
+    return () => window.clearInterval(timer);
+  }, [entered, loadingComplete]);
+
+  useEffect(() => {
+    if (entered || !loadingComplete || typeof window === "undefined") return;
 
     const handleKeyDown = (event) => {
-      if (event.key === "Enter" || event.key === " " || event.key === "Escape") {
+      if (event.key === "Enter" || event.key === " ") {
         requestEnter();
       }
     };
 
     window.addEventListener("keydown", handleKeyDown);
     return () => {
-      window.clearTimeout(timer);
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [entered, requestEnter]);
+  }, [entered, loadingComplete, requestEnter]);
 
   return (
     <main
-      className={`welcomeScreen${entered ? " isDismissed" : ""}`}
+      className={`welcomeScreen welcomeScreenMinimal${entered ? " isDismissed" : ""}`}
       aria-label="Welcome"
       aria-hidden={entered}
       inert={entered}
-      onPointerDown={requestEnter}
     >
-      <WelcomeThemeScene />
-      <div className="container welcomeInner">
-        <div className="welcomeLoader" aria-hidden="true">
-          <div className="welcomeBootCard">
-            <div className="welcomeBootTop">
-              <span className="welcomeBootDot" />
-              <span className="welcomeBootDot" />
-              <span className="welcomeBootDot" />
-              <span className="welcomeBootFile">afr.workspace</span>
+      <div className="container welcomeInner welcomeMinimalInner">
+        <div className="welcomeMinimalLoader">
+          <div
+            className="welcomeProgressShell"
+            style={{ "--welcome-progress": `${progress}%` }}
+          >
+            <span className="welcomeProgressCorner welcomeProgressCornerTopLeft" aria-hidden="true" />
+            <span className="welcomeProgressCorner welcomeProgressCornerTopRight" aria-hidden="true" />
+            <span className="welcomeProgressCorner welcomeProgressCornerBottomLeft" aria-hidden="true" />
+            <span className="welcomeProgressCorner welcomeProgressCornerBottomRight" aria-hidden="true" />
+
+            <div className="welcomeProgressNumberWrap">
+              <span className="welcomeProgressNumber">{progress}</span>
+              <span className="welcomeProgressLimit">/100</span>
             </div>
-            <div className="welcomeBootBody">
-              <div className="welcomeBootCommand">
-                <span className="welcomeBootPrompt">$</span>
-                <span className="welcomeBootPath">~/portfolio</span>
-                <span className="welcomeBootText">open workspace</span>
-                <span className="welcomeBootCursor" />
-              </div>
-              <div className="welcomeBootSteps">
-                <span>next.js</span>
-                <span>discord</span>
-                <span>lua</span>
-              </div>
+
+            <div
+              className="welcomeMinimalTrack"
+              role="progressbar"
+              aria-label="Portfolio loading progress"
+              aria-valuemin={1}
+              aria-valuemax={100}
+              aria-valuenow={progress}
+            >
+              <span className="welcomeMinimalFill" />
             </div>
-            <span className="welcomeBootProgress" />
+
+            <div className="welcomeProgressTicks" aria-hidden="true">
+              {Array.from({ length: 12 }, (_, index) => (
+                <span key={index} />
+              ))}
+            </div>
           </div>
         </div>
 
-        <p className="welcomeKicker">Audrey Faisal Riza / workspace preview</p>
-
-        <h1 className="welcomeTitle">
-          <span className="welcomeTitleTop">Opening</span>
-          <span className="welcomeTitleBottom welcomeAccent">Faisal.dev</span>
-        </h1>
-
-        <p className="welcomeLead">
-          Web builds, Discord bots, Lua scripts, and the experiments that made it past the scratchpad.
-        </p>
-
-        <div
-          className="welcomeActions welcomeAuto"
-          style={{ "--welcome-auto-delay": `${AUTO_ENTER_DELAY_MS}ms` }}
-        >
-          <div className="welcomeProgressTrack" aria-hidden="true">
-            <span className="welcomeProgressFill" />
-          </div>
-          <p className="welcomeStatus muted" aria-live="polite">
-            Warming the workspace, project notes, and soundtrack...
-          </p>
-        </div>
+        {loadingComplete && (
+          <button
+            type="button"
+            className="welcomeEnter welcomeEnterMinimal"
+            onClick={requestEnter}
+          >
+            <span>Enter Portfolio</span>
+          </button>
+        )}
       </div>
     </main>
   );
