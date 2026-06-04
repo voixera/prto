@@ -10392,3 +10392,128 @@ html body {
     animation: none !important;
   }
 }
+
+/* Wave motion lock: make the background visibly flow like slow emerald water. */
+.waveAmbient,
+.waveLayer,
+.waveSheen {
+  will-change: transform, opacity, background-position;
+}
+
+.waveLayer {
+  height: 54vh;
+  filter: blur(30px);
+  transform-origin: 50% 50%;
+}
+
+.waveLayerA {
+  top: 10vh;
+  opacity: 0.4;
+  background-size: 150% 100%, 180% 100%, 220% 100%;
+  background-position: 0% 50%, 100% 50%, 0% 50%;
+  animation: waveFlowA 16s ease-in-out infinite !important;
+}
+
+.waveLayerB {
+  top: 34vh;
+  opacity: 0.34;
+  background-size: 170% 100%, 150% 100%, 240% 100%;
+  background-position: 100% 50%, 0% 50%, 100% 50%;
+  animation: waveFlowB 22s ease-in-out infinite !important;
+}
+
+.waveLayerC {
+  top: 58vh;
+  opacity: 0.25;
+  background-size: 180% 100%, 170% 100%, 260% 100%;
+  background-position: 18% 50%, 82% 50%, 0% 50%;
+  animation: waveFlowC 28s ease-in-out infinite !important;
+}
+
+.waveSheen {
+  opacity: 0.2;
+  animation: waveSheenFlow 18s ease-in-out infinite !important;
+}
+
+@keyframes waveFlowA {
+  0% {
+    transform: translate3d(-12vw, 3vh, 0) rotate(-8deg) scale(1.02);
+    background-position: 0% 50%, 100% 50%, 0% 50%;
+  }
+  50% {
+    transform: translate3d(10vw, -4vh, 0) rotate(-2deg) scale(1.12);
+    background-position: 100% 48%, 0% 54%, 80% 50%;
+  }
+  100% {
+    transform: translate3d(-12vw, 3vh, 0) rotate(-8deg) scale(1.02);
+    background-position: 0% 50%, 100% 50%, 0% 50%;
+  }
+}
+
+@keyframes waveFlowB {
+  0% {
+    transform: translate3d(12vw, -1vh, 0) rotate(6deg) scale(1.04);
+    background-position: 100% 50%, 0% 50%, 100% 50%;
+  }
+  50% {
+    transform: translate3d(-11vw, 5vh, 0) rotate(1deg) scale(1.14);
+    background-position: 0% 54%, 100% 46%, 18% 50%;
+  }
+  100% {
+    transform: translate3d(12vw, -1vh, 0) rotate(6deg) scale(1.04);
+    background-position: 100% 50%, 0% 50%, 100% 50%;
+  }
+}
+
+@keyframes waveFlowC {
+  0% {
+    transform: translate3d(-9vw, 4vh, 0) rotate(-3deg) scale(1.02);
+    background-position: 18% 50%, 82% 50%, 0% 50%;
+  }
+  50% {
+    transform: translate3d(9vw, -3vh, 0) rotate(3deg) scale(1.12);
+    background-position: 88% 46%, 12% 56%, 100% 50%;
+  }
+  100% {
+    transform: translate3d(-9vw, 4vh, 0) rotate(-3deg) scale(1.02);
+    background-position: 18% 50%, 82% 50%, 0% 50%;
+  }
+}
+
+@keyframes waveSheenFlow {
+  0% {
+    transform: translate3d(-18vw, 1vh, 0) rotate(-5deg) scaleX(0.92);
+    opacity: 0.12;
+  }
+  50% {
+    transform: translate3d(18vw, -3vh, 0) rotate(-1deg) scaleX(1.06);
+    opacity: 0.24;
+  }
+  100% {
+    transform: translate3d(-18vw, 1vh, 0) rotate(-5deg) scaleX(0.92);
+    opacity: 0.12;
+  }
+}
+
+@media (max-width: 768px) {
+  .waveLayerA {
+    opacity: 0.32;
+  }
+
+  .waveLayerB {
+    opacity: 0.25;
+  }
+
+  .waveLayerC,
+  .waveSheen {
+    opacity: 0.16;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .waveAmbient,
+  .waveLayer,
+  .waveSheen {
+    animation: none !important;
+  }
+}
