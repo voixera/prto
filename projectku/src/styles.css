@@ -10090,3 +10090,56 @@ html body .welcomeScreenMinimal .welcomeEnterMinimal {
     transition: none !important;
   }
 }
+
+/* Final adjustment: smaller number and simple enter button after loading. */
+html body .welcomeScreenMinimal .welcomeMinimalInner {
+  gap: 22px !important;
+}
+
+html body .welcomeScreenMinimal .welcomeProgressNumber {
+  font-size: clamp(2.2rem, 9vw, 3.4rem) !important;
+  font-weight: 760 !important;
+}
+
+html body .welcomeScreenMinimal .welcomeEnterMinimal {
+  display: inline-grid !important;
+  place-items: center !important;
+  width: min(190px, 68vw) !important;
+  min-height: 42px !important;
+  padding: 11px 16px !important;
+  overflow: hidden !important;
+  border: 1px solid rgba(var(--loader-green), 0.34) !important;
+  border-radius: 8px !important;
+  background: rgba(255, 255, 255, 0.055) !important;
+  box-shadow: none !important;
+  color: rgba(248, 250, 252, 0.96) !important;
+  cursor: pointer !important;
+  font-size: 0.88rem !important;
+  font-weight: 780 !important;
+  letter-spacing: 0 !important;
+  line-height: 1 !important;
+  text-shadow: none !important;
+  animation: none !important;
+  transform: none !important;
+}
+
+html body .welcomeScreenMinimal .welcomeEnterMinimal:hover,
+html body .welcomeScreenMinimal .welcomeEnterMinimal:focus-visible {
+  border-color: rgba(var(--loader-green), 0.62) !important;
+  background: rgba(var(--loader-green), 0.095) !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+html body .welcomeScreenMinimal .welcomeEnterMinimal:focus-visible {
+  outline: 2px solid rgba(var(--loader-green), 0.34);
+  outline-offset: 4px;
+}
+
+html body .welcomeScreenMinimal .welcomeEnterMinimal::before,
+html body .welcomeScreenMinimal .welcomeEnterMinimal::after {
+  content: none !important;
+  display: none !important;
+  animation: none !important;
+  opacity: 0 !important;
+}

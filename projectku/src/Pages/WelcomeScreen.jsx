@@ -488,8 +488,6 @@ export default function WelcomeScreen({ entered = false, onEnter }) {
   useEffect(() => {
     if (entered || !loadingComplete || typeof window === "undefined") return;
 
-    const timer = window.setTimeout(requestEnter, 260);
-
     const handleKeyDown = (event) => {
       if (event.key === "Enter" || event.key === " ") {
         requestEnter();
@@ -498,7 +496,6 @@ export default function WelcomeScreen({ entered = false, onEnter }) {
 
     window.addEventListener("keydown", handleKeyDown);
     return () => {
-      window.clearTimeout(timer);
       window.removeEventListener("keydown", handleKeyDown);
     };
   }, [entered, loadingComplete, requestEnter]);
@@ -527,6 +524,16 @@ export default function WelcomeScreen({ entered = false, onEnter }) {
             <span className="welcomeMinimalFill" />
           </div>
         </div>
+
+        {loadingComplete && (
+          <button
+            type="button"
+            className="welcomeEnter welcomeEnterMinimal"
+            onClick={requestEnter}
+          >
+            <span>Enter Portfolio</span>
+          </button>
+        )}
       </div>
     </main>
   );
