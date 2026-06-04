@@ -9982,3 +9982,111 @@ html body .welcomeScreenMinimal .welcomeEnterMinimal::after {
     transition: none !important;
   }
 }
+
+/* Final simple welcome loader: only 1-100 and a small horizontal fill bar. */
+html body .welcomeScreen.welcomeScreenMinimal {
+  --welcome-player-space: 0px;
+  --loader-green: 52, 211, 153;
+  display: grid !important;
+  place-items: center !important;
+  padding: calc(24px + var(--safe-top)) 0 calc(24px + var(--safe-bottom)) !important;
+  overflow: hidden !important;
+  background:
+    radial-gradient(520px 320px at 50% 52%, rgba(var(--loader-green), 0.075), transparent 68%),
+    #050505 !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  text-align: center !important;
+  animation: none !important;
+  filter: none !important;
+  transform: none !important;
+  pointer-events: auto !important;
+}
+
+html body .welcomeScreen.welcomeScreenMinimal::before,
+html body .welcomeScreen.welcomeScreenMinimal::after {
+  content: none !important;
+  display: none !important;
+}
+
+html body .welcomeScreen.welcomeScreenMinimal.isDismissed {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+html body .welcomeScreenMinimal .welcomeMinimalInner {
+  position: relative !important;
+  z-index: 2 !important;
+  width: min(320px, calc(100vw - 40px)) !important;
+  display: grid !important;
+  justify-items: center !important;
+  gap: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  animation: none !important;
+  filter: none !important;
+  transform: none !important;
+}
+
+html body .welcomeScreenMinimal .welcomeMinimalLoader {
+  width: min(220px, 68vw) !important;
+  display: grid !important;
+  justify-items: center !important;
+  gap: 14px !important;
+  padding: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  animation: none !important;
+  filter: none !important;
+  transform: none !important;
+}
+
+html body .welcomeScreenMinimal .welcomeProgressNumber {
+  min-width: 3ch !important;
+  color: rgba(248, 250, 252, 0.96) !important;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+    "Courier New", monospace !important;
+  font-size: clamp(3rem, 13vw, 4.8rem) !important;
+  font-weight: 800 !important;
+  line-height: 0.95 !important;
+  font-variant-numeric: tabular-nums !important;
+  letter-spacing: 0 !important;
+  text-shadow: 0 0 22px rgba(var(--loader-green), 0.18) !important;
+}
+
+html body .welcomeScreenMinimal .welcomeMinimalTrack {
+  position: relative !important;
+  z-index: 1 !important;
+  width: 100% !important;
+  height: 4px !important;
+  margin: 0 !important;
+  overflow: hidden !important;
+  border: 0 !important;
+  border-radius: 999px !important;
+  background: rgba(255, 255, 255, 0.12) !important;
+  box-shadow: none !important;
+}
+
+html body .welcomeScreenMinimal .welcomeMinimalFill {
+  display: block !important;
+  width: var(--welcome-progress) !important;
+  height: 100% !important;
+  border-radius: inherit !important;
+  background: rgba(var(--loader-green), 0.96) !important;
+  box-shadow: 0 0 14px rgba(var(--loader-green), 0.34) !important;
+  transition: width 80ms linear !important;
+}
+
+html body .welcomeScreenMinimal .welcomeEnterMinimal {
+  display: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html body .welcomeScreenMinimal .welcomeMinimalFill {
+    transition: none !important;
+  }
+}

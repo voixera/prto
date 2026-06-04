@@ -488,6 +488,8 @@ export default function WelcomeScreen({ entered = false, onEnter }) {
   useEffect(() => {
     if (entered || !loadingComplete || typeof window === "undefined") return;
 
+    const timer = window.setTimeout(requestEnter, 260);
+
     const handleKeyDown = (event) => {
       if (event.key === "Enter" || event.key === " ") {
         requestEnter();
@@ -496,6 +498,7 @@ export default function WelcomeScreen({ entered = false, onEnter }) {
 
     window.addEventListener("keydown", handleKeyDown);
     return () => {
+      window.clearTimeout(timer);
       window.removeEventListener("keydown", handleKeyDown);
     };
   }, [entered, loadingComplete, requestEnter]);
@@ -508,49 +511,22 @@ export default function WelcomeScreen({ entered = false, onEnter }) {
       inert={entered}
     >
       <div className="container welcomeInner welcomeMinimalInner">
-        <div className="welcomeMinimalLoader">
+        <div
+          className="welcomeMinimalLoader"
+          style={{ "--welcome-progress": `${progress}%` }}
+        >
+          <span className="welcomeProgressNumber">{progress}</span>
           <div
-            className="welcomeProgressShell"
-            style={{ "--welcome-progress": `${progress}%` }}
+            className="welcomeMinimalTrack"
+            role="progressbar"
+            aria-label="Portfolio loading progress"
+            aria-valuemin={1}
+            aria-valuemax={100}
+            aria-valuenow={progress}
           >
-            <span className="welcomeProgressCorner welcomeProgressCornerTopLeft" aria-hidden="true" />
-            <span className="welcomeProgressCorner welcomeProgressCornerTopRight" aria-hidden="true" />
-            <span className="welcomeProgressCorner welcomeProgressCornerBottomLeft" aria-hidden="true" />
-            <span className="welcomeProgressCorner welcomeProgressCornerBottomRight" aria-hidden="true" />
-
-            <div className="welcomeProgressNumberWrap">
-              <span className="welcomeProgressNumber">{progress}</span>
-              <span className="welcomeProgressLimit">/100</span>
-            </div>
-
-            <div
-              className="welcomeMinimalTrack"
-              role="progressbar"
-              aria-label="Portfolio loading progress"
-              aria-valuemin={1}
-              aria-valuemax={100}
-              aria-valuenow={progress}
-            >
-              <span className="welcomeMinimalFill" />
-            </div>
-
-            <div className="welcomeProgressTicks" aria-hidden="true">
-              {Array.from({ length: 12 }, (_, index) => (
-                <span key={index} />
-              ))}
-            </div>
+            <span className="welcomeMinimalFill" />
           </div>
         </div>
-
-        {loadingComplete && (
-          <button
-            type="button"
-            className="welcomeEnter welcomeEnterMinimal"
-            onClick={requestEnter}
-          >
-            <span>Enter Portfolio</span>
-          </button>
-        )}
       </div>
     </main>
   );
