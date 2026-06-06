@@ -10905,3 +10905,69 @@ html body {
     animation: none !important;
   }
 }
+/* Final viewport gap lock */
+html {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: clip !important;
+  scrollbar-gutter: auto !important;
+}
+
+body,
+#root,
+.app,
+.homeRoot {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: clip !important;
+}
+
+.app,
+.animatedWaveBackground,
+.welcomeScreen {
+  width: 100vw !important;
+  max-width: 100vw !important;
+}
+
+.animatedWaveBackground {
+  right: auto !important;
+  contain: layout paint size;
+  overflow: clip !important;
+}
+
+.animatedWaveBackgroundCanvas {
+  inset: -7vh 0 !important;
+  width: 100% !important;
+  height: calc(100% + 14vh) !important;
+  transform: scaleX(1.14);
+  transform-origin: center;
+}
+
+.animatedWaveBackgroundCanvas canvas {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.heroV2,
+.aboutV2,
+.eduV2,
+.showcase,
+.faq,
+.footerV2 {
+  max-width: 100%;
+  overflow-x: clip !important;
+}
+
+.heroDeco,
+.aboutMediaWrap,
+.showcaseBackdrop {
+  contain: paint;
+}
+
+@media (max-width: 768px) {
+  .animatedWaveBackgroundCanvas {
+    inset: -5vh 0 !important;
+    width: 100% !important;
+    transform: scaleX(1.48);
+  }
+}
