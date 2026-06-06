@@ -10,6 +10,50 @@ import { profile } from "../../content/profile";
 
 const ROLE_PHRASES = ["Fullstack Developer", "Web Development", "Roblox Studio Scripting", "Discord Bot Development", "Cybersecurity Beginner"];
 const EDU_DECOR_TAGS = ["Self-Taught", "Web Dev", "Bots", "Scripting"];
+const FAQ_ITEMS = [
+  {
+    question: "What is a Full Stack Developer?",
+    answer: (
+      <>
+        A Full Stack Developer can work across both <b>Frontend</b> (UI/UX,
+        web interfaces) and <b>Backend</b> (servers, APIs, databases).
+        It does not always mean mastering everything, but it does mean
+        understanding the end-to-end flow of an application.
+      </>
+    ),
+  },
+  {
+    question: "What is the difference between Frontend and Backend?",
+    answer: (
+      <>
+        Frontend focuses on the interface and user interactions. Backend
+        focuses on application logic, authentication, data storage, and
+        the APIs used by the frontend.
+      </>
+    ),
+  },
+  {
+    question: "Which technologies are used most often?",
+    answer: (
+      <>
+        Most often: <b>React</b> + <b>Vite</b> / <b>Next.js</b> for frontend,{" "}
+        <b>Tailwind CSS</b> / CSS for styling, and <b>Node.js</b> for backend
+        needs or tooling. For data, the stack usually uses <b>MongoDB</b> / SQL,
+        with <b>Three.js</b> sometimes added for interactive visuals.
+      </>
+    ),
+  },
+  {
+    question: "Can the projects be tried as demos?",
+    answer: (
+      <>
+        Yes. Go to the <b>Projects</b> section, then click <b>Open Web</b> / <b>Open App</b>{" "}
+        on a project card. Example demo:{" "}
+        <code className="inlineCode">helloenglish.vercel.app</code>.
+      </>
+    ),
+  },
+];
 
 function ArrowUpRightIcon() {
   return (
@@ -98,6 +142,59 @@ function RotatingTypeLine({ phrases = ROLE_PHRASES }) {
       <span className="typeText">{typedRole}</span>
       <span className="caret" aria-hidden="true" />
     </p>
+  );
+}
+
+function FaqItem({ question, children, index }) {
+  const [isOpen, setIsOpen] = useState(false);
+  const bodyRef = useRef(null);
+  const [bodyHeight, setBodyHeight] = useState(0);
+  const answerId = `faq-answer-${index}`;
+
+  useEffect(() => {
+    const el = bodyRef.current;
+    if (!el) return;
+
+    const updateHeight = () => {
+      setBodyHeight(el.scrollHeight);
+    };
+
+    updateHeight();
+
+    if (typeof ResizeObserver !== "undefined") {
+      const observer = new ResizeObserver(updateHeight);
+      observer.observe(el);
+      return () => observer.disconnect();
+    }
+
+    window.addEventListener("resize", updateHeight);
+    return () => window.removeEventListener("resize", updateHeight);
+  }, [children, isOpen]);
+
+  return (
+    <article
+      className={`faqItem${isOpen ? " isOpen" : ""}`}
+      style={{
+        "--faq-body-height": `${bodyHeight}px`,
+        "--faq-index": index,
+      }}
+    >
+      <button
+        type="button"
+        className="faqQ"
+        aria-expanded={isOpen}
+        aria-controls={answerId}
+        onClick={() => setIsOpen((value) => !value)}
+      >
+        <span className="faqQText">{question}</span>
+        <span className="faqIcon" aria-hidden="true" />
+      </button>
+      <div className="faqAOuter" id={answerId} aria-hidden={!isOpen}>
+        <div className="faqA muted" ref={bodyRef}>
+          {children}
+        </div>
+      </div>
+    </article>
   );
 }
 
@@ -652,51 +749,13 @@ export default function HomeDesktop({ rootClassName = "homeRoot homeRoot--deskto
           </Reveal>
 
           <div className="faqGrid">
-            <Reveal delayMs={60}>
-              <details className="faqItem">
-                <summary className="faqQ">What is a Full Stack Developer?</summary>
-                <div className="faqA muted">
-                  A Full Stack Developer can work across both <b>Frontend</b> (UI/UX,
-                  web interfaces) and <b>Backend</b> (servers, APIs, databases).
-                  It does not always mean mastering everything, but it does mean
-                  understanding the end-to-end flow of an application.
-                </div>
-              </details>
-            </Reveal>
-
-            <Reveal delayMs={90}>
-              <details className="faqItem">
-                <summary className="faqQ">What is the difference between Frontend and Backend?</summary>
-                <div className="faqA muted">
-                  Frontend focuses on the interface and user interactions. Backend
-                  focuses on application logic, authentication, data storage, and
-                  the APIs used by the frontend.
-                </div>
-              </details>
-            </Reveal>
-
-            <Reveal delayMs={120}>
-              <details className="faqItem">
-                <summary className="faqQ">Which technologies are used most often?</summary>
-                <div className="faqA muted">
-                  Most often: <b>React</b> + <b>Vite</b> / <b>Next.js</b> for frontend,{" "}
-                  <b>Tailwind CSS</b> / CSS for styling, and <b>Node.js</b> for backend
-                  needs or tooling. For data, the stack usually uses <b>MongoDB</b> / SQL,
-                  with <b>Three.js</b> sometimes added for interactive visuals.
-                </div>
-              </details>
-            </Reveal>
-
-            <Reveal delayMs={150}>
-              <details className="faqItem">
-                <summary className="faqQ">Can the projects be tried as demos?</summary>
-                <div className="faqA muted">
-                  Yes. Go to the <b>Projects</b> section, then click <b>Open Web</b> / <b>Open App</b>{" "}
-                  on a project card. Example demo:{" "}
-                  <code className="inlineCode">helloenglish.vercel.app</code>.
-                </div>
-              </details>
-            </Reveal>
+            {FAQ_ITEMS.map((item, index) => (
+              <Reveal key={item.question} delayMs={60 + index * 30}>
+                <FaqItem question={item.question} index={index}>
+                  {item.answer}
+                </FaqItem>
+              </Reveal>
+            ))}
           </div>
         </div>
       </section>
