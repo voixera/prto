@@ -41,9 +41,7 @@ export default function Navbar({ endSlot = null }) {
   useEffect(() => {
     const setScrollbarWidth = () => {
       const raw = Math.max(0, window.innerWidth - document.documentElement.clientWidth);
-      // Opera GX / Chromium overlay scrollbars often report 0px; keep a safe gutter.
-      const sbw = raw === 0 ? 17 : raw;
-      document.documentElement.style.setProperty("--sbw", `${sbw}px`);
+      document.documentElement.style.setProperty("--sbw", `${raw}px`);
     };
 
     setScrollbarWidth();
