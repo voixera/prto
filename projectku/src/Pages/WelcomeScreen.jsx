@@ -505,7 +505,7 @@ export default function WelcomeScreen({ entered = false, onEnter }) {
       className={`welcomeScreen welcomeScreenMinimal${entered ? " isDismissed" : ""}`}
       aria-label="Welcome"
       aria-hidden={entered}
-      inert={entered}
+      inert={entered ? "" : undefined}
     >
       <div className="container welcomeInner welcomeMinimalInner">
         <div
