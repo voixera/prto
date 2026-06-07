@@ -9,7 +9,7 @@ import { getPlatform, useUiVariant } from "./ui/device";
 import MiniAudioPlayer from "./components/MiniAudioPlayer";
 import AnimatedWaveBackground from "./components/AnimatedWaveBackground";
 import { musicTracks } from "./content/music";
-import { ArrowUp, Volume2, VolumeX } from "lucide-react";
+import { ArrowUp, ChevronLeft, ChevronRight, Volume2, VolumeX } from "lucide-react";
 
 function NowPlayingIcon() {
   return (
@@ -42,6 +42,7 @@ export default function App() {
   const [pendingSectionScroll, setPendingSectionScroll] = useState("");
   const [showBackTop, setShowBackTop] = useState(false);
   const [backTopLeaving, setBackTopLeaving] = useState(false);
+  const [floatControlsCollapsed, setFloatControlsCollapsed] = useState(false);
   const [soundMuted, setSoundMuted] = useState(false);
   const [playerSnapshot, setPlayerSnapshot] = useState(null);
   const [nowPlayingToast, setNowPlayingToast] = useState({
@@ -98,6 +99,10 @@ export default function App() {
     if (typeof nextMuted === "boolean") {
       setSoundMuted(nextMuted);
     }
+  }, []);
+
+  const handleFloatControlsToggle = useCallback(() => {
+    setFloatControlsCollapsed((current) => !current);
   }, []);
 
   useEffect(() => {
@@ -296,34 +301,57 @@ export default function App() {
             ) : (
               <Home />
             )}
-            <div className="portfolioFloatControls" aria-label="Portfolio controls">
+            <div
+              className={[
+                "portfolioFloatControls",
+                floatControlsCollapsed ? "isCollapsed" : "",
+              ].join(" ")}
+              aria-label="Portfolio controls"
+            >
+              <div className="portfolioFloatActions" aria-hidden={floatControlsCollapsed}>
+                <button
+                  type="button"
+                  className="portfolioFloatBtn"
+                  onClick={handleSoundToggle}
+                  aria-label={soundMuted ? "Turn sound on" : "Turn sound off"}
+                  title={soundMuted ? "Turn sound on" : "Turn sound off"}
+                  tabIndex={floatControlsCollapsed ? -1 : 0}
+                >
+                  {soundMuted ? (
+                    <VolumeX size={20} strokeWidth={2.25} aria-hidden="true" />
+                  ) : (
+                    <Volume2 size={20} strokeWidth={2.25} aria-hidden="true" />
+                  )}
+                </button>
+                <button
+                  type="button"
+                  className={[
+                    "portfolioFloatBtn",
+                    "portfolioFloatBtnTop",
+                    showBackTop ? "isVisible" : "",
+                    backTopLeaving ? "isLeaving" : "",
+                  ].join(" ")}
+                  onClick={handleBackToTop}
+                  aria-label="Back to top"
+                  title="Back to top"
+                  tabIndex={!floatControlsCollapsed && showBackTop ? 0 : -1}
+                >
+                  <ArrowUp size={20} strokeWidth={2.35} aria-hidden="true" />
+                </button>
+              </div>
               <button
                 type="button"
-                className="portfolioFloatBtn"
-                onClick={handleSoundToggle}
-                aria-label={soundMuted ? "Turn sound on" : "Turn sound off"}
-                title={soundMuted ? "Turn sound on" : "Turn sound off"}
+                className="portfolioFloatBtn portfolioFloatToggle"
+                onClick={handleFloatControlsToggle}
+                aria-label={floatControlsCollapsed ? "Show portfolio controls" : "Hide portfolio controls"}
+                aria-expanded={!floatControlsCollapsed}
+                title={floatControlsCollapsed ? "Show controls" : "Hide controls"}
               >
-                {soundMuted ? (
-                  <VolumeX size={20} strokeWidth={2.25} aria-hidden="true" />
+                {floatControlsCollapsed ? (
+                  <ChevronLeft size={20} strokeWidth={2.45} aria-hidden="true" />
                 ) : (
-                  <Volume2 size={20} strokeWidth={2.25} aria-hidden="true" />
+                  <ChevronRight size={20} strokeWidth={2.45} aria-hidden="true" />
                 )}
-              </button>
-              <button
-                type="button"
-                className={[
-                  "portfolioFloatBtn",
-                  "portfolioFloatBtnTop",
-                  showBackTop ? "isVisible" : "",
-                  backTopLeaving ? "isLeaving" : "",
-                ].join(" ")}
-                onClick={handleBackToTop}
-                aria-label="Back to top"
-                title="Back to top"
-                tabIndex={showBackTop ? 0 : -1}
-              >
-                <ArrowUp size={20} strokeWidth={2.35} aria-hidden="true" />
               </button>
             </div>
             <Footer />

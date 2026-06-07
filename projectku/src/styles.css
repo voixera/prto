@@ -12484,8 +12484,34 @@ html body .welcomeScreenMinimal .welcomeEnterMinimal:focus-visible .welcomeEnter
   bottom: calc(18px + var(--safe-bottom));
   z-index: 120;
   display: grid;
-  gap: 10px;
+  grid-template-columns: auto auto;
+  align-items: end;
+  gap: 8px;
   pointer-events: none;
+}
+
+.portfolioFloatActions {
+  display: grid;
+  gap: 10px;
+  opacity: 1;
+  filter: blur(0) saturate(100%);
+  transform: translate3d(0, 0, 0) scale(1);
+  transform-origin: right bottom;
+  transition:
+    opacity 280ms var(--ease),
+    filter 320ms var(--ease),
+    transform 380ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.portfolioFloatControls.isCollapsed .portfolioFloatActions {
+  opacity: 0;
+  pointer-events: none;
+  filter: blur(8px) saturate(84%);
+  transform: translate3d(58px, 0, 0) scale(0.92);
+  transition:
+    opacity 240ms var(--ease),
+    filter 280ms var(--ease),
+    transform 320ms cubic-bezier(0.55, 0, 0.1, 1);
 }
 
 .portfolioFloatBtn {
@@ -12510,6 +12536,19 @@ html body .welcomeScreenMinimal .welcomeEnterMinimal:focus-visible .welcomeEnter
     background 180ms var(--ease),
     color 180ms var(--ease),
     transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.portfolioFloatToggle {
+  position: relative;
+  z-index: 1;
+}
+
+.portfolioFloatToggle svg {
+  transition: transform 260ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.portfolioFloatControls.isCollapsed .portfolioFloatToggle svg {
+  transform: translate3d(-1px, 0, 0);
 }
 
 .portfolioFloatBtn:hover,
@@ -12615,7 +12654,15 @@ html body .welcomeScreenMinimal .welcomeEnterMinimal:focus-visible .welcomeEnter
   .portfolioFloatControls {
     right: calc(12px + var(--safe-right));
     bottom: calc(12px + var(--safe-bottom));
+    gap: 7px;
+  }
+
+  .portfolioFloatActions {
     gap: 8px;
+  }
+
+  .portfolioFloatControls.isCollapsed .portfolioFloatActions {
+    transform: translate3d(54px, 0, 0) scale(0.92);
   }
 
   .portfolioFloatBtn {
