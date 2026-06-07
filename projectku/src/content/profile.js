@@ -48,7 +48,7 @@ export const profile = {
         "https://discord.com/oauth2/authorize?client_id=1498147101928984606&permissions=8&integration_type=0&scope=bot",
     },
     {
-      name: "Ticket Bot - For Store Server",
+      name: "Ticket Bot",
       category: "Store Ticket System",
       status: "Active Build",
       description:
@@ -63,7 +63,7 @@ export const profile = {
         "https://discord.com/oauth2/authorize?client_id=1477901146868944978&permissions=8&integration_type=0&scope=bot",
     },
     {
-      name: "Discord Server Assistant Bot",
+      name: "Assistant Bot",
       category: "Server Assistant",
       status: "Active Build",
       description:
@@ -76,6 +76,74 @@ export const profile = {
       stack: ["Node.js", "Discord.js", "Event Logs"],
       inviteUrl:
         "https://discord.com/oauth2/authorize?client_id=1486591389759438898&permissions=8&integration_type=0&scope=bot",
+    },
+  ],
+  robloxScripts: [
+    {
+      name: "Interface Helper Script",
+      category: "UI Helper",
+      status: "Preview only",
+      description:
+        "A small Lua pattern for Roblox Studio UI experiments. It keeps button interactions readable and makes simple interface states easier to control.",
+      preview: [
+        "local button = script.Parent",
+        "local panel = button.Parent:WaitForChild(\"Panel\")",
+        "",
+        "button.MouseButton1Click:Connect(function()",
+        "    panel.Visible = not panel.Visible",
+        "    button.Text = panel.Visible and \"Close\" or \"Open\"",
+        "end)",
+      ].join("\n"),
+      features: [
+        "Simple UI toggle behavior",
+        "Readable event-based structure",
+        "Useful for Roblox Studio interface practice",
+      ],
+      stack: ["Lua", "Roblox Studio", "UI"],
+    },
+    {
+      name: "Automation Utility Preview",
+      category: "Utility Pattern",
+      status: "Preview only",
+      description:
+        "A safe utility-style preview for repeated in-game UI updates. It demonstrates how to keep small loops controlled, readable, and easy to adjust.",
+      preview: [
+        "local label = script.Parent:WaitForChild(\"StatusLabel\")",
+        "local count = 0",
+        "",
+        "while task.wait(1) do",
+        "    count += 1",
+        "    label.Text = \"Runtime: \" .. count .. \"s\"",
+        "end",
+      ].join("\n"),
+      features: [
+        "Controlled task loop example",
+        "Live UI status update pattern",
+        "Beginner-friendly Lua structure",
+      ],
+      stack: ["Lua", "Task Loop", "Roblox UI"],
+    },
+    {
+      name: "Module Organizer Script",
+      category: "Code Structure",
+      status: "Preview only",
+      description:
+        "A module-style script preview for keeping Roblox Lua code organized. It is made for learning reusable functions and cleaner project structure.",
+      preview: [
+        "local Helper = {}",
+        "",
+        "function Helper.formatCoins(amount)",
+        "    return tostring(amount) .. \" Coins\"",
+        "end",
+        "",
+        "return Helper",
+      ].join("\n"),
+      features: [
+        "Reusable module pattern",
+        "Cleaner function organization",
+        "Easy to expand for larger Roblox projects",
+      ],
+      stack: ["Lua", "ModuleScript", "Clean Code"],
     },
   ],
   education: [
@@ -178,7 +246,7 @@ export const profile = {
       links: [
         {
           label: "Open Link",
-          href: "https://www.roblox.com/id/games/74993539800955/Veloura-Beach-Club",
+          href: "#/roblox-scripts",
         },
       ],
     },

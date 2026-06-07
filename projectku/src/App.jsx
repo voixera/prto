@@ -3,6 +3,7 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Home from "./Pages/Home";
 import DiscordBots from "./Pages/DiscordBots";
+import RobloxScripts from "./Pages/RobloxScripts";
 import WelcomeScreen from "./Pages/WelcomeScreen";
 import { getPlatform, useUiVariant } from "./ui/device";
 import MiniAudioPlayer from "./components/MiniAudioPlayer";
@@ -26,7 +27,9 @@ function NowPlayingIcon() {
 
 function getAppRoute() {
   if (typeof window === "undefined") return "home";
-  return window.location.hash === "#/discord-bots" ? "discordBots" : "home";
+  if (window.location.hash === "#/discord-bots") return "discordBots";
+  if (window.location.hash === "#/roblox-scripts") return "robloxScripts";
+  return "home";
 }
 
 export default function App() {
@@ -179,7 +182,7 @@ export default function App() {
       const hash = window.location.hash;
       const targetId = hash && !hash.startsWith("#/") ? hash.replace("#", "") : "";
 
-      if (routeRef.current === "discordBots" && nextRoute === "home" && targetId) {
+      if (routeRef.current !== "home" && nextRoute === "home" && targetId) {
         setPendingSectionScroll(targetId);
       } else {
         setPendingSectionScroll("");
@@ -199,7 +202,7 @@ export default function App() {
 
   useEffect(() => {
     if (!entered) return;
-    if (route !== "discordBots") return;
+    if (route === "home") return;
     window.scrollTo({ top: 0, behavior: "auto" });
   }, [entered, route]);
 
@@ -286,7 +289,13 @@ export default function App() {
           <>
             <Navbar />
             <div className="navSpacer" aria-hidden="true" />
-            {route === "discordBots" ? <DiscordBots /> : <Home />}
+            {route === "discordBots" ? (
+              <DiscordBots />
+            ) : route === "robloxScripts" ? (
+              <RobloxScripts />
+            ) : (
+              <Home />
+            )}
             <div className="portfolioFloatControls" aria-label="Portfolio controls">
               <button
                 type="button"
