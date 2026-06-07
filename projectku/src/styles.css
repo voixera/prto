@@ -12480,14 +12480,19 @@ html body .welcomeScreenMinimal .welcomeEnterMinimal:focus-visible .welcomeEnter
 /* Bottom-right portfolio controls: sound + back to top. */
 .portfolioFloatControls {
   position: fixed;
-  right: calc(18px + var(--safe-right));
+  right: var(--safe-right);
   bottom: calc(18px + var(--safe-bottom));
   z-index: 120;
-  display: grid;
-  grid-template-columns: auto auto;
-  align-items: end;
-  gap: 8px;
+  width: 46px;
   pointer-events: none;
+  transform: translate3d(calc(-18px), 0, 0);
+  transition: transform 420ms cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+
+.portfolioFloatControls.isCollapsed {
+  transform: translate3d(46px, 0, 0);
+  transition: transform 360ms cubic-bezier(0.55, 0, 0.1, 1);
 }
 
 .portfolioFloatActions {
@@ -12506,12 +12511,12 @@ html body .welcomeScreenMinimal .welcomeEnterMinimal:focus-visible .welcomeEnter
 .portfolioFloatControls.isCollapsed .portfolioFloatActions {
   opacity: 0;
   pointer-events: none;
-  filter: blur(8px) saturate(84%);
-  transform: translate3d(58px, 0, 0) scale(0.92);
+  filter: blur(6px) saturate(86%);
+  transform: translate3d(10px, 0, 0) scale(0.94);
   transition:
-    opacity 240ms var(--ease),
-    filter 280ms var(--ease),
-    transform 320ms cubic-bezier(0.55, 0, 0.1, 1);
+    opacity 180ms var(--ease),
+    filter 240ms var(--ease),
+    transform 260ms cubic-bezier(0.55, 0, 0.1, 1);
 }
 
 .portfolioFloatBtn {
@@ -12539,8 +12544,18 @@ html body .welcomeScreenMinimal .welcomeEnterMinimal:focus-visible .welcomeEnter
 }
 
 .portfolioFloatToggle {
-  position: relative;
+  position: absolute;
+  right: 100%;
+  bottom: 0;
   z-index: 1;
+  width: 24px;
+  height: 46px;
+  border-right: 0;
+  border-radius: 8px 0 0 8px;
+  padding: 0;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.062), rgba(255, 255, 255, 0.018)),
+    rgba(5, 9, 8, 0.86);
 }
 
 .portfolioFloatToggle svg {
@@ -12564,6 +12579,11 @@ html body .welcomeScreenMinimal .welcomeEnterMinimal:focus-visible .welcomeEnter
 .portfolioFloatBtn:focus-visible {
   outline: 2px solid rgba(52, 211, 153, 0.34);
   outline-offset: 3px;
+}
+
+.portfolioFloatToggle:hover,
+.portfolioFloatToggle:focus-visible {
+  transform: translate3d(0, 0, 0);
 }
 
 .portfolioFloatBtnTop {
@@ -12652,21 +12672,27 @@ html body .welcomeScreenMinimal .welcomeEnterMinimal:focus-visible .welcomeEnter
 
 @media (max-width: 620px) {
   .portfolioFloatControls {
-    right: calc(12px + var(--safe-right));
+    right: var(--safe-right);
     bottom: calc(12px + var(--safe-bottom));
-    gap: 7px;
+    width: 44px;
+    transform: translate3d(-12px, 0, 0);
+  }
+
+  .portfolioFloatControls.isCollapsed {
+    transform: translate3d(44px, 0, 0);
   }
 
   .portfolioFloatActions {
     gap: 8px;
   }
 
-  .portfolioFloatControls.isCollapsed .portfolioFloatActions {
-    transform: translate3d(54px, 0, 0) scale(0.92);
-  }
-
   .portfolioFloatBtn {
     width: 44px;
+    height: 44px;
+  }
+
+  .portfolioFloatToggle {
+    width: 23px;
     height: 44px;
   }
 }
