@@ -58,11 +58,6 @@ export default function DiscordBots() {
             <span>Back to Projects</span>
           </a>
 
-          <div className="discordBotsHeroBadge">
-            <Sparkles size={16} strokeWidth={2.2} aria-hidden="true" />
-            <span>Discord Bot Lab</span>
-          </div>
-
           <h1>Discord bots built for cleaner, calmer communities.</h1>
           <p>
             A small collection of Discord bots I build with Discord.js, focused on server

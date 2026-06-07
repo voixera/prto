@@ -80,49 +80,43 @@ export const profile = {
   ],
   robloxScripts: [
     {
-      name: "Interface Helper Script",
-      category: "UI Helper",
-      status: "Preview only",
+      name: "Car Driving Indonesia",
+      category: "Exploiting",
       description:
-        "A small Lua pattern for Roblox Studio UI experiments. It keeps button interactions readable and makes simple interface states easier to control.",
-      videoSrc: "/roblox-script-videos/interface-helper.mp4",
-      poster: "/RobloxThumb.png",
+        "A safe exploit service provider primarily focused on 3 Games.",
+      videoSrc: "/roblox-script-videos/CDID.mp4",
       features: [
-        "Simple UI toggle behavior",
-        "Readable event-based structure",
-        "Useful for Roblox Studio interface practice",
+        "Autofarm Money",
+        "Buy Limited Car (If Available)",
+        "Clean UI",
       ],
-      stack: ["Lua", "Roblox Studio", "UI"],
+      stack: ["Lua", "Figma", "Luau", "Roblox Studio"],
     },
     {
-      name: "Automation Utility Preview",
-      category: "Utility Pattern",
-      status: "Preview only",
+      name: "Violence Disctrict",
+      category: "Exploiting",
       description:
-        "A safe utility-style preview for repeated in-game UI updates. It demonstrates how to keep small loops controlled, readable, and easy to adjust.",
-      videoSrc: "/roblox-script-videos/automation-utility.mp4",
-      poster: "/RobloxThumb.png",
+        "A safe exploit service provider primarily focused on 3 Games.",
+      videoSrc: "/roblox-script-videos/Violence District.mp4",
       features: [
-        "Controlled task loop example",
-        "Live UI status update pattern",
-        "Beginner-friendly Lua structure",
+        "Toggle Button",
+        "Keybind Feature",
+        "Auto Done Game (ban risk)",
       ],
-      stack: ["Lua", "Task Loop", "Roblox UI"],
+      stack: ["Lua", "Figma", "Luau", "Roblox Studio"],
     },
     {
-      name: "Module Organizer Script",
-      category: "Code Structure",
-      status: "Preview only",
+      name: "Drag Drive Simulator",
+      category: "Exploiting",
       description:
-        "A module-style script preview for keeping Roblox Lua code organized. It is made for learning reusable functions and cleaner project structure.",
-      videoSrc: "/roblox-script-videos/module-organizer.mp4",
-      poster: "/RobloxThumb.png",
+        "A safe exploit service provider primarily focused on 3 Games.",
+      videoSrc: "/roblox-script-videos/DDS.mp4",
       features: [
-        "Reusable module pattern",
-        "Cleaner function organization",
-        "Easy to expand for larger Roblox projects",
+        "Use Wind UI",
+        "Automation Farm Money",
+        "Easy To Use",
       ],
-      stack: ["Lua", "ModuleScript", "Clean Code"],
+      stack: ["Lua", "Figma", "Luau", "Roblox Studio"],
     },
   ],
   education: [
@@ -220,7 +214,7 @@ export const profile = {
       description:
         "Lua scripts for learning and experimentation in Roblox Game. Suitable for beginners interested in Roblox development.",
       tags: ["Lua", "Roblox", "GUI Design"],
-      showcase: ["UI helpers", "Small automation utilities", "Code organization"],
+      showcase: ["UI & Script helpers", "Automation tools coder", "Code organization"],
       thumbnail: "/RobloxThumb.png",
       links: [
         {
