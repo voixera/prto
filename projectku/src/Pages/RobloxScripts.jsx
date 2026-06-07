@@ -1,16 +1,12 @@
-import { ArrowLeft, Code2, Layers3, Terminal } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { profile } from "../content/profile";
 
-const iconMap = [Code2, Terminal, Layers3];
-
-function RobloxScriptCard({ script, index }) {
-  const Icon = iconMap[index % iconMap.length];
-
+function RobloxScriptCard({ script }) {
   return (
     <article className="robloxScriptCard">
       <div className="robloxScriptCardTop">
         <span className="robloxScriptIcon" aria-hidden="true">
-          <Icon size={22} strokeWidth={2.2} />
+          <img src={script.iconSrc} alt="" loading="lazy" decoding="async" />
         </span>
         <div>
           <p className="robloxScriptCategory">{script.category}</p>
@@ -82,8 +78,8 @@ export default function RobloxScripts() {
           </div>
 
           <div className="robloxScriptGrid">
-            {scripts.map((script, index) => (
-              <RobloxScriptCard key={script.name} script={script} index={index} />
+            {scripts.map((script) => (
+              <RobloxScriptCard key={script.name} script={script} />
             ))}
           </div>
         </div>

@@ -84,6 +84,7 @@ export const profile = {
       category: "Exploiting",
       description:
         "A safe exploit service provider primarily focused on 3 Games.",
+      iconSrc: "/roblox-script-icons/cdid.png",
       videoSrc: "/roblox-script-videos/CDID.mp4",
       features: [
         "Autofarm Money",
@@ -97,6 +98,7 @@ export const profile = {
       category: "Exploiting",
       description:
         "A safe exploit service provider primarily focused on 3 Games.",
+      iconSrc: "/roblox-script-icons/violence-district.png",
       videoSrc: "/roblox-script-videos/Violence District.mp4",
       features: [
         "Toggle Button",
@@ -110,6 +112,7 @@ export const profile = {
       category: "Exploiting",
       description:
         "A safe exploit service provider primarily focused on 3 Games.",
+      iconSrc: "/roblox-script-icons/dds.png",
       videoSrc: "/roblox-script-videos/DDS.mp4",
       features: [
         "Use Wind UI",
