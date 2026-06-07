@@ -33,19 +33,19 @@ export const profile = {
   ],
   discordBots: [
     {
-      name: "Server Utility Bot",
-      category: "Utility / Moderation",
+      name: "Bot Bypass V1.0",
+      category: "Discord Automation",
       status: "Active build",
       description:
-        "A lightweight Discord.js bot for everyday server management. It keeps the server organized with practical commands, simple moderation flows, and clear feedback for members.",
+        "A Discord.js automation bot built for controlled server workflows, quick setup, and clear command feedback. It focuses on helping server owners run utility actions with a simple invite-and-use experience.",
       features: [
-        "Basic moderation commands for daily server control",
-        "Quick utility responses for common server actions",
-        "Clean command feedback designed for non-technical users",
+        "Fast server setup through a direct bot invite flow",
+        "Utility-focused commands for everyday server actions",
+        "Readable responses designed for smooth community use",
       ],
       stack: ["Node.js", "Discord.js", "Slash Commands"],
       inviteUrl:
-        "https://discord.com/oauth2/authorize?client_id=000000000000000000&permissions=8&scope=bot%20applications.commands",
+        "https://discord.com/oauth2/authorize?client_id=1498147101928984606&permissions=8&integration_type=0&scope=bot",
     },
     {
       name: "Welcome Flow Bot",
