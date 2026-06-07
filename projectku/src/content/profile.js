@@ -37,45 +37,45 @@ export const profile = {
       category: "Discord Automation",
       status: "Active build",
       description:
-        "A Discord.js automation bot built for controlled server workflows, quick setup, and clear command feedback. It focuses on helping server owners run utility actions with a simple invite-and-use experience.",
+        "A Discord.js bot built for permission-aware server automation and quick admin workflows. It helps server owners run controlled utility actions with simple setup and clear command feedback.",
       features: [
-        "Fast server setup through a direct bot invite flow",
-        "Utility-focused commands for everyday server actions",
-        "Readable responses designed for smooth community use",
+        "Direct invite setup for fast server installation",
+        "Permission-aware commands for controlled server actions",
+        "Clean command responses for easier staff usage",
       ],
       stack: ["Node.js", "Discord.js", "Slash Commands"],
       inviteUrl:
         "https://discord.com/oauth2/authorize?client_id=1498147101928984606&permissions=8&integration_type=0&scope=bot",
     },
     {
-      name: "Welcome Flow Bot",
-      category: "Community Automation",
-      status: "Prototype",
+      name: "Ticket Bot - For Store Server",
+      category: "Store Ticket System",
+      status: "Active Build",
       description:
-        "A Discord bot focused on first impressions. It sends welcome and leave messages, helps new members understand the server, and gives communities a smoother onboarding flow.",
+        "A support ticket bot made for store-focused Discord servers. It helps customers open private support channels, keeps order questions organized, and gives staff a cleaner way to handle requests.",
       features: [
-        "Custom welcome and leave messages",
-        "Server-friendly onboarding copy",
-        "Simple setup for community-focused servers",
+        "Private ticket channels for customer support",
+        "Organized request flow for orders and questions",
+        "Staff-friendly handling for store server support",
       ],
-      stack: ["Node.js", "Discord.js", "Embeds"],
+      stack: ["Node.js", "Discord.js", "Embeds", "Typescript"],
       inviteUrl:
-        "https://discord.com/oauth2/authorize?client_id=000000000000000000&permissions=8&scope=bot%20applications.commands",
+        "https://discord.com/oauth2/authorize?client_id=1477901146868944978&permissions=8&integration_type=0&scope=bot",
     },
     {
-      name: "Log Watcher Bot",
-      category: "Server Logs",
-      status: "Experimental",
+      name: "Discord Server Assistant Bot",
+      category: "Server Assistant",
+      status: "Active Build",
       description:
-        "A small logging bot made to track important server events without overwhelming the staff team. It is built for readable logs, lightweight setup, and fast debugging.",
+        "A general assistant bot for Discord servers, built to help staff manage daily server activity with useful automation, readable feedback, and lightweight utility features.",
       features: [
-        "Readable event logs for staff channels",
-        "Lightweight structure for smaller servers",
-        "Useful visibility for moderation decisions",
+        "Helpful utility commands for everyday server tasks",
+        "Readable feedback for members and staff",
+        "Lightweight automation for smoother community management",
       ],
       stack: ["Node.js", "Discord.js", "Event Logs"],
       inviteUrl:
-        "https://discord.com/oauth2/authorize?client_id=000000000000000000&permissions=8&scope=bot%20applications.commands",
+        "https://discord.com/oauth2/authorize?client_id=1486591389759438898&permissions=8&integration_type=0&scope=bot",
     },
   ],
   education: [
