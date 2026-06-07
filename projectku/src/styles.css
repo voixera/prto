@@ -11042,10 +11042,9 @@ html body .welcomeScreen.welcomeScreenMinimal.isExiting {
 html body .welcomeScreenMinimal .welcomeEnterMinimal {
   opacity: 1 !important;
   transform-origin: center !important;
-  will-change: opacity, transform, filter !important;
-  animation: welcomeEnterButtonIn 680ms cubic-bezier(0.16, 1, 0.3, 1) backwards !important;
+  will-change: opacity, filter !important;
+  animation: welcomeEnterButtonIn 260ms var(--ease) backwards !important;
   transition:
-    transform 220ms cubic-bezier(0.22, 1, 0.36, 1),
     border-color 220ms var(--ease),
     background 220ms var(--ease),
     box-shadow 220ms var(--ease) !important;
@@ -11053,7 +11052,7 @@ html body .welcomeScreenMinimal .welcomeEnterMinimal {
 
 html body .welcomeScreenMinimal .welcomeEnterMinimal:hover,
 html body .welcomeScreenMinimal .welcomeEnterMinimal:focus-visible {
-  transform: translate3d(0, -2px, 0) scale(1.015) !important;
+  transform: translate3d(0, 0, 0) scale(1) !important;
 }
 
 html body .welcomeScreenMinimal .welcomeEnterMinimal:disabled {
@@ -11062,7 +11061,7 @@ html body .welcomeScreenMinimal .welcomeEnterMinimal:disabled {
 }
 
 html body .welcomeScreenMinimal.isExiting .welcomeEnterMinimal {
-  animation: welcomeEnterButtonOut 360ms cubic-bezier(0.55, 0, 0.1, 1) forwards !important;
+  animation: welcomeEnterButtonOut 240ms var(--ease) forwards !important;
 }
 
 html body .welcomeScreenMinimal.isExiting .welcomeMinimalLoader {
@@ -11094,14 +11093,8 @@ html body .welcomeScreenMinimal.isExiting .welcomeMinimalFill {
 @keyframes welcomeEnterButtonIn {
   0% {
     opacity: 0;
-    filter: blur(12px);
-    transform: translate3d(0, 18px, 0) scale(0.92);
-  }
-
-  62% {
-    opacity: 1;
-    filter: blur(0);
-    transform: translate3d(0, -4px, 0) scale(1.035);
+    filter: blur(8px);
+    transform: translate3d(0, 0, 0) scale(1);
   }
 
   100% {
@@ -11114,8 +11107,8 @@ html body .welcomeScreenMinimal.isExiting .welcomeMinimalFill {
 @keyframes welcomeEnterButtonOut {
   to {
     opacity: 0;
-    filter: blur(10px);
-    transform: translate3d(0, -12px, 0) scale(0.94);
+    filter: blur(8px);
+    transform: translate3d(0, 0, 0) scale(1);
   }
 }
 
@@ -12132,8 +12125,7 @@ html body .welcomeScreenMinimal .welcomeEnterMinimal {
   transition:
     border-color 180ms var(--ease),
     background 180ms var(--ease),
-    box-shadow 220ms var(--ease),
-    transform 220ms cubic-bezier(0.22, 1, 0.36, 1) !important;
+    box-shadow 220ms var(--ease) !important;
 }
 
 html body .welcomeScreenMinimal .welcomeEnterMinimal::before {
@@ -12200,8 +12192,7 @@ html body .welcomeScreenMinimal .welcomeEnterIcon {
   color: rgba(var(--loader-green-soft), 0.96) !important;
   transition:
     border-color 180ms var(--ease),
-    background 180ms var(--ease),
-    transform 220ms cubic-bezier(0.22, 1, 0.36, 1) !important;
+    background 180ms var(--ease) !important;
 }
 
 html body .welcomeScreenMinimal .welcomeEnterMinimal:hover .welcomeEnterIcon,
