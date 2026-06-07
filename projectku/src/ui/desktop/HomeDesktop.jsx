@@ -4,6 +4,7 @@ import Showcase from "../../components/Showcase";
 import AvatarPlaceholder from "../../components/AvatarPlaceholder";
 import AnimatedProfileMeta from "../../components/AnimatedProfileMeta";
 import EducationTimeline from "../../components/EducationTimeline";
+import HighlightText from "../../components/HighlightText";
 import TypingCodeBlock from "../../components/TypingCodeBlock";
 import { GithubIcon, LinkedinIcon, MailIcon as MailIcon2 } from "../../components/Icons";
 import { profile } from "../../content/profile";
@@ -206,10 +207,6 @@ export default function HomeDesktop({ rootClassName = "homeRoot homeRoot--deskto
     []
   );
 
-  const aboutDecoRef = useRef(null);
-  const tiltRafRef = useRef(0);
-  const tiltTargetRef = useRef({ x: 0, y: 0 });
-  const tiltCurrentRef = useRef({ x: 0, y: 0 });
   const heroDecoRef = useRef(null);
   const heroTiltRafRef = useRef(0);
   const heroTiltTargetRef = useRef({ x: 0, y: 0 });
@@ -221,61 +218,6 @@ export default function HomeDesktop({ rootClassName = "homeRoot homeRoot--deskto
     const coarse = window.matchMedia?.("(pointer: coarse)").matches ?? false;
     return !reduce && !coarse;
   }, []);
-
-  const setAboutDecoVars = (x, y) => {
-    const el = aboutDecoRef.current;
-    if (!el) return;
-
-    const tiltX = (-y * 7).toFixed(2);
-    const tiltY = (x * 10).toFixed(2);
-    const moveX = (x * 12).toFixed(1);
-    const moveY = (y * 10).toFixed(1);
-
-    el.style.setProperty("--aboutTiltX", `${tiltX}deg`);
-    el.style.setProperty("--aboutTiltY", `${tiltY}deg`);
-    el.style.setProperty("--aboutMoveX", `${moveX}px`);
-    el.style.setProperty("--aboutMoveY", `${moveY}px`);
-  };
-
-  const tickAboutTilt = () => {
-    const current = tiltCurrentRef.current;
-    const target = tiltTargetRef.current;
-
-    current.x += (target.x - current.x) * 0.12;
-    current.y += (target.y - current.y) * 0.12;
-
-    setAboutDecoVars(current.x, current.y);
-
-    const done =
-      Math.abs(target.x - current.x) < 0.0008 && Math.abs(target.y - current.y) < 0.0008;
-
-    if (done) {
-      tiltRafRef.current = 0;
-      return;
-    }
-
-    tiltRafRef.current = requestAnimationFrame(tickAboutTilt);
-  };
-
-  const onAboutPointerMove = (e) => {
-    if (!tiltEnabled) return;
-    const el = aboutDecoRef.current;
-    if (!el) return;
-
-    const rect = el.getBoundingClientRect();
-    const px = (e.clientX - rect.left) / rect.width;
-    const py = (e.clientY - rect.top) / rect.height;
-    const x = Math.max(-1, Math.min(1, px * 2 - 1));
-    const y = Math.max(-1, Math.min(1, py * 2 - 1));
-
-    tiltTargetRef.current = { x, y };
-    if (!tiltRafRef.current) tiltRafRef.current = requestAnimationFrame(tickAboutTilt);
-  };
-
-  const onAboutPointerLeave = () => {
-    tiltTargetRef.current = { x: 0, y: 0 };
-    if (!tiltRafRef.current) tiltRafRef.current = requestAnimationFrame(tickAboutTilt);
-  };
 
   const setHeroDecoVars = (x, y) => {
     const el = heroDecoRef.current;
@@ -339,7 +281,6 @@ export default function HomeDesktop({ rootClassName = "homeRoot homeRoot--deskto
   useEffect(() => {
     return () => {
       if (heroTiltRafRef.current) cancelAnimationFrame(heroTiltRafRef.current);
-      if (tiltRafRef.current) cancelAnimationFrame(tiltRafRef.current);
     };
   }, []);
 
@@ -574,7 +515,9 @@ export default function HomeDesktop({ rootClassName = "homeRoot homeRoot--deskto
 
           <div className="aboutBodyV3">
             <Reveal delayMs={60}>
-              <p className="aboutLead muted">{aboutText}</p>
+              <p className="aboutLead muted">
+                <HighlightText text={aboutText} />
+              </p>
             </Reveal>
 
             {profile.quote ? (
@@ -588,117 +531,9 @@ export default function HomeDesktop({ rootClassName = "homeRoot homeRoot--deskto
               </Reveal>
             ) : null}
 
-            <Reveal delayMs={150}>
-              <div className="aboutCtas">
-                <a className="btn2 btn2Ghost" href="#portfolio">
-                  <span className="btnIcon" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" aria-hidden="true">
-                      <path
-                        d="M9 18 3 12l6-6m6 0 6 6-6 6"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2.6"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
-                  </span>
-                  View Projects
-                </a>
-              </div>
-            </Reveal>
           </div>
             </div>
 
-            <Reveal delayMs={90}>
-              <aside
-                className="aboutMediaWrap"
-                aria-label="Decorative panel"
-                ref={aboutDecoRef}
-                data-tilt={tiltEnabled ? "on" : "off"}
-                onPointerMove={onAboutPointerMove}
-                onPointerLeave={onAboutPointerLeave}
-              >
-                <div className="aboutDecoPanel" aria-hidden="true">
-                  <span className="aboutDecoSpark s1" />
-                  <span className="aboutDecoSpark s2" />
-                  <span className="aboutDecoSpark s3" />
-                  <span className="aboutDecoSpark s4" />
-                  <span className="aboutDecoSpark s5" />
-                  <span className="aboutDecoSpark s6" />
-                  {aboutBadges.map((badge, index) => (
-                    <span
-                      key={badge}
-                      className={`aboutFloatingTag aboutFloatingTag--${index + 1}`}
-                      style={{ "--about-badge-delay": `${index * 160}ms` }}
-                    >
-                      {badge}
-                    </span>
-                  ))}
-
-                  <svg className="aboutDecoOrbits" viewBox="0 0 600 600" fill="none" aria-hidden="true">
-                    <path
-                      d="M90 330c80 90 340 90 420 0"
-                      stroke="currentColor"
-                      strokeWidth="1.2"
-                      strokeLinecap="round"
-                      opacity="0.65"
-                    />
-                    <path
-                      d="M120 250c90-95 270-95 360 0"
-                      stroke="currentColor"
-                      strokeWidth="1.2"
-                      strokeLinecap="round"
-                      opacity="0.55"
-                    />
-                    <circle cx="300" cy="300" r="210" stroke="currentColor" strokeWidth="1.1" opacity="0.18" />
-                    <circle cx="300" cy="300" r="150" stroke="currentColor" strokeWidth="1.1" opacity="0.12" />
-                  </svg>
-
-                  <div className="aboutDecoCrosshair" aria-hidden="true">
-                    <span className="aboutDecoCrosshairH" />
-                    <span className="aboutDecoCrosshairV" />
-                  </div>
-
-                  <div className="aboutDecoDevice">
-                    <div className="aboutDecoDeviceTop">
-                      <span className="aboutDecoDot" />
-                      <span className="aboutDecoDot" />
-                      <span className="aboutDecoDot" />
-                      <span className="aboutDecoPill">BUILD</span>
-                    </div>
-                    <div className="aboutDecoDeviceScreen">
-                      {aboutBadges.length ? (
-                        <div className="aboutDecoBadgeRow">
-                          {aboutBadges.map((badge, index) => (
-                            <span
-                              key={badge}
-                              className="aboutDecoMiniBadge"
-                              style={{ "--about-badge-delay": `${index * 160}ms` }}
-                            >
-                              {badge}
-                            </span>
-                          ))}
-                        </div>
-                      ) : null}
-                      <div className="aboutDecoCodeLine w1" />
-                      <div className="aboutDecoCodeLine w2" />
-                      <div className="aboutDecoCodeLine w3" />
-                      <div className="aboutDecoCodeLine w4" />
-                      <div className="aboutDecoCodeLine w5" />
-                      <div className="aboutDecoCodeLine w6" />
-                      <div className="aboutDecoCursor" />
-                      <span className="aboutDecoScanline" />
-                      <span className="aboutDecoCorner c1" />
-                      <span className="aboutDecoCorner c2" />
-                      <span className="aboutDecoCorner c3" />
-                      <span className="aboutDecoCorner c4" />
-                    </div>
-                    <div className="aboutDecoDeviceBase" />
-                  </div>
-                </div>
-              </aside>
-            </Reveal>
           </div>
         </div>
       </section>

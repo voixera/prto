@@ -441,7 +441,6 @@ function GroupCard({ item, delayMs }) {
 export default function Showcase({
   projects,
   skills,
-  yearsExperience,
 }) {
   const [tab, setTab] = useState("projects");
   const galleryItems = useMemo(() => {
@@ -457,23 +456,6 @@ export default function Showcase({
       }));
   }, [projects]);
 
-  const stats = useMemo(() => {
-    return [
-      {
-        label: "SHIPPED BUILDS",
-        value: projects.length,
-        helper: "Web apps, bots, and scripting experiments",
-        icon: "code",
-      },
-      {
-        label: "YEARS BUILDING",
-        value: yearsExperience,
-        helper: "Learning by shipping real interfaces",
-        icon: "globe",
-      },
-    ];
-  }, [projects.length, yearsExperience]);
-
   return (
     <section id="portfolio" className="showcase">
       <div className="showcaseBackdrop" aria-hidden="true">
@@ -483,12 +465,6 @@ export default function Showcase({
       </div>
 
       <div className="container">
-        <div className="statsRow">
-          {stats.map((s, idx) => (
-            <StatCard key={s.label} stat={s} delayMs={idx * 80} />
-          ))}
-        </div>
-
         <div className="showcaseCenter">
           <Reveal>
             <h2 className="showcaseTitle">

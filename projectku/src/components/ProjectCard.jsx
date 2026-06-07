@@ -8,6 +8,10 @@ function getLinkHost(href) {
   }
 }
 
+function isExternalLink(href) {
+  return /^(https?:|mailto:|tel:)/i.test(href);
+}
+
 export default function ProjectCard({ project, index = 0 }) {
   const rafIdRef = useRef(0);
   const pointerRef = useRef({ x: 0, y: 0 });
@@ -129,22 +133,25 @@ export default function ProjectCard({ project, index = 0 }) {
       </div>
       {project.links && project.links.length ? (
         <div className="cardFooter">
-          {project.links.map((link, index) => (
-            <a
-              key={link.href}
-              className={["pillLink", index === 0 ? "pillLinkPrimary" : ""].join(
-                " "
-              )}
-              href={link.href}
-              target="_blank"
-              rel="noreferrer"
-              aria-label={`${link.label} (buka tab baru)`}
-            >
-              <span className="pillLinkText">{link.label}</span>
-              <span className="pillLinkHost">{getLinkHost(link.href)}</span>
-              <span aria-hidden="true">↗</span>
-            </a>
-          ))}
+          {project.links.map((link, index) => {
+            const external = isExternalLink(link.href);
+
+            return (
+              <a
+                key={link.href}
+                className={["pillLink", index === 0 ? "pillLinkPrimary" : ""].join(
+                  " "
+                )}
+                href={link.href}
+                target={external ? "_blank" : undefined}
+                rel={external ? "noreferrer" : undefined}
+                aria-label={external ? `${link.label} (buka tab baru)` : link.label}
+              >
+                <span className="pillLinkText">{link.label}</span>
+                <span aria-hidden="true">↗</span>
+              </a>
+            );
+          })}
         </div>
       ) : null}
     </article>

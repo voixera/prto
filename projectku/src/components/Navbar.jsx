@@ -13,7 +13,7 @@ const navItems = [
   },
   {
     href: "#portfolio",
-    label: "Portfolio",
+    label: "Projects",
     mobileLabel: "Projects",
     id: "portfolio",
     Icon: Briefcase,
@@ -191,9 +191,12 @@ export default function Navbar({ endSlot = null }) {
   }, [sectionIds]);
 
   return (
-    <header className={["navV2", hidden ? "navV2--hidden" : ""].join(" ")}>
+    <nav
+      className={["navV2", hidden ? "navV2--hidden" : ""].join(" ")}
+      aria-label="Navigasi utama"
+    >
       <div className="container navV2Inner">
-        <nav className="navV2Links" aria-label="Navigasi">
+        <div className="navV2Links">
           {navItems.map((item) => {
             const isActive = active === item.id;
             return (
@@ -210,9 +213,9 @@ export default function Navbar({ endSlot = null }) {
               </a>
             );
           })}
-        </nav>
+        </div>
         {endSlot ? <div className="navV2End">{endSlot}</div> : null}
       </div>
-    </header>
+    </nav>
   );
 }

@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { ArrowRight } from "lucide-react";
 
 const LOADING_TICK_MS = 28;
+const EXIT_ANIMATION_MS = 760;
 
 const PALETTES = [
   {
@@ -457,7 +459,10 @@ function applyBackgroundVars(palette = MONOCHROME_THEME) {
 export default function WelcomeScreen({ entered = false, onEnter }) {
   const defaultPalette = useMemo(() => MONOCHROME_THEME, []);
   const didEnterRef = useRef(false);
+  const exitTimerRef = useRef(0);
   const [progress, setProgress] = useState(1);
+  const [isExiting, setIsExiting] = useState(false);
+  const [isGone, setIsGone] = useState(false);
   const loadingComplete = progress >= 100;
 
   useEffect(() => {
@@ -470,26 +475,38 @@ export default function WelcomeScreen({ entered = false, onEnter }) {
 
   const requestEnter = useCallback(() => {
     if (!loadingComplete) return;
+    if (isExiting) return;
     if (didEnterRef.current) return;
+
     didEnterRef.current = true;
+    setIsExiting(true);
     onEnter?.();
-  }, [loadingComplete, onEnter]);
+
+    if (exitTimerRef.current) {
+      window.clearTimeout(exitTimerRef.current);
+    }
+
+    exitTimerRef.current = window.setTimeout(() => {
+      setIsGone(true);
+    }, EXIT_ANIMATION_MS);
+  }, [isExiting, loadingComplete, onEnter]);
 
   useEffect(() => {
-    if (entered || loadingComplete || typeof window === "undefined") return;
+    if (entered || isExiting || loadingComplete || typeof window === "undefined") return;
 
     const timer = window.setInterval(() => {
       setProgress((current) => Math.min(current + 1, 100));
     }, LOADING_TICK_MS);
 
     return () => window.clearInterval(timer);
-  }, [entered, loadingComplete]);
+  }, [entered, isExiting, loadingComplete]);
 
   useEffect(() => {
-    if (entered || !loadingComplete || typeof window === "undefined") return;
+    if (entered || isExiting || !loadingComplete || typeof window === "undefined") return;
 
     const handleKeyDown = (event) => {
       if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
         requestEnter();
       }
     };
@@ -498,21 +515,35 @@ export default function WelcomeScreen({ entered = false, onEnter }) {
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [entered, loadingComplete, requestEnter]);
+  }, [entered, isExiting, loadingComplete, requestEnter]);
+
+  useEffect(() => {
+    return () => {
+      if (exitTimerRef.current) {
+        window.clearTimeout(exitTimerRef.current);
+      }
+    };
+  }, []);
+
+  if (isGone) return null;
 
   return (
     <main
-      className={`welcomeScreen welcomeScreenMinimal${entered ? " isDismissed" : ""}`}
+      className={[
+        "welcomeScreen",
+        "welcomeScreenMinimal",
+        loadingComplete ? "isReady" : "",
+        isExiting ? "isExiting" : "",
+      ].join(" ")}
       aria-label="Welcome"
-      aria-hidden={entered}
-      inert={entered ? "" : undefined}
+      aria-hidden={isExiting || entered}
+      inert={isExiting || entered ? "" : undefined}
     >
       <div className="container welcomeInner welcomeMinimalInner">
         <div
           className="welcomeMinimalLoader"
           style={{ "--welcome-progress": `${progress}%` }}
         >
-          <span className="welcomeProgressNumber">{progress}</span>
           <div
             className="welcomeMinimalTrack"
             role="progressbar"
@@ -523,6 +554,7 @@ export default function WelcomeScreen({ entered = false, onEnter }) {
           >
             <span className="welcomeMinimalFill" />
           </div>
+          <span className="welcomeProgressNumber">{progress}%</span>
         </div>
 
         {loadingComplete && (
@@ -530,8 +562,12 @@ export default function WelcomeScreen({ entered = false, onEnter }) {
             type="button"
             className="welcomeEnter welcomeEnterMinimal"
             onClick={requestEnter}
+            disabled={isExiting}
           >
-            <span>Enter Portfolio</span>
+            <span className="welcomeEnterCopy">Enter Portfolio</span>
+            <span className="welcomeEnterIcon" aria-hidden="true">
+              <ArrowRight size={17} strokeWidth={2.5} />
+            </span>
           </button>
         )}
       </div>

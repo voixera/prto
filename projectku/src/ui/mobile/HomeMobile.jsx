@@ -4,6 +4,7 @@ import Showcase from "../../components/Showcase";
 import AvatarPlaceholder from "../../components/AvatarPlaceholder";
 import AnimatedProfileMeta from "../../components/AnimatedProfileMeta";
 import EducationTimeline from "../../components/EducationTimeline";
+import HighlightText from "../../components/HighlightText";
 import TypingCodeBlock from "../../components/TypingCodeBlock";
 import { GithubIcon, LinkedinIcon, MailIcon as MailIcon2 } from "../../components/Icons";
 import { profile } from "../../content/profile";
@@ -429,7 +430,9 @@ export default function HomeMobile() {
 
           <div className="aboutBodyV3">
             <Reveal delayMs={60}>
-              <p className="aboutLead muted">{aboutText}</p>
+              <p className="aboutLead muted">
+                <HighlightText text={aboutText} />
+              </p>
             </Reveal>
 
             {profile.quote ? (
@@ -443,25 +446,6 @@ export default function HomeMobile() {
               </Reveal>
             ) : null}
 
-            <Reveal delayMs={150}>
-              <div className="aboutCtas">
-                <a className="btn2 btn2Ghost" href="#portfolio">
-                  <span className="btnIcon" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" aria-hidden="true">
-                      <path
-                        d="M9 18 3 12l6-6m6 0 6 6-6 6"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2.6"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
-                  </span>
-                  View Projects
-                </a>
-              </div>
-            </Reveal>
           </div>
         </div>
       </section>

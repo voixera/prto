@@ -11,14 +11,19 @@ function clampMusicVolume(n) {
 }
 
 const MiniAudioPlayer = forwardRef(function MiniAudioPlayer(
-  { tracks = [], autoPlay = false, onTrackChange },
+  { tracks = [], autoPlay = false, onTrackChange, onPlaybackChange },
   ref
 ) {
   const audioRef = useRef(null);
   const onTrackChangeRef = useRef(onTrackChange);
+  const onPlaybackChangeRef = useRef(onPlaybackChange);
   const attemptedAutoplayRef = useRef(false);
+  const autoPlayRef = useRef(autoPlay);
+  const playingRef = useRef(false);
+  const mutedRef = useRef(false);
   const [index, setIndex] = useState(0);
   const [playing, setPlaying] = useState(false);
+  const [muted, setMuted] = useState(false);
   const [volume, setVolume] = useState(DEFAULT_VOLUME);
 
   const hasTracks = tracks.length > 0;
@@ -27,6 +32,22 @@ const MiniAudioPlayer = forwardRef(function MiniAudioPlayer(
   useEffect(() => {
     onTrackChangeRef.current = onTrackChange;
   }, [onTrackChange]);
+
+  useEffect(() => {
+    onPlaybackChangeRef.current = onPlaybackChange;
+  }, [onPlaybackChange]);
+
+  useEffect(() => {
+    autoPlayRef.current = autoPlay;
+  }, [autoPlay]);
+
+  useEffect(() => {
+    playingRef.current = playing;
+  }, [playing]);
+
+  useEffect(() => {
+    mutedRef.current = muted;
+  }, [muted]);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -39,6 +60,9 @@ const MiniAudioPlayer = forwardRef(function MiniAudioPlayer(
       if (Number.isFinite(saved?.volume)) {
         setVolume(clampMusicVolume(saved.volume));
       }
+      if (typeof saved?.muted === "boolean") {
+        setMuted(saved.muted);
+      }
     } catch {
       // Ignore invalid localStorage data.
     }
@@ -50,20 +74,20 @@ const MiniAudioPlayer = forwardRef(function MiniAudioPlayer(
     try {
       window.localStorage.setItem(
         STORAGE_KEY,
-        JSON.stringify({ index, muted: false, volume: clampMusicVolume(volume) })
+        JSON.stringify({ index, muted, volume: clampMusicVolume(volume) })
       );
     } catch {
       // Ignore storage failures.
     }
-  }, [index, volume]);
+  }, [index, muted, volume]);
 
   useEffect(() => {
     const el = audioRef.current;
     if (!el) return;
 
-    el.muted = false;
+    el.muted = muted;
     el.volume = clampMusicVolume(volume);
-  }, [volume]);
+  }, [muted, volume]);
 
   useEffect(() => {
     const el = audioRef.current;
@@ -71,8 +95,14 @@ const MiniAudioPlayer = forwardRef(function MiniAudioPlayer(
 
     el.src = track.url;
     el.load();
-    if (playing) {
-      el.play().catch(() => setPlaying(false));
+
+    attemptedAutoplayRef.current = false;
+    if (playingRef.current || autoPlayRef.current) {
+      const timer = window.setTimeout(() => {
+        playFromGesture({ mutedFallback: true });
+      }, 0);
+
+      return () => window.clearTimeout(timer);
     }
   }, [track?.url]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -101,7 +131,7 @@ const MiniAudioPlayer = forwardRef(function MiniAudioPlayer(
     const el = audioRef.current;
     if (!el || !track) return false;
 
-    el.muted = false;
+    el.muted = mutedRef.current;
     el.volume = clampMusicVolume(volume);
     const playAttempt = el.play();
 
@@ -117,7 +147,7 @@ const MiniAudioPlayer = forwardRef(function MiniAudioPlayer(
         el.play()
           .then(() => {
             window.setTimeout(() => {
-              el.muted = false;
+              el.muted = mutedRef.current;
               el.volume = clampMusicVolume(volume);
             }, 120);
           })
@@ -128,13 +158,31 @@ const MiniAudioPlayer = forwardRef(function MiniAudioPlayer(
     return true;
   };
 
+  const toggleSound = () => {
+    const nextMuted = !mutedRef.current;
+    const el = audioRef.current;
+
+    mutedRef.current = nextMuted;
+    setMuted(nextMuted);
+
+    if (el) {
+      el.muted = nextMuted;
+      el.volume = clampMusicVolume(volume);
+      if (!nextMuted && track && el.paused) {
+        el.play().catch(() => setPlaying(false));
+      }
+    }
+
+    return nextMuted;
+  };
+
   useEffect(() => {
     if (!autoPlay) return;
-    if (attemptedAutoplayRef.current) return;
+    if (attemptedAutoplayRef.current && !audioRef.current?.paused) return;
     if (!track) return;
 
     attemptedAutoplayRef.current = true;
-    playFromGesture();
+    playFromGesture({ mutedFallback: true });
   }, [autoPlay, track?.url]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
@@ -161,9 +209,19 @@ const MiniAudioPlayer = forwardRef(function MiniAudioPlayer(
     });
   }, [hasTracks, index, track, tracks.length]);
 
+  useEffect(() => {
+    onPlaybackChangeRef.current?.({
+      muted,
+      playing,
+      volume: clampMusicVolume(volume),
+    });
+  }, [muted, playing, volume]);
+
   useImperativeHandle(ref, () => ({
     playFromGesture,
     pause: () => audioRef.current?.pause(),
+    toggleSound,
+    isMuted: () => mutedRef.current,
   }));
 
   return (

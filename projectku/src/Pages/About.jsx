@@ -1,5 +1,6 @@
 import Reveal from "../components/Reveal";
 import AvatarPlaceholder from "../components/AvatarPlaceholder";
+import HighlightText from "../components/HighlightText";
 import { profile } from "../content/profile";
 
 export default function About() {
@@ -14,7 +15,7 @@ export default function About() {
               <div className="aboutText">
                 {profile.about.map((p) => (
                   <p key={p} className="muted">
-                    {p}
+                    <HighlightText text={p} />
                   </p>
                 ))}
               </div>

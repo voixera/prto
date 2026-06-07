@@ -31,6 +31,53 @@ export const profile = {
       ],
     },
   ],
+  discordBots: [
+    {
+      name: "Server Utility Bot",
+      category: "Utility / Moderation",
+      status: "Active build",
+      description:
+        "A lightweight Discord.js bot for everyday server management. It keeps the server organized with practical commands, simple moderation flows, and clear feedback for members.",
+      features: [
+        "Basic moderation commands for daily server control",
+        "Quick utility responses for common server actions",
+        "Clean command feedback designed for non-technical users",
+      ],
+      stack: ["Node.js", "Discord.js", "Slash Commands"],
+      inviteUrl:
+        "https://discord.com/oauth2/authorize?client_id=000000000000000000&permissions=8&scope=bot%20applications.commands",
+    },
+    {
+      name: "Welcome Flow Bot",
+      category: "Community Automation",
+      status: "Prototype",
+      description:
+        "A Discord bot focused on first impressions. It sends welcome and leave messages, helps new members understand the server, and gives communities a smoother onboarding flow.",
+      features: [
+        "Custom welcome and leave messages",
+        "Server-friendly onboarding copy",
+        "Simple setup for community-focused servers",
+      ],
+      stack: ["Node.js", "Discord.js", "Embeds"],
+      inviteUrl:
+        "https://discord.com/oauth2/authorize?client_id=000000000000000000&permissions=8&scope=bot%20applications.commands",
+    },
+    {
+      name: "Log Watcher Bot",
+      category: "Server Logs",
+      status: "Experimental",
+      description:
+        "A small logging bot made to track important server events without overwhelming the staff team. It is built for readable logs, lightweight setup, and fast debugging.",
+      features: [
+        "Readable event logs for staff channels",
+        "Lightweight structure for smaller servers",
+        "Useful visibility for moderation decisions",
+      ],
+      stack: ["Node.js", "Discord.js", "Event Logs"],
+      inviteUrl:
+        "https://discord.com/oauth2/authorize?client_id=000000000000000000&permissions=8&scope=bot%20applications.commands",
+    },
+  ],
   education: [
     {
       period: "2026 - Present",
@@ -64,7 +111,7 @@ export const profile = {
     "Vercel",
   ],
   about: [
-    "I'm a student at Universitas Terbuka (UT) and a developer focused on modern UI, performance, and user experience.",
+    "I'm a Information System student at Universitas Terbuka (UT) and a developer focused on modern UI, performance, and user experience.",
     "I love transforming complex ideas into smooth, user-friendly interfaces.",
     "I'm currently exploring animation, WebGL, and interactive web experiences.",
   ],
@@ -119,7 +166,7 @@ export const profile = {
       tags: ["Node.js", "Discord.js"],
       showcase: ["Moderation commands", "Welcome/leave messages", "Lightweight logs"],
       thumbnail: "/DiscordThumb.png",
-      links: [{ label: "Open Link", href: "https://discord.gg/D6hPJJsG" }],
+      links: [{ label: "Open Link", href: "#/discord-bots" }],
     },
     {
       title: "Roblox Lua Script",

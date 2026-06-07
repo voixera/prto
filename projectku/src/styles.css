@@ -10199,7 +10199,7 @@ html body {
   isolation: isolate;
   background:
     radial-gradient(900px 620px at 50% 105%, rgba(16, 185, 129, 0.095), transparent 68%),
-    radial-gradient(720px 520px at 86% 18%, rgba(8, 145, 178, 0.08), transparent 70%),
+    radial-gradient(720px 520px at 86% 18%, rgba(16, 185, 129, 0.065), transparent 70%),
     linear-gradient(180deg, #020605 0%, #04110d 46%, #010403 100%);
 }
 
@@ -10228,8 +10228,8 @@ html body {
   z-index: 1;
   opacity: 0.22;
   background-image:
-    linear-gradient(90deg, rgba(20, 184, 166, 0.045) 1px, transparent 1px),
-    linear-gradient(0deg, rgba(255, 255, 255, 0.026) 1px, transparent 1px);
+    linear-gradient(90deg, rgba(16, 185, 129, 0.04) 1px, transparent 1px),
+    linear-gradient(0deg, rgba(16, 185, 129, 0.032) 1px, transparent 1px);
   background-size: 76px 76px;
   mask-image: radial-gradient(circle at 50% 50%, #000 0 38%, transparent 78%);
 }
@@ -10266,7 +10266,7 @@ html body {
 .waveAmbientB {
   right: -20vw;
   bottom: -30vh;
-  background: radial-gradient(circle, rgba(8, 145, 178, 0.2), transparent 70%);
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.16), transparent 70%);
   animation: waveAmbientB 40s ease-in-out infinite;
 }
 
@@ -10285,7 +10285,7 @@ html body {
   opacity: 0.3;
   background:
     radial-gradient(ellipse at 26% 52%, rgba(16, 185, 129, 0.28), transparent 52%),
-    radial-gradient(ellipse at 72% 48%, rgba(20, 184, 166, 0.2), transparent 56%),
+    radial-gradient(ellipse at 72% 48%, rgba(16, 185, 129, 0.18), transparent 56%),
     linear-gradient(90deg, transparent, rgba(16, 185, 129, 0.13), transparent);
   animation: waveFlowA 28s ease-in-out infinite;
 }
@@ -10295,8 +10295,8 @@ html body {
   opacity: 0.24;
   background:
     radial-gradient(ellipse at 30% 50%, rgba(6, 95, 70, 0.3), transparent 54%),
-    radial-gradient(ellipse at 78% 54%, rgba(8, 145, 178, 0.2), transparent 58%),
-    linear-gradient(100deg, transparent, rgba(20, 184, 166, 0.12), transparent);
+    radial-gradient(ellipse at 78% 54%, rgba(16, 185, 129, 0.16), transparent 58%),
+    linear-gradient(100deg, transparent, rgba(16, 185, 129, 0.11), transparent);
   animation: waveFlowB 36s ease-in-out infinite;
 }
 
@@ -10306,7 +10306,7 @@ html body {
   background:
     radial-gradient(ellipse at 40% 56%, rgba(167, 243, 208, 0.14), transparent 48%),
     radial-gradient(ellipse at 70% 42%, rgba(16, 185, 129, 0.18), transparent 60%),
-    linear-gradient(88deg, transparent, rgba(8, 145, 178, 0.11), transparent);
+    linear-gradient(88deg, transparent, rgba(16, 185, 129, 0.1), transparent);
   animation: waveFlowC 44s ease-in-out infinite;
 }
 
@@ -10633,8 +10633,8 @@ html body {
   isolation: isolate;
   background:
     radial-gradient(900px 600px at 18% 16%, rgba(52, 211, 153, 0.12), transparent 64%),
-    radial-gradient(760px 540px at 84% 24%, rgba(96, 165, 250, 0.11), transparent 68%),
-    radial-gradient(860px 720px at 50% 106%, rgba(103, 232, 249, 0.08), transparent 68%),
+    radial-gradient(760px 540px at 84% 24%, rgba(52, 211, 153, 0.08), transparent 68%),
+    radial-gradient(860px 720px at 50% 106%, rgba(16, 185, 129, 0.075), transparent 68%),
     linear-gradient(180deg, #020504 0%, #04110d 48%, #010302 100%) !important;
 }
 
@@ -10686,18 +10686,18 @@ html body {
 
 .motionBackdropGlowB {
   background:
-    radial-gradient(500px 360px at 74% 24%, rgba(96, 165, 250, 0.24), transparent 70%),
-    radial-gradient(460px 340px at 46% 76%, rgba(103, 232, 249, 0.18), transparent 72%);
+    radial-gradient(500px 360px at 74% 24%, rgba(52, 211, 153, 0.2), transparent 70%),
+    radial-gradient(460px 340px at 46% 76%, rgba(16, 185, 129, 0.16), transparent 72%);
   animation: motionBackdropGlowB 22s ease-in-out infinite;
 }
 
 .motionBackdropScan {
   z-index: 3;
-  opacity: 0.34;
+  opacity: 0.26;
   background:
-    linear-gradient(90deg, transparent 0 48%, rgba(248, 250, 252, 0.035) 50%, transparent 52% 100%),
-    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.035) 0 1px, transparent 1px 9px),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.04), transparent 22%, transparent 76%, rgba(52, 211, 153, 0.05));
+    linear-gradient(90deg, transparent 0 48%, rgba(52, 211, 153, 0.028) 50%, transparent 52% 100%),
+    repeating-linear-gradient(0deg, rgba(52, 211, 153, 0.03) 0 1px, transparent 1px 9px),
+    linear-gradient(180deg, rgba(52, 211, 153, 0.025), transparent 22%, transparent 76%, rgba(52, 211, 153, 0.05));
   mix-blend-mode: screen;
   animation: motionScanDrift 14s linear infinite;
 }
@@ -10750,7 +10750,7 @@ html body {
   .animatedWaveBackground {
     background:
       radial-gradient(520px 420px at 50% 18%, rgba(52, 211, 153, 0.11), transparent 70%),
-      radial-gradient(460px 360px at 72% 76%, rgba(96, 165, 250, 0.08), transparent 70%),
+      radial-gradient(460px 360px at 72% 76%, rgba(52, 211, 153, 0.065), transparent 70%),
       linear-gradient(180deg, #020504 0%, #04110d 58%, #010302 100%) !important;
   }
 
@@ -11030,4 +11030,1312 @@ body,
   width: 100% !important;
   padding-right: 4px !important;
   overflow: hidden !important;
+}
+
+/* Enter flow polish: button in/out plus first portfolio reveal. */
+html body .welcomeScreen.welcomeScreenMinimal.isExiting {
+  pointer-events: none !important;
+  visibility: visible !important;
+  animation: welcomeStageExit 760ms cubic-bezier(0.76, 0, 0.24, 1) forwards !important;
+}
+
+html body .welcomeScreenMinimal .welcomeEnterMinimal {
+  opacity: 1 !important;
+  transform-origin: center !important;
+  will-change: opacity, transform, filter !important;
+  animation: welcomeEnterButtonIn 680ms cubic-bezier(0.16, 1, 0.3, 1) backwards !important;
+  transition:
+    transform 220ms cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 220ms var(--ease),
+    background 220ms var(--ease),
+    box-shadow 220ms var(--ease) !important;
+}
+
+html body .welcomeScreenMinimal .welcomeEnterMinimal:hover,
+html body .welcomeScreenMinimal .welcomeEnterMinimal:focus-visible {
+  transform: translate3d(0, -2px, 0) scale(1.015) !important;
+}
+
+html body .welcomeScreenMinimal .welcomeEnterMinimal:disabled {
+  cursor: default !important;
+  pointer-events: none !important;
+}
+
+html body .welcomeScreenMinimal.isExiting .welcomeEnterMinimal {
+  animation: welcomeEnterButtonOut 360ms cubic-bezier(0.55, 0, 0.1, 1) forwards !important;
+}
+
+html body .welcomeScreenMinimal.isExiting .welcomeMinimalLoader {
+  animation: welcomeLoaderExit 620ms cubic-bezier(0.55, 0, 0.1, 1) 80ms forwards !important;
+}
+
+html body .welcomeScreenMinimal.isExiting .welcomeMinimalFill {
+  width: 100% !important;
+  transition-duration: 180ms !important;
+}
+
+.app.portfolioEntered .navV2 {
+  animation: portfolioNavEnter 720ms cubic-bezier(0.16, 1, 0.3, 1) 120ms backwards;
+}
+
+.app.portfolioEntered .homeRoot {
+  animation: portfolioPageEnter 900ms cubic-bezier(0.16, 1, 0.3, 1) 120ms backwards;
+  transform-origin: 50% 0%;
+}
+
+.app.portfolioEntered .heroV2Inner {
+  animation: portfolioHeroEnter 960ms cubic-bezier(0.16, 1, 0.3, 1) 220ms backwards;
+}
+
+.app.portfolioEntered .footerV2 {
+  animation: portfolioPageEnter 760ms cubic-bezier(0.16, 1, 0.3, 1) 260ms backwards;
+}
+
+@keyframes welcomeEnterButtonIn {
+  0% {
+    opacity: 0;
+    filter: blur(12px);
+    transform: translate3d(0, 18px, 0) scale(0.92);
+  }
+
+  62% {
+    opacity: 1;
+    filter: blur(0);
+    transform: translate3d(0, -4px, 0) scale(1.035);
+  }
+
+  100% {
+    opacity: 1;
+    filter: blur(0);
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+@keyframes welcomeEnterButtonOut {
+  to {
+    opacity: 0;
+    filter: blur(10px);
+    transform: translate3d(0, -12px, 0) scale(0.94);
+  }
+}
+
+@keyframes welcomeLoaderExit {
+  to {
+    opacity: 0;
+    filter: blur(14px);
+    transform: translate3d(0, -20px, 0) scale(0.96);
+  }
+}
+
+@keyframes welcomeStageExit {
+  0% {
+    opacity: 1;
+    filter: blur(0);
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+
+  48% {
+    opacity: 1;
+    filter: blur(0);
+    transform: translate3d(0, 0, 0) scale(1.012);
+  }
+
+  100% {
+    opacity: 0;
+    filter: blur(18px);
+    transform: translate3d(0, -18px, 0) scale(1.035);
+  }
+}
+
+@keyframes portfolioNavEnter {
+  from {
+    opacity: 0;
+    filter: blur(12px);
+    transform: translate3d(0, -24px, 0) scale(0.985);
+  }
+
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+@keyframes portfolioPageEnter {
+  from {
+    opacity: 0;
+    filter: blur(16px);
+    transform: translate3d(0, 30px, 0) scale(1.018);
+  }
+
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+@keyframes portfolioHeroEnter {
+  from {
+    opacity: 0;
+    filter: blur(10px);
+    transform: translate3d(0, 34px, 0) scale(0.985);
+  }
+
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html body .welcomeScreen.welcomeScreenMinimal.isExiting,
+  html body .welcomeScreenMinimal .welcomeEnterMinimal,
+  html body .welcomeScreenMinimal.isExiting .welcomeMinimalLoader,
+  .app.portfolioEntered .navV2,
+  .app.portfolioEntered .homeRoot,
+  .app.portfolioEntered .heroV2Inner,
+  .app.portfolioEntered .footerV2 {
+    animation: none !important;
+    transition: none !important;
+    filter: none !important;
+    transform: none !important;
+  }
+
+  html body .welcomeScreen.welcomeScreenMinimal.isExiting {
+    opacity: 0 !important;
+    visibility: hidden !important;
+  }
+}
+
+/* Navbar-only lock: compact floating nav instead of a full-width header bar. */
+html body .navV2,
+html body .uiTablet .navV2,
+html body .uiMobile .navV2 {
+  top: calc(14px + var(--safe-top)) !important;
+  left: 50% !important;
+  right: auto !important;
+  bottom: auto !important;
+  width: min(720px, calc(100vw - 32px)) !important;
+  max-width: 720px !important;
+  padding: 0 !important;
+  overflow: visible !important;
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  transform: translate3d(-50%, 0, 0);
+}
+
+html body .navV2.navV2--hidden,
+html body .uiTablet .navV2.navV2--hidden,
+html body .uiMobile .navV2.navV2--hidden {
+  opacity: 0 !important;
+  filter: blur(10px) saturate(86%) !important;
+  pointer-events: none !important;
+  transform: translate3d(-50%, -22px, 0) scale(0.98);
+}
+
+html body .navV2::before,
+html body .uiTablet .navV2::before,
+html body .uiMobile .navV2::before {
+  content: "" !important;
+  display: block !important;
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  border-radius: 999px !important;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.078), rgba(255, 255, 255, 0.03)),
+    rgba(5, 9, 8, 0.78) !important;
+  box-shadow:
+    0 18px 46px rgba(0, 0, 0, 0.38),
+    inset 0 1px 0 rgba(255, 255, 255, 0.07) !important;
+  backdrop-filter: blur(18px) saturate(145%) !important;
+  -webkit-backdrop-filter: blur(18px) saturate(145%) !important;
+  pointer-events: none !important;
+}
+
+html body .navV2Inner,
+html body .uiTablet .navV2Inner,
+html body .uiMobile .navV2Inner {
+  width: 100% !important;
+  max-width: 100% !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+  padding: 5px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+html body .navV2Inner::before,
+html body .uiTablet .navV2Inner::before,
+html body .uiMobile .navV2Inner::before {
+  content: none !important;
+  display: none !important;
+}
+
+html body .navV2Links,
+html body .uiTablet .navV2Links,
+html body .uiMobile .navV2Links {
+  width: 100% !important;
+  max-width: 100% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 4px !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 999px !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  overflow: visible !important;
+}
+
+html body .navV2Link,
+html body .uiTablet .navV2Link,
+html body .uiMobile .navV2Link {
+  flex: 1 1 0 !important;
+  min-width: 0 !important;
+  min-height: 42px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex-direction: row !important;
+  gap: 7px !important;
+  padding: 0 14px !important;
+  border: 1px solid transparent !important;
+  border-radius: 999px !important;
+  background: transparent !important;
+  color: rgba(244, 244, 245, 0.64) !important;
+  font-size: 0.82rem !important;
+  font-weight: 780 !important;
+  line-height: 1 !important;
+  letter-spacing: 0 !important;
+  text-decoration: none !important;
+  white-space: nowrap !important;
+  transition:
+    color 180ms var(--ease),
+    background 200ms var(--ease),
+    border-color 200ms var(--ease),
+    transform 220ms cubic-bezier(0.22, 1, 0.36, 1) !important;
+}
+
+html body .navV2Link:hover,
+html body .navV2Link.isActive,
+html body .uiTablet .navV2Link:hover,
+html body .uiTablet .navV2Link.isActive,
+html body .uiMobile .navV2Link:hover,
+html body .uiMobile .navV2Link.isActive {
+  border-color: rgba(52, 211, 153, 0.24) !important;
+  background:
+    linear-gradient(180deg, rgba(52, 211, 153, 0.16), rgba(52, 211, 153, 0.055)),
+    rgba(255, 255, 255, 0.045) !important;
+  color: rgba(255, 255, 255, 0.96) !important;
+  transform: translate3d(0, -1px, 0) !important;
+}
+
+html body .navV2Link::after,
+html body .navV2Link.isActive::after,
+html body .navV2Link:focus-visible::after,
+html body .uiTablet .navV2Link::after,
+html body .uiTablet .navV2Link.isActive::after,
+html body .uiTablet .navV2Link:focus-visible::after,
+html body .uiMobile .navV2Link::after,
+html body .uiMobile .navV2Link.isActive::after,
+html body .uiMobile .navV2Link:focus-visible::after {
+  content: none !important;
+  display: none !important;
+}
+
+html body .navV2Icon,
+html body .uiTablet .navV2Icon,
+html body .uiMobile .navV2Icon {
+  display: block !important;
+  width: 16px !important;
+  height: 16px !important;
+  flex: 0 0 16px !important;
+}
+
+html body .navV2Text,
+html body .uiTablet .navV2Text,
+html body .uiMobile .navV2Text {
+  display: inline !important;
+}
+
+html body .navV2MobileText,
+html body .uiTablet .navV2MobileText,
+html body .uiMobile .navV2MobileText {
+  display: none !important;
+}
+
+html body .navSpacer,
+html body .uiTablet .navSpacer,
+html body .uiMobile .navSpacer {
+  height: calc(74px + var(--safe-top)) !important;
+}
+
+@keyframes portfolioNavEnter {
+  from {
+    opacity: 0;
+    filter: blur(12px);
+    transform: translate3d(-50%, -24px, 0) scale(0.985);
+  }
+
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: translate3d(-50%, 0, 0) scale(1);
+  }
+}
+
+@media (max-width: 620px) {
+  html body .navV2,
+  html body .uiTablet .navV2,
+  html body .uiMobile .navV2 {
+    top: calc(10px + var(--safe-top)) !important;
+    width: min(440px, calc(100vw - 20px)) !important;
+    max-width: calc(100vw - 20px) !important;
+  }
+
+  html body .navV2Inner,
+  html body .uiTablet .navV2Inner,
+  html body .uiMobile .navV2Inner {
+    padding: 4px !important;
+  }
+
+  html body .navV2Links,
+  html body .uiTablet .navV2Links,
+  html body .uiMobile .navV2Links {
+    gap: 3px !important;
+  }
+
+  html body .navV2Link,
+  html body .uiTablet .navV2Link,
+  html body .uiMobile .navV2Link {
+    min-height: 42px !important;
+    flex-direction: column !important;
+    gap: 3px !important;
+    padding: 5px 2px !important;
+    font-size: 0.62rem !important;
+    font-weight: 800 !important;
+  }
+
+  html body .navV2Icon,
+  html body .uiTablet .navV2Icon,
+  html body .uiMobile .navV2Icon {
+    width: 16px !important;
+    height: 16px !important;
+    flex-basis: 16px !important;
+  }
+
+  html body .navV2Text,
+  html body .uiTablet .navV2Text,
+  html body .uiMobile .navV2Text {
+    display: none !important;
+  }
+
+  html body .navV2MobileText,
+  html body .uiTablet .navV2MobileText,
+  html body .uiMobile .navV2MobileText {
+    display: block !important;
+    max-width: 100% !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+  }
+
+  html body .navSpacer,
+  html body .uiTablet .navSpacer,
+  html body .uiMobile .navSpacer {
+    height: calc(66px + var(--safe-top)) !important;
+  }
+}
+
+/* About profile layout: remove decorative panel space and align the profile block to the right. */
+html body .homeRoot--desktop .aboutDesktopGrid {
+  grid-template-columns: minmax(0, 820px) !important;
+  justify-content: end !important;
+  gap: 0 !important;
+}
+
+html body .homeRoot--desktop .aboutDesktopMain {
+  width: min(820px, 100%) !important;
+  margin-left: auto !important;
+}
+
+html body .homeRoot--desktop .aboutHeaderMain {
+  display: grid !important;
+  justify-items: end !important;
+  gap: 18px !important;
+  width: 100% !important;
+}
+
+html body .homeRoot--desktop .aboutHeaderTop {
+  width: 100% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  gap: clamp(16px, 2.6vw, 24px) !important;
+  text-align: left !important;
+}
+
+html body .homeRoot--desktop .aboutHeaderInfo {
+  min-width: 0 !important;
+  max-width: 610px !important;
+  text-align: left !important;
+}
+
+html body .homeRoot--desktop .aboutHeaderName,
+html body .homeRoot--desktop .aboutHeaderMeta,
+html body .homeRoot--desktop .aboutHeaderLocation {
+  text-align: left !important;
+}
+
+html body .homeRoot--desktop .aboutHeaderLocation {
+  justify-content: flex-start !important;
+}
+
+html body .homeRoot--desktop .aboutHeaderActions,
+html body .homeRoot--desktop .aboutHeaderIcons {
+  width: 100% !important;
+  justify-content: flex-end !important;
+}
+
+html body .homeRoot--desktop .aboutBodyV3 {
+  width: min(820px, 100%) !important;
+  margin-left: auto !important;
+}
+
+html body .homeRoot--desktop .aboutLead,
+html body .homeRoot--desktop .aboutQuote {
+  width: 100% !important;
+  margin-left: auto !important;
+}
+
+html body .homeRoot--desktop .aboutCtas {
+  justify-content: flex-end !important;
+}
+
+@media (max-width: 720px) {
+  html body .homeRoot--desktop .aboutDesktopGrid,
+  html body .homeRoot--desktop .aboutDesktopMain,
+  html body .homeRoot--desktop .aboutBodyV3 {
+    width: 100% !important;
+  }
+
+  html body .homeRoot--desktop .aboutHeaderTop {
+    justify-content: flex-start !important;
+  }
+
+  html body .homeRoot--desktop .aboutHeaderActions,
+  html body .homeRoot--desktop .aboutHeaderIcons,
+  html body .homeRoot--desktop .aboutCtas {
+    justify-content: flex-start !important;
+  }
+}
+
+/* About split layout: profile on the left, text content on the right. */
+@media (min-width: 901px) {
+  html body .homeRoot--desktop .aboutDesktopGrid {
+    grid-template-columns: minmax(0, 1160px) !important;
+    justify-content: end !important;
+  }
+
+  html body .homeRoot--desktop .aboutDesktopMain {
+    width: min(1160px, 100%) !important;
+    margin-left: auto !important;
+    display: grid !important;
+    grid-template-columns: minmax(300px, 0.82fr) minmax(420px, 1fr) !important;
+    align-items: start !important;
+    column-gap: clamp(34px, 5vw, 72px) !important;
+  }
+
+  html body .homeRoot--desktop .aboutHeaderCard {
+    width: 100% !important;
+  }
+
+  html body .homeRoot--desktop .aboutHeaderMain {
+    justify-items: start !important;
+  }
+
+  html body .homeRoot--desktop .aboutHeaderTop {
+    justify-content: flex-start !important;
+    align-items: center !important;
+    width: 100% !important;
+  }
+
+  html body .homeRoot--desktop .aboutHeaderInfo {
+    max-width: none !important;
+  }
+
+  html body .homeRoot--desktop .aboutHeaderActions,
+  html body .homeRoot--desktop .aboutHeaderIcons {
+    justify-content: flex-start !important;
+  }
+
+  html body .homeRoot--desktop .aboutBodyV3 {
+    width: 100% !important;
+    margin: 0 !important;
+    align-self: start !important;
+    padding-top: clamp(24px, 5vw, 58px) !important;
+  }
+
+  html body .homeRoot--desktop .aboutLead,
+  html body .homeRoot--desktop .aboutQuote {
+    width: 100% !important;
+    margin-left: 0 !important;
+  }
+
+  html body .homeRoot--desktop .aboutCtas {
+    justify-content: flex-end !important;
+  }
+}
+
+/* Background grid color lock: keep horizontal lines emerald like the rest. */
+html body .animatedWaveBackground::after {
+  background-image:
+    linear-gradient(90deg, rgba(20, 184, 166, 0.045) 1px, transparent 1px),
+    linear-gradient(0deg, rgba(20, 184, 166, 0.034) 1px, transparent 1px) !important;
+}
+
+/* Hero/About divider lock: keep a single horizontal line. */
+html body .heroV2::after {
+  content: "" !important;
+  display: block !important;
+  left: 0 !important;
+  right: 0 !important;
+  width: 100% !important;
+  background: linear-gradient(
+    90deg,
+    rgba(52, 211, 153, 0.28),
+    rgba(6, 95, 70, 0.16),
+    transparent
+  ) !important;
+}
+
+html body .aboutV2 {
+  border-top: 0 !important;
+}
+
+html body .eduV2,
+html body .showcase,
+html body .faq {
+  border-top-color: rgba(6, 95, 70, 0.22) !important;
+}
+
+/* About centered stack: profile above, text content below. */
+html body .homeRoot--desktop .aboutDesktopGrid {
+  grid-template-columns: minmax(0, 820px) !important;
+  justify-content: center !important;
+  gap: 0 !important;
+}
+
+html body .homeRoot--desktop .aboutDesktopMain {
+  width: min(820px, 100%) !important;
+  margin: 0 auto !important;
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) !important;
+  row-gap: clamp(22px, 4vw, 34px) !important;
+  justify-items: center !important;
+  text-align: center !important;
+}
+
+html body .homeRoot--desktop .aboutHeaderCard,
+html body .homeRoot--desktop .aboutBodyV3 {
+  width: min(760px, 100%) !important;
+  margin: 0 auto !important;
+}
+
+html body .homeRoot--desktop .aboutHeaderMain {
+  width: 100% !important;
+  display: grid !important;
+  justify-items: center !important;
+  gap: 18px !important;
+}
+
+html body .homeRoot--desktop .aboutHeaderTop {
+  width: 100% !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 14px !important;
+  text-align: center !important;
+}
+
+html body .homeRoot--desktop .aboutHeaderInfo {
+  max-width: 720px !important;
+  text-align: center !important;
+}
+
+html body .homeRoot--desktop .aboutHeaderName,
+html body .homeRoot--desktop .aboutHeaderMeta,
+html body .homeRoot--desktop .aboutHeaderLocation {
+  text-align: center !important;
+}
+
+html body .homeRoot--desktop .aboutHeaderMeta,
+html body .homeRoot--desktop .aboutHeaderLocation,
+html body .homeRoot--desktop .aboutHeaderBadges,
+html body .homeRoot--desktop .aboutHeaderActions,
+html body .homeRoot--desktop .aboutHeaderIcons,
+html body .homeRoot--desktop .aboutCtas {
+  justify-content: center !important;
+}
+
+html body .homeRoot--desktop .aboutBodyV3 {
+  width: min(980px, calc(100vw - 48px)) !important;
+  padding-top: 0 !important;
+  transform: translateX(clamp(-84px, -8vw, -48px)) !important;
+}
+
+html body .homeRoot--desktop .aboutLead {
+  width: min(720px, 100%) !important;
+  margin: 0 auto !important;
+  text-align: center !important;
+}
+
+html body .homeRoot--desktop .aboutLead::before {
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+}
+
+html body .homeRoot--desktop .aboutQuote {
+  width: min(760px, calc(100vw - 48px)) !important;
+  max-width: min(760px, calc(100vw - 48px)) !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  grid-template-columns: none !important;
+  gap: 0 !important;
+  padding-left: clamp(18px, 3vw, 28px) !important;
+  padding-right: clamp(18px, 3vw, 28px) !important;
+  text-align: center !important;
+}
+
+html body .homeRoot--desktop .aboutQuoteMark {
+  display: none !important;
+}
+
+html body .homeRoot--desktop .aboutQuoteText {
+  display: inline-block !important;
+  width: auto !important;
+  max-width: 100% !important;
+  margin: 0 auto !important;
+  white-space: nowrap !important;
+  text-align: center !important;
+}
+
+@media (max-width: 720px) {
+  html body .homeRoot--desktop .aboutBodyV3 {
+    transform: none !important;
+  }
+
+  html body .homeRoot--desktop .aboutQuoteText {
+    white-space: normal !important;
+  }
+}
+
+/* Discord bot catalog page */
+.discordBotsPage {
+  min-height: calc(100svh - 72px);
+  padding-bottom: clamp(76px, 10vw, 128px);
+  color: rgba(250, 250, 250, 0.92);
+}
+
+.discordBotsHero {
+  padding: clamp(70px, 9vw, 112px) 0 clamp(34px, 6vw, 62px);
+}
+
+.discordBotsHeroInner {
+  max-width: 920px;
+  display: grid;
+  justify-items: center;
+  gap: 18px;
+  text-align: center;
+}
+
+.discordBotsBack {
+  justify-self: start;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 40px;
+  padding: 0 14px;
+  border: 1px solid rgba(255, 255, 255, 0.11);
+  border-radius: 999px;
+  background: rgba(5, 9, 8, 0.58);
+  color: rgba(244, 244, 245, 0.78);
+  font-size: 0.84rem;
+  font-weight: 800;
+  text-decoration: none;
+  transition:
+    color 180ms var(--ease),
+    border-color 180ms var(--ease),
+    background 180ms var(--ease),
+    transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.discordBotsBack:hover,
+.discordBotsBack:focus-visible {
+  border-color: rgba(52, 211, 153, 0.36);
+  background: rgba(52, 211, 153, 0.1);
+  color: #ffffff;
+  transform: translate3d(-2px, 0, 0);
+}
+
+.discordBotsHeroBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 34px;
+  padding: 0 13px;
+  border: 1px solid rgba(52, 211, 153, 0.24);
+  border-radius: 999px;
+  background: rgba(52, 211, 153, 0.08);
+  color: rgba(167, 243, 208, 0.94);
+  font-size: 0.78rem;
+  font-weight: 850;
+  text-transform: uppercase;
+}
+
+.discordBotsHero h1 {
+  max-width: 840px;
+  margin: 0;
+  font-size: clamp(2.45rem, 6vw, 5.6rem);
+  line-height: 0.96;
+  letter-spacing: 0;
+}
+
+.discordBotsHero p {
+  max-width: 720px;
+  margin: 0;
+  color: rgba(244, 244, 245, 0.72);
+  font-size: clamp(1rem, 1.65vw, 1.18rem);
+  line-height: 1.72;
+}
+
+.discordBotsCatalog {
+  padding: clamp(28px, 5vw, 52px) 0 0;
+}
+
+.discordBotsCatalogHead {
+  max-width: 760px;
+  margin: 0 auto clamp(24px, 4vw, 36px);
+  text-align: center;
+}
+
+.discordBotsCatalogHead h2 {
+  margin: 8px 0 0;
+  font-size: clamp(1.75rem, 3vw, 2.7rem);
+  line-height: 1.05;
+}
+
+.discordBotGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.discordBotCard {
+  position: relative;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 18px;
+  padding: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.078), rgba(255, 255, 255, 0.025) 56%),
+    radial-gradient(100% 120% at 10% 0%, rgba(52, 211, 153, 0.11), transparent 52%),
+    rgba(4, 10, 8, 0.74);
+  box-shadow:
+    0 22px 60px rgba(0, 0, 0, 0.34),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+.discordBotCard::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, rgba(52, 211, 153, 0.028) 1px, transparent 1px),
+    linear-gradient(0deg, rgba(255, 255, 255, 0.018) 1px, transparent 1px);
+  background-size: 38px 38px;
+  opacity: 0.5;
+}
+
+.discordBotCard > * {
+  position: relative;
+  z-index: 1;
+}
+
+.discordBotCardTop {
+  display: grid;
+  grid-template-columns: 46px minmax(0, 1fr);
+  gap: 13px;
+  align-items: center;
+}
+
+.discordBotIcon {
+  width: 46px;
+  height: 46px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(52, 211, 153, 0.25);
+  border-radius: 8px;
+  background: rgba(52, 211, 153, 0.09);
+  color: #a7f3d0;
+}
+
+.discordBotCategory {
+  margin: 0 0 5px;
+  color: rgba(167, 243, 208, 0.78);
+  font-size: 0.72rem;
+  font-weight: 850;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.discordBotCard h2 {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.96);
+  font-size: clamp(1.18rem, 2vw, 1.5rem);
+  line-height: 1.12;
+}
+
+.discordBotDescription {
+  margin: 0;
+  color: rgba(244, 244, 245, 0.72);
+  font-size: 0.96rem;
+  line-height: 1.68;
+}
+
+.discordBotFeatures {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.discordBotFeatures li {
+  display: grid;
+  grid-template-columns: 9px minmax(0, 1fr);
+  gap: 10px;
+  align-items: start;
+  color: rgba(244, 244, 245, 0.78);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.discordBotFeatures li span {
+  width: 7px;
+  height: 7px;
+  margin-top: 0.48em;
+  border-radius: 999px;
+  background: #34d399;
+  box-shadow: 0 0 14px rgba(52, 211, 153, 0.48);
+}
+
+.discordBotStack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.discordBotStack span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 28px;
+  padding: 0 10px;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.045);
+  color: rgba(244, 244, 245, 0.72);
+  font-size: 0.76rem;
+  font-weight: 760;
+}
+
+.discordBotFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: auto;
+  padding-top: 6px;
+}
+
+.discordBotStatus {
+  color: rgba(244, 244, 245, 0.62);
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.discordBotUse {
+  min-height: 42px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 0 15px;
+  border: 1px solid rgba(52, 211, 153, 0.42);
+  border-radius: 8px;
+  background:
+    linear-gradient(180deg, rgba(52, 211, 153, 0.22), rgba(52, 211, 153, 0.075)),
+    rgba(0, 0, 0, 0.36);
+  color: #ffffff;
+  font-size: 0.86rem;
+  font-weight: 850;
+  text-decoration: none;
+  white-space: nowrap;
+  transition:
+    border-color 180ms var(--ease),
+    background 180ms var(--ease),
+    transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.discordBotUse:hover,
+.discordBotUse:focus-visible {
+  border-color: rgba(167, 243, 208, 0.78);
+  background:
+    linear-gradient(180deg, rgba(52, 211, 153, 0.3), rgba(52, 211, 153, 0.1)),
+    rgba(0, 0, 0, 0.4);
+  transform: translate3d(0, -2px, 0);
+}
+
+@media (max-width: 960px) {
+  .discordBotGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .discordBotsBack {
+    justify-self: center;
+  }
+}
+
+@media (max-width: 620px) {
+  .discordBotsPage {
+    min-height: calc(100svh - 66px);
+  }
+
+  .discordBotsHero {
+    padding-top: 46px;
+  }
+
+  .discordBotsHero h1 {
+    font-size: clamp(2.1rem, 12vw, 3.2rem);
+  }
+
+  .discordBotCard {
+    padding: 16px;
+  }
+
+  .discordBotFooter {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .discordBotUse {
+    width: 100%;
+  }
+}
+
+/* Final welcome loader shape: thin line above, small percentage below. */
+html body .welcomeScreenMinimal .welcomeMinimalInner {
+  gap: 28px !important;
+}
+
+html body .welcomeScreenMinimal .welcomeMinimalLoader {
+  width: min(300px, calc(100vw - 56px)) !important;
+  display: grid !important;
+  justify-items: center !important;
+  gap: 10px !important;
+}
+
+html body .welcomeScreenMinimal .welcomeMinimalTrack {
+  width: 100% !important;
+  height: 1px !important;
+  margin: 0 !important;
+  overflow: visible !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: rgba(255, 255, 255, 0.12) !important;
+  box-shadow: none !important;
+}
+
+html body .welcomeScreenMinimal .welcomeMinimalFill {
+  display: block !important;
+  width: var(--welcome-progress) !important;
+  height: 1px !important;
+  border-radius: 0 !important;
+  background: rgba(var(--loader-green), 0.98) !important;
+  box-shadow:
+    0 0 10px rgba(var(--loader-green), 0.42),
+    0 0 1px rgba(var(--loader-green-soft), 0.9) !important;
+}
+
+html body .welcomeScreenMinimal .welcomeProgressNumber {
+  min-width: 0 !important;
+  color: rgba(var(--loader-green-soft), 0.72) !important;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+    "Courier New", monospace !important;
+  font-size: 0.72rem !important;
+  font-weight: 700 !important;
+  line-height: 1 !important;
+  letter-spacing: 0.14em !important;
+  font-variant-numeric: tabular-nums !important;
+  text-shadow: 0 0 12px rgba(var(--loader-green), 0.28) !important;
+}
+
+/* Final enter button polish */
+html body .welcomeScreenMinimal .welcomeEnterMinimal {
+  position: relative !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 10px !important;
+  width: auto !important;
+  min-width: 214px !important;
+  min-height: 48px !important;
+  padding: 0 13px 0 20px !important;
+  overflow: hidden !important;
+  border: 1px solid rgba(var(--loader-green), 0.38) !important;
+  border-radius: 8px !important;
+  background:
+    linear-gradient(180deg, rgba(var(--loader-green), 0.18), rgba(var(--loader-green), 0.055)),
+    radial-gradient(120% 160% at 18% 0%, rgba(255, 255, 255, 0.13), transparent 52%),
+    rgba(5, 9, 8, 0.74) !important;
+  box-shadow:
+    0 18px 46px rgba(0, 0, 0, 0.36),
+    0 0 0 1px rgba(255, 255, 255, 0.045) inset,
+    0 0 30px rgba(var(--loader-green), 0.13) !important;
+  color: rgba(255, 255, 255, 0.98) !important;
+  cursor: pointer !important;
+  font-size: 0.93rem !important;
+  font-weight: 850 !important;
+  line-height: 1 !important;
+  letter-spacing: 0 !important;
+  text-shadow: none !important;
+  transform: translate3d(0, 0, 0) !important;
+  transition:
+    border-color 180ms var(--ease),
+    background 180ms var(--ease),
+    box-shadow 220ms var(--ease),
+    transform 220ms cubic-bezier(0.22, 1, 0.36, 1) !important;
+}
+
+html body .welcomeScreenMinimal .welcomeEnterMinimal::before {
+  content: "" !important;
+  display: block !important;
+  position: absolute !important;
+  inset: 0 !important;
+  border-radius: inherit !important;
+  background: linear-gradient(
+    105deg,
+    transparent 0 28%,
+    rgba(255, 255, 255, 0.16) 42%,
+    rgba(var(--loader-green-soft), 0.18) 50%,
+    transparent 66% 100%
+  ) !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  transform: translate3d(-42%, 0, 0) skewX(-14deg) !important;
+  transition:
+    opacity 220ms var(--ease),
+    transform 620ms cubic-bezier(0.22, 1, 0.36, 1) !important;
+}
+
+html body .welcomeScreenMinimal .welcomeEnterMinimal::after {
+  content: none !important;
+  display: none !important;
+}
+
+html body .welcomeScreenMinimal .welcomeEnterMinimal:hover,
+html body .welcomeScreenMinimal .welcomeEnterMinimal:focus-visible {
+  border-color: rgba(var(--loader-green), 0.38) !important;
+  background:
+    linear-gradient(180deg, rgba(var(--loader-green), 0.18), rgba(var(--loader-green), 0.055)),
+    radial-gradient(120% 160% at 18% 0%, rgba(255, 255, 255, 0.13), transparent 52%),
+    rgba(5, 9, 8, 0.74) !important;
+  box-shadow:
+    0 18px 46px rgba(0, 0, 0, 0.36),
+    0 0 0 1px rgba(255, 255, 255, 0.045) inset,
+    0 0 30px rgba(var(--loader-green), 0.13) !important;
+  transform: translate3d(0, 0, 0) !important;
+}
+
+html body .welcomeScreenMinimal .welcomeEnterMinimal:hover::before,
+html body .welcomeScreenMinimal .welcomeEnterMinimal:focus-visible::before {
+  opacity: 0 !important;
+  transform: translate3d(-42%, 0, 0) skewX(-14deg) !important;
+}
+
+html body .welcomeScreenMinimal .welcomeEnterCopy,
+html body .welcomeScreenMinimal .welcomeEnterIcon {
+  position: relative !important;
+  z-index: 1 !important;
+}
+
+html body .welcomeScreenMinimal .welcomeEnterIcon {
+  width: 31px !important;
+  height: 31px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border: 1px solid rgba(var(--loader-green), 0.26) !important;
+  border-radius: 8px !important;
+  background: rgba(0, 0, 0, 0.24) !important;
+  color: rgba(var(--loader-green-soft), 0.96) !important;
+  transition:
+    border-color 180ms var(--ease),
+    background 180ms var(--ease),
+    transform 220ms cubic-bezier(0.22, 1, 0.36, 1) !important;
+}
+
+html body .welcomeScreenMinimal .welcomeEnterMinimal:hover .welcomeEnterIcon,
+html body .welcomeScreenMinimal .welcomeEnterMinimal:focus-visible .welcomeEnterIcon {
+  border-color: rgba(var(--loader-green), 0.26) !important;
+  background: rgba(0, 0, 0, 0.24) !important;
+  transform: translate3d(0, 0, 0) !important;
+}
+
+/* Bottom-right portfolio controls: sound + back to top. */
+.portfolioFloatControls {
+  position: fixed;
+  right: calc(18px + var(--safe-right));
+  bottom: calc(18px + var(--safe-bottom));
+  z-index: 120;
+  display: grid;
+  gap: 10px;
+  pointer-events: none;
+}
+
+.portfolioFloatBtn {
+  width: 46px;
+  height: 46px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(52, 211, 153, 0.28);
+  border-radius: 8px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.075), rgba(255, 255, 255, 0.025)),
+    rgba(5, 9, 8, 0.82);
+  box-shadow:
+    0 16px 42px rgba(0, 0, 0, 0.36),
+    inset 0 1px 0 rgba(255, 255, 255, 0.065);
+  color: rgba(244, 244, 245, 0.9);
+  cursor: pointer;
+  pointer-events: auto;
+  transition:
+    border-color 180ms var(--ease),
+    background 180ms var(--ease),
+    color 180ms var(--ease),
+    transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.portfolioFloatBtn:hover,
+.portfolioFloatBtn:focus-visible {
+  border-color: rgba(52, 211, 153, 0.52);
+  background:
+    linear-gradient(180deg, rgba(52, 211, 153, 0.14), rgba(52, 211, 153, 0.045)),
+    rgba(5, 9, 8, 0.9);
+  color: #ffffff;
+  transform: translate3d(0, -2px, 0);
+}
+
+.portfolioFloatBtn:focus-visible {
+  outline: 2px solid rgba(52, 211, 153, 0.34);
+  outline-offset: 3px;
+}
+
+.portfolioFloatBtnTop {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translate3d(0, 10px, 0) scale(0.92);
+  filter: blur(8px) saturate(88%);
+  transition:
+    opacity 260ms var(--ease),
+    visibility 0ms linear 260ms,
+    filter 320ms var(--ease),
+    transform 360ms cubic-bezier(0.5, 0, 0.1, 1),
+    border-color 180ms var(--ease),
+    background 180ms var(--ease),
+    color 180ms var(--ease) !important;
+}
+
+.portfolioFloatBtnTop.isVisible {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  filter: blur(0) saturate(100%);
+  transform: translate3d(0, 0, 0) scale(1);
+  transition:
+    opacity 240ms var(--ease),
+    visibility 0ms linear 0ms,
+    filter 360ms var(--ease),
+    transform 520ms cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 180ms var(--ease),
+    background 180ms var(--ease),
+    color 180ms var(--ease) !important;
+  animation: backTopPop 520ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.portfolioFloatBtn svg {
+  width: 20px;
+  height: 20px;
+}
+
+@keyframes backTopPop {
+  0% {
+    opacity: 0;
+    filter: blur(8px) saturate(88%);
+    transform: translate3d(0, 14px, 0) scale(0.86);
+  }
+
+  62% {
+    opacity: 1;
+    filter: blur(0) saturate(108%);
+    transform: translate3d(0, -3px, 0) scale(1.06);
+  }
+
+  100% {
+    opacity: 1;
+    filter: blur(0) saturate(100%);
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+@media (max-width: 620px) {
+  .portfolioFloatControls {
+    right: calc(12px + var(--safe-right));
+    bottom: calc(12px + var(--safe-bottom));
+    gap: 8px;
+  }
+
+  .portfolioFloatBtn {
+    width: 44px;
+    height: 44px;
+  }
+}
+
+.aboutTextHighlight {
+  color: rgba(255, 255, 255, 0.96);
+  font-weight: 900;
+  text-shadow:
+    0 0 18px rgba(52, 211, 153, 0.2),
+    0 0 1px rgba(167, 243, 208, 0.72);
 }

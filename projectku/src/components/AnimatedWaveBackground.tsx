@@ -2,6 +2,9 @@ import { Canvas, useFrame } from "@react-three/fiber";
 import { useEffect, useMemo, useRef, useState } from "react";
 import * as THREE from "three";
 
+const BACKGROUND_LINE_COLOR = "#064e3b";
+const BACKGROUND_ACCENT_COLOR = "#34d399";
+
 const PANELS = [
   {
     position: [-5.95, 2.06, -4.3],
@@ -20,7 +23,7 @@ const PANELS = [
     rotation: [-0.03, 0.2, 0.05],
     size: [1.42, 0.72],
     delay: 0.8,
-    accent: "#8ff7d2",
+    accent: "#34d399",
     variant: "module",
     title: "SyncedC0de",
     kicker: "A7OMIC space",
@@ -32,7 +35,7 @@ const PANELS = [
     rotation: [0.04, -0.12, 0.08],
     size: [1.54, 0.68],
     delay: 1.4,
-    accent: "#5eead4",
+    accent: "#34d399",
     variant: "route",
     title: "contact.api",
     kicker: "server/contact.js",
@@ -56,7 +59,7 @@ const PANELS = [
     rotation: [-0.02, -0.34, 0.07],
     size: [2.12, 0.98],
     delay: 0.5,
-    accent: "#60a5fa",
+    accent: "#34d399",
     variant: "project",
     title: "ClarityX.web",
     kicker: "react + vercel",
@@ -80,7 +83,7 @@ const PANELS = [
     rotation: [-0.04, -0.22, -0.06],
     size: [1.34, 0.74],
     delay: 2.6,
-    accent: "#a7f3d0",
+    accent: "#34d399",
     variant: "lua",
     title: "roblox.lua",
     kicker: "ui helper",
@@ -92,7 +95,7 @@ const PANELS = [
     rotation: [0.05, 0.3, 0.12],
     size: [1.58, 0.74],
     delay: 3.0,
-    accent: "#67e8f9",
+    accent: "#34d399",
     variant: "project",
     title: "HelloEnglish",
     kicker: "lesson flow",
@@ -128,7 +131,7 @@ const PANELS = [
     rotation: [-0.03, -0.28, -0.04],
     size: [1.78, 0.78],
     delay: 3.4,
-    accent: "#5eead4",
+    accent: "#34d399",
     variant: "route",
     title: "dashboard.ui",
     kicker: "quiet system",
@@ -139,10 +142,10 @@ const PANELS = [
 
 const RAILS = [
   { origin: [-5.8, -1.6, -3.6], height: 4.1, amp: 0.54, phase: 0.2, color: "#34d399", opacity: 0.36 },
-  { origin: [-2.6, -2.1, -4.8], height: 5.3, amp: 0.36, phase: 1.4, color: "#67e8f9", opacity: 0.28 },
-  { origin: [0.1, -2.3, -5.7], height: 5.8, amp: 0.46, phase: 2.4, color: "#f8fafc", opacity: 0.18 },
+  { origin: [-2.6, -2.1, -4.8], height: 5.3, amp: 0.36, phase: 1.4, color: "#34d399", opacity: 0.24 },
+  { origin: [0.1, -2.3, -5.7], height: 5.8, amp: 0.46, phase: 2.4, color: "#34d399", opacity: 0.16 },
   { origin: [2.8, -1.7, -4.1], height: 4.4, amp: 0.5, phase: 3.6, color: "#34d399", opacity: 0.32 },
-  { origin: [5.4, -2.2, -5.2], height: 5.1, amp: 0.42, phase: 4.8, color: "#60a5fa", opacity: 0.24 },
+  { origin: [5.4, -2.2, -5.2], height: 5.1, amp: 0.42, phase: 4.8, color: "#34d399", opacity: 0.22 },
 ];
 
 function hexToRgb(hex) {
@@ -228,23 +231,24 @@ function drawPanelGrid(ctx, width, height, accent) {
 
 function drawPanelChrome(ctx, width, height, panel) {
   const accent = panel.accent;
+  const lineColor = BACKGROUND_LINE_COLOR;
   const bg = ctx.createLinearGradient(0, 0, width, height);
   bg.addColorStop(0, "rgba(3, 12, 10, 0.82)");
   bg.addColorStop(0.52, "rgba(5, 20, 16, 0.68)");
   bg.addColorStop(1, "rgba(2, 6, 6, 0.5)");
 
   fillRoundedRect(ctx, 10, 10, width - 20, height - 20, 8, bg);
-  drawPanelGrid(ctx, width, height, accent);
-  strokeRoundedRect(ctx, 12, 12, width - 24, height - 24, 8, rgba(accent, 0.42), 2);
+  drawPanelGrid(ctx, width, height, lineColor);
+  strokeRoundedRect(ctx, 12, 12, width - 24, height - 24, 8, rgba(lineColor, 0.46), 2);
   strokeRoundedRect(ctx, 24, 24, width - 48, height - 48, 4, "rgba(255, 255, 255, 0.05)", 1);
 
-  ctx.fillStyle = rgba(accent, 0.78);
+  ctx.fillStyle = rgba(lineColor, 0.74);
   ctx.fillRect(24, 30, 5, height - 60);
   ctx.fillRect(width - 92, 30, 48, 3);
   ctx.fillRect(width - 92, height - 34, 48, 3);
 
   const notchSize = 26;
-  ctx.strokeStyle = rgba(accent, 0.5);
+  ctx.strokeStyle = rgba(lineColor, 0.52);
   ctx.lineWidth = 2;
   [
     [30, 30, 1, 1],
@@ -465,21 +469,21 @@ function FloatingPanel({ panel, reducedMotion }) {
 
       <lineSegments geometry={edgeGeometry} position={[0, 0, 0.012]}>
         <lineBasicMaterial
-          color={panel.accent}
+          color={BACKGROUND_LINE_COLOR}
           depthWrite={false}
-          opacity={0.34}
+          opacity={0.2}
           transparent
         />
       </lineSegments>
 
       <mesh position={[-width * 0.49, 0, 0.024]}>
         <planeGeometry args={[0.024, height * 0.72]} />
-        <meshBasicMaterial color={panel.accent} depthWrite={false} opacity={0.72} transparent />
+        <meshBasicMaterial color={BACKGROUND_LINE_COLOR} depthWrite={false} opacity={0.42} transparent />
       </mesh>
 
       <mesh position={[-width * 0.42, height * 0.36, 0.028]}>
         <circleGeometry args={[0.032, 18]} />
-        <meshBasicMaterial color={panel.accent} depthWrite={false} opacity={0.82} transparent />
+        <meshBasicMaterial color={BACKGROUND_ACCENT_COLOR} depthWrite={false} opacity={0.64} transparent />
       </mesh>
     </group>
   );
@@ -491,10 +495,10 @@ function ParticleField({ count, reducedMotion }) {
     const nextPositions = new Float32Array(count * 3);
     const nextColors = new Float32Array(count * 3);
     const palette = [
-      new THREE.Color("#34d399"),
-      new THREE.Color("#67e8f9"),
+      new THREE.Color(BACKGROUND_ACCENT_COLOR),
+      new THREE.Color(BACKGROUND_LINE_COLOR),
       new THREE.Color("#f8fafc"),
-      new THREE.Color("#9ff7cf"),
+      new THREE.Color(BACKGROUND_ACCENT_COLOR),
     ];
 
     for (let index = 0; index < count; index += 1) {
@@ -601,7 +605,7 @@ function InterfaceGrid({ reducedMotion }) {
           transparent
         />
       </mesh>
-      <gridHelper args={[36, 42, "#34d399", "#0f766e"]} />
+      <gridHelper args={[36, 42, BACKGROUND_LINE_COLOR, BACKGROUND_LINE_COLOR]} />
     </group>
   );
 }
