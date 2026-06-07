@@ -38,6 +38,7 @@ export default function App() {
   const [route, setRoute] = useState(getAppRoute);
   const [pendingSectionScroll, setPendingSectionScroll] = useState("");
   const [showBackTop, setShowBackTop] = useState(false);
+  const [backTopLeaving, setBackTopLeaving] = useState(false);
   const [soundMuted, setSoundMuted] = useState(false);
   const [playerSnapshot, setPlayerSnapshot] = useState(null);
   const [nowPlayingToast, setNowPlayingToast] = useState({
@@ -49,6 +50,8 @@ export default function App() {
   const hideNowPlayingTimerRef = useRef(0);
   const lastAnnouncedTrackIdRef = useRef(null);
   const routeRef = useRef(route);
+  const showBackTopRef = useRef(showBackTop);
+  const backTopExitTimerRef = useRef(0);
 
   const showNowPlayingToast = (title, detail) => {
     if (hideNowPlayingTimerRef.current) {
@@ -102,6 +105,7 @@ export default function App() {
   useEffect(() => {
     if (!entered) {
       setShowBackTop(false);
+      setBackTopLeaving(false);
       return;
     }
 
@@ -121,7 +125,26 @@ export default function App() {
       if (rafId) return;
       rafId = window.requestAnimationFrame(() => {
         rafId = 0;
-        setShowBackTop(readScrollY() > 420);
+        const shouldShow = readScrollY() > 420;
+
+        if (shouldShow) {
+          if (backTopExitTimerRef.current) {
+            window.clearTimeout(backTopExitTimerRef.current);
+            backTopExitTimerRef.current = 0;
+          }
+          setBackTopLeaving(false);
+          if (!showBackTopRef.current) setShowBackTop(true);
+          return;
+        }
+
+        if (showBackTopRef.current && !backTopExitTimerRef.current) {
+          setShowBackTop(false);
+          setBackTopLeaving(true);
+          backTopExitTimerRef.current = window.setTimeout(() => {
+            setBackTopLeaving(false);
+            backTopExitTimerRef.current = 0;
+          }, 340);
+        }
       });
     };
 
@@ -140,8 +163,15 @@ export default function App() {
       if (hideNowPlayingTimerRef.current) {
         window.clearTimeout(hideNowPlayingTimerRef.current);
       }
+      if (backTopExitTimerRef.current) {
+        window.clearTimeout(backTopExitTimerRef.current);
+      }
     };
   }, []);
+
+  useEffect(() => {
+    showBackTopRef.current = showBackTop;
+  }, [showBackTop]);
 
   useEffect(() => {
     const onHashChange = () => {
@@ -277,6 +307,7 @@ export default function App() {
                   "portfolioFloatBtn",
                   "portfolioFloatBtnTop",
                   showBackTop ? "isVisible" : "",
+                  backTopLeaving ? "isLeaving" : "",
                 ].join(" ")}
                 onClick={handleBackToTop}
                 aria-label="Back to top"

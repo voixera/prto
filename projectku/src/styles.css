@@ -12294,6 +12294,12 @@ html body .welcomeScreenMinimal .welcomeEnterMinimal:focus-visible .welcomeEnter
   animation: backTopPop 520ms cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
+.portfolioFloatBtnTop.isLeaving {
+  visibility: visible;
+  pointer-events: none;
+  animation: backTopOut 340ms cubic-bezier(0.55, 0, 0.1, 1) both;
+}
+
 .portfolioFloatBtn svg {
   width: 20px;
   height: 20px;
@@ -12316,6 +12322,26 @@ html body .welcomeScreenMinimal .welcomeEnterMinimal:focus-visible .welcomeEnter
     opacity: 1;
     filter: blur(0) saturate(100%);
     transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+@keyframes backTopOut {
+  0% {
+    opacity: 1;
+    filter: blur(0) saturate(100%);
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+
+  42% {
+    opacity: 0.72;
+    filter: blur(2px) saturate(96%);
+    transform: translate3d(0, -2px, 0) scale(0.98);
+  }
+
+  100% {
+    opacity: 0;
+    filter: blur(8px) saturate(86%);
+    transform: translate3d(0, 14px, 0) scale(0.86);
   }
 }
 
