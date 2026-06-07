@@ -626,8 +626,22 @@ html {
 }
 
 .uiMobile .aboutHeaderMeta {
-  font-size: 0.76rem !important;
-  line-height: 1.45 !important;
+  width: 100% !important;
+  font-size: clamp(0.48rem, 2.15vw, 0.74rem) !important;
+  line-height: 1.16 !important;
+  letter-spacing: -0.055em !important;
+  white-space: nowrap !important;
+  overflow: visible !important;
+}
+
+.uiMobile .aboutHeaderMetaShine,
+.uiMobile .aboutHeaderMetaVisual {
+  max-width: none !important;
+  white-space: nowrap !important;
+}
+
+.uiMobile .aboutHeaderMetaChar {
+  white-space: pre !important;
 }
 
 .uiMobile .aboutHeaderLocation {
