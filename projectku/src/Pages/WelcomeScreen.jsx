@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { ArrowRight } from "lucide-react";
 
 const LOADING_TICK_MS = 28;
 const EXIT_ANIMATION_MS = 760;
@@ -565,9 +564,6 @@ export default function WelcomeScreen({ entered = false, onEnter }) {
             disabled={isExiting}
           >
             <span className="welcomeEnterCopy">Enter Portfolio</span>
-            <span className="welcomeEnterIcon" aria-hidden="true">
-              <ArrowRight size={17} strokeWidth={2.5} />
-            </span>
           </button>
         )}
       </div>

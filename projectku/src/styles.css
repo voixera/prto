@@ -12092,45 +12092,44 @@ html body .welcomeScreenMinimal .welcomeProgressNumber {
   text-shadow: 0 0 12px rgba(var(--loader-green), 0.28) !important;
 }
 
+html body .welcomeScreenMinimal.isReady .welcomeProgressNumber {
+  animation: welcomePercentDone 420ms cubic-bezier(0.55, 0, 0.1, 1) 120ms both !important;
+}
+
 /* Final enter button polish */
 html body .welcomeScreenMinimal .welcomeEnterMinimal {
   position: relative !important;
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
-  gap: 10px !important;
+  gap: 0 !important;
   width: auto !important;
-  min-width: 214px !important;
+  min-width: min(224px, calc(100vw - 72px)) !important;
   min-height: 48px !important;
-  padding: 0 13px 0 20px !important;
+  padding: 0 24px !important;
   overflow: hidden !important;
-  border: 1px solid rgba(var(--loader-green), 0.38) !important;
+  border: 1px solid rgba(var(--loader-green), 0.34) !important;
   border-radius: 8px !important;
-  background:
-    linear-gradient(180deg, rgba(var(--loader-green), 0.18), rgba(var(--loader-green), 0.055)),
-    radial-gradient(120% 160% at 18% 0%, rgba(255, 255, 255, 0.13), transparent 52%),
-    rgba(5, 9, 8, 0.74) !important;
-  box-shadow:
-    0 18px 46px rgba(0, 0, 0, 0.36),
-    0 0 0 1px rgba(255, 255, 255, 0.045) inset,
-    0 0 30px rgba(var(--loader-green), 0.13) !important;
-  color: rgba(255, 255, 255, 0.98) !important;
+  background: rgba(4, 18, 14, 0.56) !important;
+  box-shadow: none !important;
+  color: rgba(var(--loader-green-soft), 0.72) !important;
   cursor: pointer !important;
-  font-size: 0.93rem !important;
-  font-weight: 850 !important;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+    "Courier New", monospace !important;
+  font-size: 0.9rem !important;
+  font-weight: 800 !important;
   line-height: 1 !important;
-  letter-spacing: 0 !important;
+  letter-spacing: 0.02em !important;
+  text-transform: uppercase !important;
   text-shadow: none !important;
   transform: translate3d(0, 0, 0) !important;
-  transition:
-    border-color 180ms var(--ease),
-    background 180ms var(--ease),
-    box-shadow 220ms var(--ease) !important;
+  transition: none !important;
+  -webkit-tap-highlight-color: transparent !important;
 }
 
 html body .welcomeScreenMinimal .welcomeEnterMinimal::before {
-  content: "" !important;
-  display: block !important;
+  content: none !important;
+  display: none !important;
   position: absolute !important;
   inset: 0 !important;
   border-radius: inherit !important;
@@ -12144,9 +12143,7 @@ html body .welcomeScreenMinimal .welcomeEnterMinimal::before {
   opacity: 0 !important;
   pointer-events: none !important;
   transform: translate3d(-42%, 0, 0) skewX(-14deg) !important;
-  transition:
-    opacity 220ms var(--ease),
-    transform 620ms cubic-bezier(0.22, 1, 0.36, 1) !important;
+  transition: none !important;
 }
 
 html body .welcomeScreenMinimal .welcomeEnterMinimal::after {
@@ -12155,21 +12152,20 @@ html body .welcomeScreenMinimal .welcomeEnterMinimal::after {
 }
 
 html body .welcomeScreenMinimal .welcomeEnterMinimal:hover,
-html body .welcomeScreenMinimal .welcomeEnterMinimal:focus-visible {
-  border-color: rgba(var(--loader-green), 0.38) !important;
-  background:
-    linear-gradient(180deg, rgba(var(--loader-green), 0.18), rgba(var(--loader-green), 0.055)),
-    radial-gradient(120% 160% at 18% 0%, rgba(255, 255, 255, 0.13), transparent 52%),
-    rgba(5, 9, 8, 0.74) !important;
-  box-shadow:
-    0 18px 46px rgba(0, 0, 0, 0.36),
-    0 0 0 1px rgba(255, 255, 255, 0.045) inset,
-    0 0 30px rgba(var(--loader-green), 0.13) !important;
+html body .welcomeScreenMinimal .welcomeEnterMinimal:focus-visible,
+html body .welcomeScreenMinimal .welcomeEnterMinimal:active {
+  border-color: rgba(var(--loader-green), 0.34) !important;
+  background: rgba(4, 18, 14, 0.56) !important;
+  box-shadow: none !important;
+  color: rgba(var(--loader-green-soft), 0.72) !important;
+  outline: 0 !important;
   transform: translate3d(0, 0, 0) !important;
+  filter: none !important;
 }
 
 html body .welcomeScreenMinimal .welcomeEnterMinimal:hover::before,
-html body .welcomeScreenMinimal .welcomeEnterMinimal:focus-visible::before {
+html body .welcomeScreenMinimal .welcomeEnterMinimal:focus-visible::before,
+html body .welcomeScreenMinimal .welcomeEnterMinimal:active::before {
   opacity: 0 !important;
   transform: translate3d(-42%, 0, 0) skewX(-14deg) !important;
 }
@@ -12200,6 +12196,20 @@ html body .welcomeScreenMinimal .welcomeEnterMinimal:focus-visible .welcomeEnter
   border-color: rgba(var(--loader-green), 0.26) !important;
   background: rgba(0, 0, 0, 0.24) !important;
   transform: translate3d(0, 0, 0) !important;
+}
+
+@keyframes welcomePercentDone {
+  0% {
+    opacity: 1;
+    filter: blur(0);
+    transform: translate3d(0, 0, 0);
+  }
+
+  100% {
+    opacity: 0;
+    filter: blur(6px);
+    transform: translate3d(0, -4px, 0);
+  }
 }
 
 /* Bottom-right portfolio controls: sound + back to top. */
