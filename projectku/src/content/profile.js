@@ -85,15 +85,8 @@ export const profile = {
       status: "Preview only",
       description:
         "A small Lua pattern for Roblox Studio UI experiments. It keeps button interactions readable and makes simple interface states easier to control.",
-      preview: [
-        "local button = script.Parent",
-        "local panel = button.Parent:WaitForChild(\"Panel\")",
-        "",
-        "button.MouseButton1Click:Connect(function()",
-        "    panel.Visible = not panel.Visible",
-        "    button.Text = panel.Visible and \"Close\" or \"Open\"",
-        "end)",
-      ].join("\n"),
+      videoSrc: "/roblox-script-videos/interface-helper.mp4",
+      poster: "/RobloxThumb.png",
       features: [
         "Simple UI toggle behavior",
         "Readable event-based structure",
@@ -107,15 +100,8 @@ export const profile = {
       status: "Preview only",
       description:
         "A safe utility-style preview for repeated in-game UI updates. It demonstrates how to keep small loops controlled, readable, and easy to adjust.",
-      preview: [
-        "local label = script.Parent:WaitForChild(\"StatusLabel\")",
-        "local count = 0",
-        "",
-        "while task.wait(1) do",
-        "    count += 1",
-        "    label.Text = \"Runtime: \" .. count .. \"s\"",
-        "end",
-      ].join("\n"),
+      videoSrc: "/roblox-script-videos/automation-utility.mp4",
+      poster: "/RobloxThumb.png",
       features: [
         "Controlled task loop example",
         "Live UI status update pattern",
@@ -129,15 +115,8 @@ export const profile = {
       status: "Preview only",
       description:
         "A module-style script preview for keeping Roblox Lua code organized. It is made for learning reusable functions and cleaner project structure.",
-      preview: [
-        "local Helper = {}",
-        "",
-        "function Helper.formatCoins(amount)",
-        "    return tostring(amount) .. \" Coins\"",
-        "end",
-        "",
-        "return Helper",
-      ].join("\n"),
+      videoSrc: "/roblox-script-videos/module-organizer.mp4",
+      poster: "/RobloxThumb.png",
       features: [
         "Reusable module pattern",
         "Cleaner function organization",

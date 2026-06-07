@@ -20,9 +20,19 @@ function RobloxScriptCard({ script, index }) {
 
       <p className="robloxScriptDescription">{script.description}</p>
 
-      <pre className="robloxScriptPreview" aria-label={`${script.name} Lua preview`}>
-        <code>{script.preview}</code>
-      </pre>
+      <div className="robloxScriptVideoFrame">
+        <video
+          className="robloxScriptVideo"
+          controls
+          muted
+          playsInline
+          preload="metadata"
+          poster={script.poster}
+          aria-label={`${script.name} video preview`}
+        >
+          <source src={script.videoSrc} type="video/mp4" />
+        </video>
+      </div>
 
       <ul className="robloxScriptFeatures" aria-label={`${script.name} highlights`}>
         {script.features.map((feature) => (
