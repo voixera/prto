@@ -1,7 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Limehub">
-  <rect width="128" height="128" rx="28" fill="#07110d"/>
-  <rect x="8" y="8" width="112" height="112" rx="24" fill="none" stroke="#34d399" stroke-opacity=".32" stroke-width="2"/>
-  <path d="M38 82V31h14v39h37v12H38Z" fill="#a7f3d0"/>
-  <path d="M58 58c0-16 13-29 29-29h7v7c0 16-13 29-29 29h-7v-7Z" fill="#34d399"/>
-  <circle cx="91" cy="31" r="6" fill="#ecfdf5"/>
-</svg>
