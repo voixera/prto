@@ -140,6 +140,32 @@ export const profile = {
         "Started learning programming through online resources, focusing on web development and scripting languages.",
     },
   ],
+  experience: [
+    {
+      period: "4 February 2026 - Present",
+      title: "Script Helper",
+      subtitle: "ATOMIC",
+      details:
+        "Helping with Lua scripting support, script testing, and clear guidance for users who need cleaner script workflows.",
+      logo: "/A7OMIC.png",
+    },
+    {
+      period: "23 February 2026 - Present",
+      title: "Script Helper",
+      subtitle: "LYNX",
+      details:
+        "Supporting script usage, helping troubleshoot user issues, and improving practical scripting workflows for the community.",
+      logo: "/elenx.png",
+    },
+    {
+      period: "3 March 2026 - Present",
+      title: "Script Dev",
+      subtitle: "Limehub",
+      details:
+        "Building and refining Lua script features with a focus on usability, interface clarity, and maintainable script behavior.",
+      logo: "/experience-logos/limehub.svg",
+    },
+  ],
   skills: [
     "Next.js",
     "React",

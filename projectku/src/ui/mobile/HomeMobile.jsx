@@ -11,6 +11,7 @@ import { profile } from "../../content/profile";
 
 const ROLE_PHRASES = ["Fullstack Developer", "Web Development", "Roblox Studio Scripting", "Discord Bot Development", "Cybersecurity Beginner"];
 const EDU_DECOR_TAGS = ["Self-Taught", "Web Dev", "Bots", "Scripting"];
+const EXPERIENCE_DECOR_TAGS = ["ATOMIC", "LYNX", "Limehub", "Lua"];
 const FAQ_ITEMS = [
   {
     question: "What is a Full Stack Developer?",
@@ -202,10 +203,14 @@ function FaqItem({ question, children, index }) {
 export default function HomeMobile() {
   const aboutText = useMemo(() => profile.about.join(" "), []);
   const aboutBadges = useMemo(() => profile.aboutBadges?.slice(0, 3) ?? [], []);
+  const [timelineMode, setTimelineMode] = useState("education");
   const visibleSocials = useMemo(
     () => profile.socials.slice(0, 3),
     []
   );
+  const isExperienceMode = timelineMode === "experience";
+  const timelineItems = isExperienceMode ? profile.experience ?? [] : profile.education ?? [];
+  const timelineTags = isExperienceMode ? EXPERIENCE_DECOR_TAGS : EDU_DECOR_TAGS;
 
   return (
     <main className="homeRoot homeRoot--mobile">
@@ -453,16 +458,40 @@ export default function HomeMobile() {
       <section id="education" className="eduV2">
         <div className="container">
           <div className="eduHeader">
-            <Reveal>
-              <p className="kickerV2">Education</p>
-            </Reveal>
-            <Reveal delayMs={70}>
-              <h2 className="h2V2">Education History</h2>
-            </Reveal>
+            <div className="eduHeaderTop">
+              <div>
+                <Reveal>
+                  <p className="kickerV2">{isExperienceMode ? "Experience" : "Education"}</p>
+                </Reveal>
+                <Reveal delayMs={70}>
+                  <h2 className="h2V2">{isExperienceMode ? "Experience" : "Education History"}</h2>
+                </Reveal>
+              </div>
+              <Reveal delayMs={90}>
+                <div className="eduModeSwitch" aria-label="Timeline view">
+                  <button
+                    type="button"
+                    className={!isExperienceMode ? "isActive" : ""}
+                    onClick={() => setTimelineMode("education")}
+                    aria-pressed={!isExperienceMode}
+                  >
+                    Education
+                  </button>
+                  <button
+                    type="button"
+                    className={isExperienceMode ? "isActive" : ""}
+                    onClick={() => setTimelineMode("experience")}
+                    aria-pressed={isExperienceMode}
+                  >
+                    Experience
+                  </button>
+                </div>
+              </Reveal>
+            </div>
             <Reveal delayMs={110}>
-              <div className="eduRibbon" aria-label="Education highlights">
+              <div className="eduRibbon" aria-label={`${isExperienceMode ? "Experience" : "Education"} highlights`}>
                 <span className="eduRibbonLine" aria-hidden="true" />
-                {EDU_DECOR_TAGS.map((item) => (
+                {timelineTags.map((item) => (
                   <span key={item} className="eduRibbonChip">
                     {item}
                   </span>
@@ -473,7 +502,11 @@ export default function HomeMobile() {
           </div>
 
           <Reveal delayMs={90}>
-            <EducationTimeline items={profile.education ?? []} />
+            <EducationTimeline
+              key={timelineMode}
+              items={timelineItems}
+              label={isExperienceMode ? "Experience timeline" : "Education timeline"}
+            />
           </Reveal>
         </div>
       </section>
