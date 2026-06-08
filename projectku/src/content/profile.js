@@ -58,7 +58,7 @@ export const profile = {
         "Organized request flow for orders and questions",
         "Staff-friendly handling for store server support",
       ],
-      stack: ["Node.js", "Discord.js", "Embeds", "Typescript"],
+      stack: ["Node.js", "Discord.js", "Embeds", "Python"],
       inviteUrl:
         "https://discord.com/oauth2/authorize?client_id=1477901146868944978&permissions=8&integration_type=0&scope=bot",
     },
@@ -73,7 +73,7 @@ export const profile = {
         "Readable feedback for members and staff",
         "Lightweight automation for smoother community management",
       ],
-      stack: ["Node.js", "Discord.js", "Event Logs"],
+      stack: ["Node.js", "Discord.js", "Python"],
       inviteUrl:
         "https://discord.com/oauth2/authorize?client_id=1486591389759438898&permissions=8&integration_type=0&scope=bot",
     },
