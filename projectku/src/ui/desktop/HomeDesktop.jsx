@@ -11,7 +11,7 @@ import { profile } from "../../content/profile";
 
 const ROLE_PHRASES = ["Fullstack Developer", "Web Development", "Roblox Studio Scripting", "Discord Bot Development", "Cybersecurity Beginner"];
 const EDU_DECOR_TAGS = ["Self-Taught", "Web Dev", "Bots", "Scripting"];
-const EXPERIENCE_DECOR_TAGS = ["ATOMIC", "LYNX", "Limehub", "Lua"];
+const EXPERIENCE_DECOR_TAGS = ["Lua", "Luau", "Roblox Studio", "Figma"];
 const FAQ_ITEMS = [
   {
     question: "What is a Full Stack Developer?",
