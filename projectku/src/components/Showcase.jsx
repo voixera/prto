@@ -374,65 +374,86 @@ function GroupCard({ item, delayMs }) {
   return (
     <Reveal delayMs={delayMs}>
       <article className="groupCard">
-        <div className="groupHeader">
-          <span className="groupIcon" aria-hidden="true">
-            {item.logo ? (
-              <img className="groupLogo" src={item.logo} alt="" loading="lazy" />
-            ) : (
-              <Icon name="globe" />
-            )}
-          </span>
-          <div className="groupHeading">
-            <p className="groupEyebrow">{item.affiliation}</p>
-            <h3 className="groupLabel">{item.name ?? item.label}</h3>
+        <div className="groupMain">
+          <div className="groupHeader">
+            <span className="groupIcon" aria-hidden="true">
+              {item.logo ? (
+                <img className="groupLogo" src={item.logo} alt="" loading="lazy" />
+              ) : (
+                <Icon name="globe" />
+              )}
+            </span>
+            <div className="groupHeading">
+              <p className="groupEyebrow">{item.affiliation}</p>
+              <h3 className="groupLabel">{item.name ?? item.label}</h3>
+            </div>
           </div>
+
+          {item.summary ? <p className="groupLead">{item.summary}</p> : null}
+
+          {item.description?.length ? (
+            <div className="groupDescription">
+              {item.description.map((paragraph) => (
+                <p key={paragraph}>{paragraph}</p>
+              ))}
+            </div>
+          ) : null}
+
+          {item.focus?.length ? (
+            <div className="groupFocusBlock">
+              <p className="groupSectionLabel">Focus inside the group</p>
+              <ul className="groupFocusList" aria-label="SyncedC0de focus areas">
+                {item.focus.map((focus) => (
+                  <li key={focus}>{focus}</li>
+                ))}
+              </ul>
+            </div>
+          ) : null}
         </div>
 
-        {item.summary ? <p className="groupLead">{item.summary}</p> : null}
+        <aside className="groupAside" aria-label="Group details">
+          <dl className="groupInfoGrid">
+            {item.createdAt ? (
+              <div>
+                <dt>Created</dt>
+                <dd>{item.createdAt}</dd>
+              </div>
+            ) : null}
+            {item.affiliation ? (
+              <div>
+                <dt>Network</dt>
+                <dd>{item.affiliation}</dd>
+              </div>
+            ) : null}
+            {inviteLabel ? (
+              <div>
+                <dt>Invite</dt>
+                <dd>{inviteLabel}</dd>
+              </div>
+            ) : null}
+          </dl>
 
-        {item.description?.length ? (
-          <div className="groupDescription">
-            {item.description.map((paragraph) => (
-              <p key={paragraph}>{paragraph}</p>
-            ))}
-          </div>
-        ) : null}
-
-        <dl className="groupInfoGrid">
-          {item.createdAt ? (
-            <div>
-              <dt>Created</dt>
-              <dd>{item.createdAt}</dd>
-            </div>
+          {href ? (
+            <a className="groupJoin" href={href} target="_blank" rel="noreferrer">
+              <span className="groupJoinText">
+                <strong>Join Discord</strong>
+                <span>{inviteLabel}</span>
+              </span>
+              <span className="groupJoinIcon" aria-hidden="true">
+                <svg viewBox="0 0 24 24">
+                  <path
+                    d="M7 17 17 7M10 7h7v7"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2.4"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </span>
+            </a>
           ) : null}
-          {item.affiliation ? (
-            <div>
-              <dt>Network</dt>
-              <dd>{item.affiliation}</dd>
-            </div>
-          ) : null}
-          {inviteLabel ? (
-            <div>
-              <dt>Invite</dt>
-              <dd>{inviteLabel}</dd>
-            </div>
-          ) : null}
-        </dl>
-
-        {item.focus?.length ? (
-          <ul className="groupFocusList" aria-label="SyncedC0de focus areas">
-            {item.focus.map((focus) => (
-              <li key={focus}>{focus}</li>
-            ))}
-          </ul>
-        ) : null}
-
-        {href ? (
-          <a className="groupJoin" href={href} target="_blank" rel="noreferrer">
-            <span>Join Discord</span>
-            <span>{inviteLabel}</span>
-          </a>
-        ) : null}
+        </aside>
       </article>
     </Reveal>
   );

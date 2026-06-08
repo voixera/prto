@@ -906,8 +906,21 @@ html {
 }
 
 .uiMobile .groupCard {
+  grid-template-columns: 1fr !important;
   padding: 15px !important;
   gap: 12px;
+}
+
+.uiMobile .groupMain {
+  gap: 12px;
+}
+
+.uiMobile .groupAside {
+  gap: 13px;
+  padding-top: 13px;
+  padding-left: 0;
+  border-top: 1px solid var(--mobile-border);
+  border-left: 0;
 }
 
 .uiMobile .groupIcon {
@@ -931,13 +944,21 @@ html {
 }
 
 .uiMobile .groupInfoGrid div {
-  border-radius: 8px;
-  padding: 11px;
+  border-radius: 0;
+  padding: 0 0 12px;
+  border: 0;
+  background: transparent;
+}
+
+.uiMobile .groupInfoGrid div + div {
+  padding-top: 12px;
+  border-top: 1px solid var(--mobile-border);
 }
 
 .uiMobile .groupFocusList li {
-  border-radius: 6px;
-  font-size: 0.72rem;
+  border-radius: 0;
+  font-size: 0.8rem;
+  line-height: 1.5;
 }
 
 .uiMobile .groupJoin {
@@ -947,7 +968,7 @@ html {
   border-radius: 8px;
 }
 
-.uiMobile .groupJoin span:last-child {
+.uiMobile .groupJoinText span {
   min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;

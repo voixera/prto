@@ -1126,9 +1126,22 @@
   }
 
   .groupCard {
+    grid-template-columns: 1fr;
     gap: 14px;
     min-height: 0;
     padding: 16px;
+  }
+
+  .groupMain {
+    gap: 13px;
+  }
+
+  .groupAside {
+    gap: 14px;
+    padding-top: 14px;
+    padding-left: 0;
+    border-top: 1px solid rgba(167, 243, 208, 0.12);
+    border-left: 0;
   }
 
   .groupHeader {
@@ -1159,12 +1172,21 @@
     grid-template-columns: 1fr;
   }
 
+  .groupInfoGrid div {
+    padding: 0 0 13px;
+  }
+
+  .groupInfoGrid div + div {
+    padding-top: 13px;
+  }
+
   .groupFocusList {
     gap: 7px;
   }
 
   .groupFocusList li {
-    font-size: 0.74rem;
+    font-size: 0.8rem;
+    line-height: 1.5;
   }
 
   .groupJoin {
