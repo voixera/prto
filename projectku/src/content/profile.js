@@ -143,24 +143,24 @@ export const profile = {
   experience: [
     {
       period: "4 February 2026 - Present",
-      title: "Script Helper",
-      subtitle: "ATOMIC",
+      title: "Atomic",
+      subtitle: "Script Helper",
       details:
         "Helping with Lua scripting support, script testing, and clear guidance for users who need cleaner script workflows.",
       logo: "/A7OMIC.png",
     },
     {
       period: "23 February 2026 - Present",
-      title: "Script Helper",
-      subtitle: "LYNX",
+      title: "LYNX",
+      subtitle: "Script Helper",
       details:
         "Supporting script usage, helping troubleshoot user issues, and improving practical scripting workflows for the community.",
       logo: "/experience-logos/LYNX.png",
     },
     {
       period: "3 March 2026 - Present",
-      title: "Script Dev",
-      subtitle: "Limehub",
+      title: "Limehub",
+      subtitle: "Script Dev",
       details:
         "Building and refining Lua script features with a focus on usability, interface clarity, and maintainable script behavior.",
       logo: "/experience-logos/Limehub.png",
