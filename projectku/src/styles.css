@@ -9518,6 +9518,64 @@ body {
   color: rgba(244, 244, 245, 0.62);
 }
 
+/* Give experience logos room so the text reads as a clean left/right row. */
+.eduItem {
+  grid-template-columns: minmax(150px, 220px) 58px minmax(0, 1fr) !important;
+  column-gap: 26px !important;
+}
+
+.eduPeriod {
+  padding-top: 9px !important;
+}
+
+.eduRail {
+  width: 58px !important;
+  justify-items: center;
+}
+
+.eduLogoDot {
+  width: 46px;
+  height: 46px;
+  margin-top: 0 !important;
+}
+
+.eduContent {
+  padding-top: 5px !important;
+}
+
+.eduTitle {
+  line-height: 1.15;
+}
+
+.eduSubtitle {
+  margin-top: 5px;
+}
+
+@media (max-width: 720px) {
+  .eduItem {
+    grid-template-columns: 40px minmax(0, 1fr) !important;
+    gap: 8px 16px !important;
+  }
+
+  .eduPeriod {
+    padding-top: 0 !important;
+  }
+
+  .eduRail {
+    width: 40px !important;
+  }
+
+  .eduLogoDot {
+    width: 34px;
+    height: 34px;
+    margin-top: 1px !important;
+  }
+
+  .eduContent {
+    padding-top: 0 !important;
+  }
+}
+
 /* Put the rotating green effect on the outer outline only */
 .btn2,
 .welcomeEnter,
