@@ -12756,32 +12756,61 @@ html body .welcomeScreenMinimal .welcomeEnterMinimal:focus-visible .welcomeEnter
   right: var(--safe-right);
   bottom: calc(18px + var(--safe-bottom));
   z-index: 120;
-  width: 42px;
+  width: 48px;
+  --float-control-green: 52, 211, 153;
+  --float-control-mint: 167, 243, 208;
   pointer-events: none;
   transform: translate3d(-8px, 0, 0);
   transition: transform 420ms cubic-bezier(0.16, 1, 0.3, 1);
   will-change: transform;
 }
 
+.portfolioFloatControls::before {
+  content: "";
+  position: absolute;
+  inset: -12px -9px -12px -28px;
+  border-radius: 24px;
+  background:
+    radial-gradient(circle at 84% 48%, rgba(var(--float-control-green), 0.2), transparent 48%),
+    radial-gradient(circle at 18% 58%, rgba(var(--float-control-mint), 0.12), transparent 42%);
+  filter: blur(12px);
+  opacity: 0.68;
+  pointer-events: none;
+  transform: translate3d(0, 0, 0) scale(1);
+  transition:
+    opacity 300ms var(--ease),
+    transform 380ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
 .portfolioFloatControls.isCollapsed {
-  transform: translate3d(42px, 0, 0);
+  transform: translate3d(40px, 0, 0);
   transition: transform 360ms cubic-bezier(0.55, 0, 0.1, 1);
 }
 
+.portfolioFloatControls.isCollapsed::before {
+  opacity: 0.5;
+  transform: translate3d(7px, 0, 0) scale(0.9);
+}
+
 .portfolioFloatActions {
+  position: relative;
   display: grid;
   gap: 4px;
-  padding: 4px;
-  border: 1px solid rgba(52, 211, 153, 0.18);
-  border-radius: 14px;
+  padding: 5px;
+  isolation: isolate;
+  overflow: hidden;
+  border: 1px solid rgba(var(--float-control-green), 0.24);
+  border-radius: 16px;
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.012)),
-    rgba(3, 9, 8, 0.66);
+    linear-gradient(180deg, rgba(255, 255, 255, 0.062), rgba(255, 255, 255, 0.016)),
+    radial-gradient(circle at 50% 0%, rgba(var(--float-control-green), 0.17), transparent 64%),
+    rgba(3, 9, 8, 0.72);
   box-shadow:
-    0 14px 34px rgba(0, 0, 0, 0.28),
-    inset 0 1px 0 rgba(255, 255, 255, 0.045);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+    0 18px 38px rgba(0, 0, 0, 0.32),
+    0 0 0 1px rgba(0, 0, 0, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(14px) saturate(132%);
+  -webkit-backdrop-filter: blur(14px) saturate(132%);
   opacity: 1;
   filter: blur(0) saturate(100%);
   transform: translate3d(0, 0, 0) scale(1);
@@ -12790,6 +12819,37 @@ html body .welcomeScreenMinimal .welcomeEnterMinimal:focus-visible .welcomeEnter
     opacity 280ms var(--ease),
     filter 320ms var(--ease),
     transform 380ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.portfolioFloatActions::before {
+  content: "";
+  position: absolute;
+  inset: 1px;
+  z-index: 0;
+  border-radius: 15px;
+  background:
+    linear-gradient(115deg, rgba(255, 255, 255, 0.075), transparent 34%),
+    radial-gradient(circle at 50% 100%, rgba(var(--float-control-mint), 0.09), transparent 58%);
+  opacity: 0.9;
+  pointer-events: none;
+}
+
+.portfolioFloatActions::after {
+  content: "";
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  top: 50%;
+  height: 1px;
+  z-index: 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(var(--float-control-mint), 0.22),
+    transparent
+  );
+  opacity: 0.56;
+  pointer-events: none;
 }
 
 .portfolioFloatControls.isCollapsed .portfolioFloatActions {
@@ -12810,8 +12870,8 @@ html body .welcomeScreenMinimal .welcomeEnterMinimal:focus-visible .welcomeEnter
   align-items: center;
   justify-content: center;
   border: 1px solid transparent;
-  border-radius: 10px;
-  background: transparent;
+  border-radius: 11px;
+  background: rgba(255, 255, 255, 0.018);
   box-shadow: none;
   color: rgba(244, 244, 245, 0.74);
   cursor: pointer;
@@ -12823,27 +12883,98 @@ html body .welcomeScreenMinimal .welcomeEnterMinimal:focus-visible .welcomeEnter
     transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
+.portfolioFloatActions .portfolioFloatBtn {
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.portfolioFloatActions .portfolioFloatBtn::before {
+  content: "";
+  position: absolute;
+  inset: 3px;
+  border-radius: 9px;
+  background:
+    radial-gradient(circle at 50% 18%, rgba(var(--float-control-mint), 0.2), transparent 58%),
+    rgba(var(--float-control-green), 0.045);
+  opacity: 0;
+  transform: scale(0.82);
+  transition:
+    opacity 180ms var(--ease),
+    transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.portfolioFloatActions .portfolioFloatBtn:hover::before,
+.portfolioFloatActions .portfolioFloatBtn:focus-visible::before {
+  opacity: 1;
+  transform: scale(1);
+}
+
 .portfolioFloatToggle {
   position: absolute;
-  right: 100%;
-  bottom: 4px;
+  right: calc(100% - 3px);
+  top: 50%;
   z-index: 1;
-  width: 18px;
-  height: 34px;
-  border-color: rgba(52, 211, 153, 0.16);
-  border-right: 0;
-  border-radius: 10px 0 0 10px;
+  width: 26px;
+  height: 46px;
+  border-color: rgba(var(--float-control-green), 0.24);
+  border-right-color: rgba(var(--float-control-green), 0.09);
+  border-radius: 14px 4px 4px 14px;
   padding: 0;
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.012)),
-    rgba(3, 9, 8, 0.72);
+    linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.014)),
+    linear-gradient(90deg, rgba(var(--float-control-green), 0.14), rgba(var(--float-control-green), 0.036)),
+    rgba(3, 9, 8, 0.78);
   box-shadow:
-    -8px 10px 22px rgba(0, 0, 0, 0.18),
-    inset 0 1px 0 rgba(255, 255, 255, 0.04);
-  color: rgba(167, 243, 208, 0.76);
+    -10px 12px 24px rgba(0, 0, 0, 0.24),
+    0 0 18px rgba(var(--float-control-green), 0.065),
+    inset 1px 1px 0 rgba(255, 255, 255, 0.055);
+  color: rgba(var(--float-control-mint), 0.84);
+  transform: translate3d(0, -50%, 0);
+}
+
+.portfolioFloatToggle::before {
+  content: "";
+  position: absolute;
+  inset: 9px 4px 9px auto;
+  width: 1px;
+  border-radius: 999px;
+  background: linear-gradient(
+    180deg,
+    transparent,
+    rgba(var(--float-control-mint), 0.44),
+    transparent
+  );
+  opacity: 0.74;
+}
+
+.portfolioFloatToggle::after {
+  content: "";
+  position: absolute;
+  top: 7px;
+  right: -5px;
+  width: 8px;
+  height: calc(100% - 14px);
+  border-radius: 0 10px 10px 0;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.012)),
+    rgba(3, 9, 8, 0.72);
+  opacity: 0.86;
+  pointer-events: none;
+}
+
+.portfolioFloatControls.isCollapsed .portfolioFloatToggle {
+  border-color: rgba(var(--float-control-green), 0.28);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.072), rgba(255, 255, 255, 0.018)),
+    linear-gradient(90deg, rgba(var(--float-control-green), 0.17), rgba(var(--float-control-green), 0.058)),
+    rgba(3, 9, 8, 0.82);
 }
 
 .portfolioFloatToggle svg {
+  position: relative;
+  z-index: 1;
+  transform: translate3d(1px, 0, 0);
   transition: transform 260ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -12853,22 +12984,32 @@ html body .welcomeScreenMinimal .welcomeEnterMinimal:focus-visible .welcomeEnter
 
 .portfolioFloatBtn:hover,
 .portfolioFloatBtn:focus-visible {
-  border-color: rgba(52, 211, 153, 0.2);
+  border-color: rgba(var(--float-control-green), 0.24);
   background:
-    linear-gradient(180deg, rgba(52, 211, 153, 0.13), rgba(52, 211, 153, 0.035)),
+    linear-gradient(180deg, rgba(var(--float-control-green), 0.13), rgba(var(--float-control-green), 0.035)),
     rgba(255, 255, 255, 0.026);
   color: #ffffff;
-  transform: translate3d(0, 0, 0);
+  transform: translate3d(0, -1px, 0);
 }
 
 .portfolioFloatBtn:focus-visible {
-  outline: 2px solid rgba(52, 211, 153, 0.34);
+  outline: 2px solid rgba(var(--float-control-green), 0.34);
   outline-offset: 3px;
 }
 
 .portfolioFloatToggle:hover,
 .portfolioFloatToggle:focus-visible {
-  transform: translate3d(0, 0, 0);
+  border-color: rgba(var(--float-control-green), 0.34);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.082), rgba(255, 255, 255, 0.018)),
+    linear-gradient(90deg, rgba(var(--float-control-green), 0.2), rgba(var(--float-control-green), 0.064)),
+    rgba(3, 9, 8, 0.84);
+  color: #ffffff;
+  transform: translate3d(-2px, -50%, 0);
+}
+
+.portfolioFloatToggle:active {
+  transform: translate3d(0, -50%, 0) scale(0.96);
 }
 
 .portfolioFloatBtnTop {
@@ -12959,12 +13100,12 @@ html body .welcomeScreenMinimal .welcomeEnterMinimal:focus-visible .welcomeEnter
   .portfolioFloatControls {
     right: var(--safe-right);
     bottom: calc(12px + var(--safe-bottom));
-    width: 40px;
+    width: 46px;
     transform: translate3d(-7px, 0, 0);
   }
 
   .portfolioFloatControls.isCollapsed {
-    transform: translate3d(40px, 0, 0);
+    transform: translate3d(38px, 0, 0);
   }
 
   .portfolioFloatActions {
@@ -12978,9 +13119,8 @@ html body .welcomeScreenMinimal .welcomeEnterMinimal:focus-visible .welcomeEnter
   }
 
   .portfolioFloatToggle {
-    width: 18px;
-    height: 32px;
-    bottom: 4px;
+    width: 25px;
+    height: 44px;
   }
 }
 
