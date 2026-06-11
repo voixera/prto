@@ -3,6 +3,21 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 const LOADING_TICK_MS = 28;
 const EXIT_ANIMATION_MS = 760;
 
+const WELCOME_PARTICLES = Array.from({ length: 54 }, (_, index) => {
+  const x = (index * 37 + 9) % 100;
+  const y = (index * 59 + 14) % 100;
+  const size = 1.1 + (index % 5) * 0.62;
+  const driftX = ((index % 9) - 4) * 11;
+  const driftY = -20 - (index % 7) * 8;
+  const driftMidX = Math.round(driftX * 0.48);
+  const driftMidY = Math.round(driftY * 0.54);
+  const duration = 8600 + (index % 8) * 960;
+  const delay = -(index % 13) * 520;
+  const opacity = 0.28 + (index % 4) * 0.075;
+
+  return { x, y, size, driftX, driftY, driftMidX, driftMidY, duration, delay, opacity };
+});
+
 const PALETTES = [
   {
     id: "midnight",
@@ -538,6 +553,27 @@ export default function WelcomeScreen({ entered = false, onEnter }) {
       aria-hidden={isExiting || entered}
       inert={isExiting || entered ? "" : undefined}
     >
+      <div className="welcomeParticleField" aria-hidden="true">
+        {WELCOME_PARTICLES.map((particle, index) => (
+          <span
+            key={`welcome-particle-${index}`}
+            className="welcomeParticle"
+            style={{
+              "--particle-x": `${particle.x}%`,
+              "--particle-y": `${particle.y}%`,
+              "--particle-size": `${particle.size}px`,
+              "--particle-drift-x": `${particle.driftX}px`,
+              "--particle-drift-y": `${particle.driftY}px`,
+              "--particle-drift-mid-x": `${particle.driftMidX}px`,
+              "--particle-drift-mid-y": `${particle.driftMidY}px`,
+              "--particle-duration": `${particle.duration}ms`,
+              "--particle-delay": `${particle.delay}ms`,
+              "--particle-opacity": particle.opacity,
+            }}
+          />
+        ))}
+      </div>
+
       <div className="container welcomeInner welcomeMinimalInner">
         <div
           className="welcomeMinimalLoader"

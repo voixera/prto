@@ -10923,8 +10923,8 @@ html body {
   z-index: 1;
   width: calc(100% + 14vw) !important;
   height: calc(100% + 14vh) !important;
-  opacity: 0.86;
-  filter: saturate(112%) contrast(104%);
+  opacity: 0.88;
+  filter: saturate(114%) contrast(105%);
 }
 
 .animatedWaveBackgroundCanvas canvas {
@@ -10966,7 +10966,7 @@ html body {
 
 .motionBackdropScan {
   z-index: 3;
-  opacity: 0.26;
+  opacity: 0.18;
   background:
     linear-gradient(90deg, transparent 0 48%, rgba(52, 211, 153, 0.028) 50%, transparent 52% 100%),
     repeating-linear-gradient(0deg, rgba(52, 211, 153, 0.03) 0 1px, transparent 1px 9px),
@@ -11030,7 +11030,7 @@ html body {
   .animatedWaveBackgroundCanvas {
     inset: -5vh -24vw !important;
     width: calc(100% + 48vw) !important;
-    opacity: 0.72;
+    opacity: 0.76;
   }
 
   .motionBackdropGlow {
@@ -11039,7 +11039,7 @@ html body {
   }
 
   .motionBackdropScan {
-    opacity: 0.22;
+    opacity: 0.15;
   }
 }
 
@@ -12747,6 +12747,191 @@ html body .welcomeScreenMinimal .welcomeEnterMinimal:focus-visible .welcomeEnter
     opacity: 0;
     filter: blur(6px);
     transform: translate3d(0, -4px, 0);
+  }
+}
+
+/* Welcome particle stage: replace the old square grid with soft floating points. */
+html body .welcomeScreen.welcomeScreenMinimal {
+  background:
+    radial-gradient(520px 340px at 50% 48%, rgba(var(--loader-green), 0.12), transparent 72%),
+    radial-gradient(780px 540px at 50% 112%, rgba(var(--loader-green-soft), 0.05), transparent 70%),
+    linear-gradient(180deg, #050505 0%, #06100c 52%, #050505 100%) !important;
+}
+
+html body .welcomeScreen.welcomeScreenMinimal::before {
+  content: "" !important;
+  display: block !important;
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 0 !important;
+  pointer-events: none !important;
+  background:
+    radial-gradient(circle at 18% 22%, rgba(var(--loader-green), 0.12) 0 1px, transparent 2.2px),
+    radial-gradient(circle at 74% 28%, rgba(var(--loader-green-soft), 0.14) 0 1px, transparent 2.4px),
+    radial-gradient(circle at 38% 70%, rgba(255, 255, 255, 0.11) 0 1px, transparent 2px),
+    radial-gradient(circle at 82% 78%, rgba(var(--loader-green), 0.1) 0 1px, transparent 2.4px) !important;
+  background-size: 210px 190px, 260px 230px, 300px 260px, 230px 280px !important;
+  opacity: 0.66 !important;
+  mask-image: radial-gradient(circle at 50% 50%, #000 0 46%, transparent 84%) !important;
+  animation: welcomeParticleMist 18s ease-in-out infinite !important;
+}
+
+html body .welcomeScreen.welcomeScreenMinimal::after {
+  content: "" !important;
+  display: block !important;
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 0 !important;
+  pointer-events: none !important;
+  background:
+    radial-gradient(circle at 50% 50%, transparent 0 38%, rgba(0, 0, 0, 0.22) 76%, rgba(0, 0, 0, 0.64) 100%),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.12), transparent 36%, rgba(0, 0, 0, 0.36)) !important;
+}
+
+html body .welcomeParticleField {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  overflow: hidden;
+  pointer-events: none;
+  transform: translate3d(0, 0, 0);
+}
+
+html body .welcomeParticleField::before,
+html body .welcomeParticleField::after {
+  content: "";
+  position: absolute;
+  width: min(44vw, 390px);
+  aspect-ratio: 1;
+  border-radius: 999px;
+  pointer-events: none;
+  filter: blur(42px);
+  opacity: 0.18;
+}
+
+html body .welcomeParticleField::before {
+  left: 14%;
+  top: 19%;
+  background: rgba(var(--loader-green), 0.78);
+  animation: welcomeGlowDrift 14s ease-in-out infinite;
+}
+
+html body .welcomeParticleField::after {
+  right: 13%;
+  bottom: 13%;
+  background: rgba(var(--loader-green-soft), 0.52);
+  animation: welcomeGlowDrift 16s ease-in-out -4s infinite reverse;
+}
+
+html body .welcomeParticle {
+  position: absolute;
+  left: var(--particle-x);
+  top: var(--particle-y);
+  width: var(--particle-size);
+  height: var(--particle-size);
+  border-radius: 999px;
+  background: rgba(var(--loader-green-soft), var(--particle-opacity));
+  box-shadow:
+    0 0 12px rgba(var(--loader-green), 0.42),
+    0 0 2px rgba(255, 255, 255, 0.62);
+  opacity: 0.86;
+  transform: translate3d(-50%, -50%, 0);
+  animation: welcomeParticleFloat var(--particle-duration) ease-in-out var(--particle-delay)
+    infinite both;
+}
+
+html body .welcomeScreenMinimal .welcomeMinimalInner {
+  position: relative !important;
+  z-index: 2 !important;
+}
+
+html body .welcomeScreenMinimal.isExiting .welcomeParticleField {
+  animation: welcomeParticlesOut 560ms cubic-bezier(0.55, 0, 0.1, 1) forwards;
+}
+
+@keyframes welcomeParticleFloat {
+  0% {
+    opacity: 0.08;
+    transform: translate3d(-50%, -50%, 0) scale(0.78);
+  }
+
+  24% {
+    opacity: 0.92;
+  }
+
+  58% {
+    opacity: 0.55;
+    transform: translate3d(
+        calc(-50% + var(--particle-drift-mid-x)),
+        calc(-50% + var(--particle-drift-mid-y)),
+        0
+      )
+      scale(1.12);
+  }
+
+  100% {
+    opacity: 0.12;
+    transform: translate3d(
+        calc(-50% + var(--particle-drift-x)),
+        calc(-50% + var(--particle-drift-y)),
+        0
+      )
+      scale(0.9);
+  }
+}
+
+@keyframes welcomeParticleMist {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+
+  50% {
+    transform: translate3d(0, -12px, 0) scale(1.04);
+  }
+}
+
+@keyframes welcomeGlowDrift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+
+  50% {
+    transform: translate3d(26px, -18px, 0) scale(1.08);
+  }
+}
+
+@keyframes welcomeParticlesOut {
+  to {
+    opacity: 0;
+    filter: blur(16px);
+    transform: translate3d(0, -16px, 0) scale(1.035);
+  }
+}
+
+@media (max-width: 680px) {
+  html body .welcomeParticle {
+    box-shadow:
+      0 0 9px rgba(var(--loader-green), 0.38),
+      0 0 1px rgba(255, 255, 255, 0.58);
+  }
+
+  html body .welcomeParticleField::before,
+  html body .welcomeParticleField::after {
+    width: 62vw;
+    filter: blur(36px);
+    opacity: 0.15;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html body .welcomeScreen.welcomeScreenMinimal::before,
+  html body .welcomeParticleField::before,
+  html body .welcomeParticleField::after,
+  html body .welcomeParticle,
+  html body .welcomeScreenMinimal.isExiting .welcomeParticleField {
+    animation: none !important;
   }
 }
 

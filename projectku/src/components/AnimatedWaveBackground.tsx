@@ -4,6 +4,15 @@ import * as THREE from "three";
 
 const BACKGROUND_LINE_COLOR = "#064e3b";
 const BACKGROUND_ACCENT_COLOR = "#34d399";
+const BACKGROUND_SOFT_COLOR = "#a7f3d0";
+
+const PANEL_LINKS = [
+  { from: 0, to: 2, lane: 0.34 },
+  { from: 2, to: 3, lane: 0.46 },
+  { from: 4, to: 5, lane: 0.16 },
+  { from: 8, to: 9, lane: -0.22 },
+  { from: 9, to: 10, lane: -0.18 },
+];
 
 const PANELS = [
   {
@@ -368,6 +377,50 @@ function createPanelTexture(panel, panelWidth, panelHeight) {
   return texture;
 }
 
+function createPanelDepthGeometry(width, height) {
+  const halfW = width / 2;
+  const halfH = height / 2;
+  const offset = 0.08;
+  const depth = -0.095;
+  const front = [
+    new THREE.Vector3(-halfW, -halfH, 0),
+    new THREE.Vector3(halfW, -halfH, 0),
+    new THREE.Vector3(halfW, halfH, 0),
+    new THREE.Vector3(-halfW, halfH, 0),
+  ];
+  const back = front.map((point) => point.clone().add(new THREE.Vector3(offset, -offset, depth)));
+  const points = [];
+
+  for (let index = 0; index < 4; index += 1) {
+    const next = (index + 1) % 4;
+    points.push(front[index], back[index], back[index], back[next]);
+  }
+
+  return new THREE.BufferGeometry().setFromPoints(points);
+}
+
+function createGroundGridGeometry(width, depth, columns, rows) {
+  const halfW = width / 2;
+  const halfD = depth / 2;
+  const points = [];
+
+  for (let index = 0; index <= columns; index += 1) {
+    const x = -halfW + (width * index) / columns;
+    points.push(new THREE.Vector3(x, 0, -halfD), new THREE.Vector3(x, 0, halfD));
+  }
+
+  for (let index = 0; index <= rows; index += 1) {
+    const z = -halfD + (depth * index) / rows;
+    points.push(new THREE.Vector3(-halfW, 0, z), new THREE.Vector3(halfW, 0, z));
+  }
+
+  return new THREE.BufferGeometry().setFromPoints(points);
+}
+
+function clampMotion(n, min = -1, max = 1) {
+  return Math.min(max, Math.max(min, n));
+}
+
 function useReducedMotion() {
   const [reducedMotion, setReducedMotion] = useState(false);
 
@@ -399,13 +452,36 @@ function useCompactViewport() {
   return isCompact;
 }
 
-function usePointerParallax() {
-  const targetRef = useRef({ x: 0, y: 0 });
+function useTiltViewport() {
+  const [usesTilt, setUsesTilt] = useState(false);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
 
+    const update = () => {
+      const coarsePointer = window.matchMedia?.("(pointer: coarse)")?.matches ?? false;
+      setUsesTilt(coarsePointer || window.innerWidth < 1024);
+    };
+
+    update();
+    window.addEventListener("resize", update, { passive: true });
+    return () => window.removeEventListener("resize", update);
+  }, []);
+
+  return usesTilt;
+}
+
+function useMotionParallax(usesTilt) {
+  const targetRef = useRef({ x: 0, y: 0 });
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    let orientationListenerActive = false;
+    let orientationRequestStarted = false;
+    let baseline = null;
+
     const handlePointerMove = (event) => {
+      if (usesTilt && orientationListenerActive) return;
       targetRef.current = {
         x: (event.clientX / window.innerWidth - 0.5) * 2,
         y: (event.clientY / window.innerHeight - 0.5) * 2,
@@ -413,8 +489,56 @@ function usePointerParallax() {
     };
 
     window.addEventListener("pointermove", handlePointerMove, { passive: true });
-    return () => window.removeEventListener("pointermove", handlePointerMove);
-  }, []);
+
+    if (!usesTilt || typeof window.DeviceOrientationEvent === "undefined") {
+      return () => window.removeEventListener("pointermove", handlePointerMove);
+    }
+
+    const handleOrientation = (event) => {
+      if (!Number.isFinite(event.gamma) || !Number.isFinite(event.beta)) return;
+
+      const gamma = Number(event.gamma);
+      const beta = Number(event.beta);
+      if (!baseline) baseline = { gamma, beta };
+
+      orientationListenerActive = true;
+      targetRef.current = {
+        x: clampMotion((gamma - baseline.gamma) / 18),
+        y: clampMotion((beta - baseline.beta) / 24),
+      };
+    };
+
+    const startOrientation = async () => {
+      if (orientationRequestStarted) return;
+      orientationRequestStarted = true;
+
+      try {
+        const OrientationEvent = window.DeviceOrientationEvent;
+        if (typeof OrientationEvent?.requestPermission === "function") {
+          const permission = await OrientationEvent.requestPermission();
+          if (permission !== "granted") return;
+        }
+
+        window.addEventListener("deviceorientation", handleOrientation, true);
+      } catch {
+        orientationListenerActive = false;
+      }
+    };
+
+    if (typeof window.DeviceOrientationEvent?.requestPermission === "function") {
+      window.addEventListener("pointerdown", startOrientation, { once: true, passive: true });
+      window.addEventListener("touchend", startOrientation, { once: true, passive: true });
+    } else {
+      startOrientation();
+    }
+
+    return () => {
+      window.removeEventListener("pointermove", handlePointerMove);
+      window.removeEventListener("pointerdown", startOrientation);
+      window.removeEventListener("touchend", startOrientation);
+      window.removeEventListener("deviceorientation", handleOrientation, true);
+    };
+  }, [usesTilt]);
 
   return targetRef;
 }
@@ -423,45 +547,93 @@ function FloatingPanel({ panel, reducedMotion }) {
   const groupRef = useRef(null);
   const [width, height] = panel.size;
   const texture = useMemo(() => createPanelTexture(panel, width, height), [height, panel, width]);
+  const accentColor = panel.accent === "#f8fafc" ? BACKGROUND_SOFT_COLOR : BACKGROUND_ACCENT_COLOR;
   const edgeGeometry = useMemo(() => {
     const plane = new THREE.PlaneGeometry(width, height);
     return new THREE.EdgesGeometry(plane);
   }, [height, width]);
+  const depthGeometry = useMemo(() => createPanelDepthGeometry(width, height), [height, width]);
+  const cornerPositions = useMemo(
+    () => [
+      [-width / 2, -height / 2, 0.052],
+      [width / 2, -height / 2, 0.052],
+      [width / 2, height / 2, 0.052],
+      [-width / 2, height / 2, 0.052],
+    ],
+    [height, width]
+  );
 
   useEffect(() => {
     return () => {
+      depthGeometry.dispose();
       edgeGeometry.dispose();
       texture.dispose();
     };
-  }, [edgeGeometry, texture]);
+  }, [depthGeometry, edgeGeometry, texture]);
 
   useFrame(({ clock }) => {
     if (!groupRef.current || reducedMotion) return;
     const t = clock.elapsedTime + panel.delay;
     groupRef.current.position.y = panel.position[1] + Math.sin(t * 0.78) * 0.11;
+    groupRef.current.position.x = panel.position[0] + Math.sin(t * 0.36) * 0.04;
+    groupRef.current.position.z = panel.position[2] + Math.cos(t * 0.4) * 0.08;
     groupRef.current.rotation.z = panel.rotation[2] + Math.sin(t * 0.52) * 0.025;
+    groupRef.current.rotation.y = panel.rotation[1] + Math.sin(t * 0.28) * 0.035;
   });
 
   return (
     <group ref={groupRef} position={panel.position} rotation={panel.rotation}>
-      <mesh position={[0.045, -0.045, -0.025]} scale={[1.025, 1.025, 1]}>
+      <mesh position={[0.12, -0.11, -0.12]} scale={[1.08, 1.08, 1]}>
         <planeGeometry args={[width, height]} />
         <meshBasicMaterial
           color="#000000"
           depthWrite={false}
-          opacity={0.26}
+          opacity={0.3}
           side={THREE.DoubleSide}
           transparent
         />
       </mesh>
 
-      <mesh>
+      <mesh position={[0.065, -0.06, -0.065]} scale={[1.045, 1.045, 1]}>
+        <planeGeometry args={[width, height]} />
+        <meshBasicMaterial
+          color="#03120e"
+          depthWrite={false}
+          opacity={0.5}
+          side={THREE.DoubleSide}
+          transparent
+        />
+      </mesh>
+
+      <mesh position={[width * 0.515, -0.02, -0.028]} rotation={[0, Math.PI / 2, 0]}>
+        <planeGeometry args={[0.12, height * 0.88]} />
+        <meshBasicMaterial
+          color={accentColor}
+          depthWrite={false}
+          opacity={0.12}
+          side={THREE.DoubleSide}
+          transparent
+        />
+      </mesh>
+
+      <mesh position={[0.04, -height * 0.515, -0.03]} rotation={[Math.PI / 2, 0, 0]}>
+        <planeGeometry args={[width * 0.88, 0.12]} />
+        <meshBasicMaterial
+          color={BACKGROUND_LINE_COLOR}
+          depthWrite={false}
+          opacity={0.14}
+          side={THREE.DoubleSide}
+          transparent
+        />
+      </mesh>
+
+      <mesh position={[0, 0, 0.018]}>
         <planeGeometry args={[width, height]} />
         <meshBasicMaterial
           color="#ffffff"
           depthWrite={false}
           map={texture}
-          opacity={0.92}
+          opacity={0.9}
           side={THREE.DoubleSide}
           transparent
         />
@@ -469,22 +641,234 @@ function FloatingPanel({ panel, reducedMotion }) {
 
       <lineSegments geometry={edgeGeometry} position={[0, 0, 0.012]}>
         <lineBasicMaterial
-          color={BACKGROUND_LINE_COLOR}
+          color={accentColor}
           depthWrite={false}
-          opacity={0.2}
+          opacity={0.24}
           transparent
         />
       </lineSegments>
 
-      <mesh position={[-width * 0.49, 0, 0.024]}>
+      <lineSegments geometry={edgeGeometry} position={[0.045, -0.045, -0.045]}>
+        <lineBasicMaterial
+          color={BACKGROUND_LINE_COLOR}
+          depthWrite={false}
+          opacity={0.1}
+          transparent
+        />
+      </lineSegments>
+
+      <lineSegments geometry={depthGeometry} position={[0, 0, 0.028]}>
+        <lineBasicMaterial
+          color={accentColor}
+          depthWrite={false}
+          opacity={0.18}
+          transparent
+        />
+      </lineSegments>
+
+      {cornerPositions.map(([x, y, z], index) => (
+        <mesh key={`panel-corner-${index}`} position={[x, y, z]}>
+          <circleGeometry args={[0.026, 16]} />
+          <meshBasicMaterial
+            color={index % 2 === 0 ? accentColor : BACKGROUND_SOFT_COLOR}
+            depthWrite={false}
+            opacity={0.52}
+            transparent
+          />
+        </mesh>
+      ))}
+
+      <mesh position={[-width * 0.49, 0, 0.034]}>
         <planeGeometry args={[0.024, height * 0.72]} />
         <meshBasicMaterial color={BACKGROUND_LINE_COLOR} depthWrite={false} opacity={0.42} transparent />
       </mesh>
 
-      <mesh position={[-width * 0.42, height * 0.36, 0.028]}>
+      <mesh position={[width * 0.36, height * 0.43, 0.044]}>
+        <planeGeometry args={[width * 0.22, 0.016]} />
+        <meshBasicMaterial color={accentColor} depthWrite={false} opacity={0.34} transparent />
+      </mesh>
+
+      <mesh position={[-width * 0.42, height * 0.36, 0.038]}>
         <circleGeometry args={[0.032, 18]} />
         <meshBasicMaterial color={BACKGROUND_ACCENT_COLOR} depthWrite={false} opacity={0.64} transparent />
       </mesh>
+    </group>
+  );
+}
+
+function DepthRibbon({ index, isCompact, reducedMotion }) {
+  const meshRef = useRef(null);
+  const geometry = useMemo(() => {
+    const side = index % 2 === 0 ? -1 : 1;
+    const lane = Math.floor(index / 2);
+    const spread = (isCompact ? 3.45 : 5.45) + lane * (isCompact ? 0.54 : 0.82);
+    const height = isCompact ? 2.65 : 3.75;
+    const depth = isCompact ? 6.4 : 8.8;
+    const points = Array.from({ length: 8 }, (_, pointIndex) => {
+      const t = pointIndex / 7;
+      const wave = Math.sin(t * Math.PI + index * 0.46);
+      return new THREE.Vector3(
+        side * (spread - t * (isCompact ? 0.56 : 0.74)) + wave * 0.12,
+        -height * 0.52 + t * height + Math.cos(t * Math.PI + index) * 0.1,
+        -1.8 - t * depth
+      );
+    });
+    const curve = new THREE.CatmullRomCurve3(points);
+    return new THREE.TubeGeometry(curve, 96, isCompact ? 0.0045 : 0.006, 6, false);
+  }, [index, isCompact]);
+
+  useEffect(() => {
+    return () => geometry.dispose();
+  }, [geometry]);
+
+  useFrame(({ clock }) => {
+    if (!meshRef.current || reducedMotion) return;
+    const t = clock.elapsedTime + index * 0.72;
+    meshRef.current.rotation.z = Math.sin(t * 0.22) * 0.025;
+    meshRef.current.position.y = Math.sin(t * 0.38) * 0.16;
+    meshRef.current.position.z = Math.sin(t * 0.18) * 0.22;
+  });
+
+  return (
+    <mesh ref={meshRef} geometry={geometry}>
+      <meshBasicMaterial
+        color={index % 3 === 1 ? BACKGROUND_SOFT_COLOR : BACKGROUND_ACCENT_COLOR}
+        depthWrite={false}
+        opacity={isCompact ? 0.085 : 0.115}
+        transparent
+      />
+    </mesh>
+  );
+}
+
+function DepthRibbons({ isCompact, reducedMotion }) {
+  const count = isCompact ? 3 : 5;
+  return (
+    <group position={[0, isCompact ? 0.1 : 0.24, 0]}>
+      {Array.from({ length: count }, (_, index) => (
+        <DepthRibbon
+          key={`depth-ribbon-${index}`}
+          index={index}
+          isCompact={isCompact}
+          reducedMotion={reducedMotion}
+        />
+      ))}
+    </group>
+  );
+}
+
+function OrbitalHalo({ isCompact, reducedMotion }) {
+  const groupRef = useRef(null);
+
+  useFrame(({ clock }) => {
+    if (!groupRef.current || reducedMotion) return;
+    const t = clock.elapsedTime;
+    groupRef.current.rotation.y = t * 0.12;
+    groupRef.current.rotation.x = Math.sin(t * 0.28) * 0.08;
+    groupRef.current.position.y = (isCompact ? 0.68 : 0.88) + Math.sin(t * 0.34) * 0.1;
+  });
+
+  return (
+    <group
+      ref={groupRef}
+      position={[isCompact ? 1.35 : 3.55, isCompact ? 0.68 : 0.88, isCompact ? -6.1 : -6.8]}
+      scale={isCompact ? 0.66 : 1}
+    >
+      {[0, 1, 2].map((ring) => (
+        <mesh
+          key={`orbital-halo-${ring}`}
+          rotation={[
+            ring === 0 ? Math.PI / 2 : Math.PI / 2.75,
+            ring === 1 ? Math.PI / 2 : 0.3,
+            ring === 2 ? Math.PI / 2.55 : 0,
+          ]}
+        >
+          <torusGeometry args={[0.74 + ring * 0.22, 0.006, 8, 128]} />
+          <meshBasicMaterial
+            color={ring === 1 ? BACKGROUND_SOFT_COLOR : BACKGROUND_ACCENT_COLOR}
+            depthWrite={false}
+            opacity={0.13 - ring * 0.018}
+            transparent
+          />
+        </mesh>
+      ))}
+      <mesh>
+        <icosahedronGeometry args={[0.34, 1]} />
+        <meshBasicMaterial
+          color={BACKGROUND_ACCENT_COLOR}
+          depthWrite={false}
+          opacity={0.08}
+          transparent
+          wireframe
+        />
+      </mesh>
+    </group>
+  );
+}
+
+function PanelLink({ link, from, to, index, isCompact, reducedMotion }) {
+  const meshRef = useRef(null);
+  const geometry = useMemo(() => {
+    const direction = to.position[0] >= from.position[0] ? 1 : -1;
+    const start = new THREE.Vector3(
+      from.position[0] + direction * from.size[0] * 0.46,
+      from.position[1] + link.lane * 0.12,
+      from.position[2] - 0.12
+    );
+    const end = new THREE.Vector3(
+      to.position[0] - direction * to.size[0] * 0.46,
+      to.position[1] + link.lane * 0.12,
+      to.position[2] - 0.12
+    );
+    const firstMid = start.clone().lerp(end, 0.36);
+    const secondMid = start.clone().lerp(end, 0.68);
+    const laneOffset = link.lane * (isCompact ? 0.62 : 1);
+    firstMid.y += laneOffset;
+    secondMid.y += laneOffset * 0.82;
+    firstMid.z -= 0.42 + index * 0.018;
+    secondMid.z -= 0.5 + index * 0.018;
+    const curve = new THREE.CatmullRomCurve3([start, firstMid, secondMid, end]);
+    return new THREE.TubeGeometry(curve, 80, isCompact ? 0.0032 : 0.0045, 5, false);
+  }, [from, index, isCompact, link, to]);
+
+  useEffect(() => {
+    return () => geometry.dispose();
+  }, [geometry]);
+
+  useFrame(({ clock }) => {
+    if (!meshRef.current || reducedMotion) return;
+    const t = clock.elapsedTime + index * 0.64;
+    meshRef.current.material.opacity = (isCompact ? 0.045 : 0.068) + Math.sin(t * 0.9) * 0.012;
+  });
+
+  return (
+    <mesh ref={meshRef} geometry={geometry}>
+      <meshBasicMaterial
+        color={index % 2 === 0 ? BACKGROUND_ACCENT_COLOR : BACKGROUND_SOFT_COLOR}
+        depthWrite={false}
+        opacity={isCompact ? 0.045 : 0.068}
+        transparent
+      />
+    </mesh>
+  );
+}
+
+function PanelLinks({ panels, isCompact, reducedMotion }) {
+  return (
+    <group>
+      {PANEL_LINKS.filter((link) => panels[link.from] && panels[link.to]).map(
+        (link, index) => (
+          <PanelLink
+            key={`panel-link-${link.from}-${link.to}`}
+            link={link}
+            from={panels[link.from]}
+            to={panels[link.to]}
+            index={index}
+            isCompact={isCompact}
+            reducedMotion={reducedMotion}
+          />
+        )
+      )}
     </group>
   );
 }
@@ -510,7 +894,7 @@ function ParticleField({ count, reducedMotion }) {
 
       nextPositions[index * 3] = (randomA - 0.5) * 14;
       nextPositions[index * 3 + 1] = (randomB - 0.5) * 7;
-      nextPositions[index * 3 + 2] = -1.4 - randomC * 7.8;
+      nextPositions[index * 3 + 2] = 0.6 - randomC * 13.2;
 
       nextColors[index * 3] = color.r;
       nextColors[index * 3 + 1] = color.g;
@@ -535,8 +919,8 @@ function ParticleField({ count, reducedMotion }) {
       </bufferGeometry>
       <pointsMaterial
         depthWrite={false}
-        opacity={0.54}
-        size={0.032}
+        opacity={0.62}
+        size={0.038}
         sizeAttenuation
         transparent
         vertexColors
@@ -586,6 +970,11 @@ function MotionRail({ rail, reducedMotion }) {
 
 function InterfaceGrid({ reducedMotion }) {
   const gridRef = useRef(null);
+  const gridGeometry = useMemo(() => createGroundGridGeometry(36, 24, 7, 12), []);
+
+  useEffect(() => {
+    return () => gridGeometry.dispose();
+  }, [gridGeometry]);
 
   useFrame(({ clock }) => {
     if (!gridRef.current || reducedMotion) return;
@@ -605,7 +994,14 @@ function InterfaceGrid({ reducedMotion }) {
           transparent
         />
       </mesh>
-      <gridHelper args={[36, 42, BACKGROUND_LINE_COLOR, BACKGROUND_LINE_COLOR]} />
+      <lineSegments geometry={gridGeometry}>
+        <lineBasicMaterial
+          color={BACKGROUND_LINE_COLOR}
+          depthWrite={false}
+          opacity={0.14}
+          transparent
+        />
+      </lineSegments>
     </group>
   );
 }
@@ -620,14 +1016,20 @@ function MotionScene({ isCompact, pointerTargetRef, reducedMotion }) {
     const motionScale = reducedMotion ? 0.25 : 1;
     rootRef.current.rotation.y = THREE.MathUtils.damp(
       rootRef.current.rotation.y,
-      pointer.x * 0.055 * motionScale,
-      2.4,
+      pointer.x * 0.105 * motionScale,
+      4.1,
       delta
     );
     rootRef.current.rotation.x = THREE.MathUtils.damp(
       rootRef.current.rotation.x,
-      -pointer.y * 0.03 * motionScale,
-      2.2,
+      -pointer.y * 0.045 * motionScale,
+      3.6,
+      delta
+    );
+    rootRef.current.position.x = THREE.MathUtils.damp(
+      rootRef.current.position.x,
+      pointer.x * 0.28 * motionScale,
+      3.8,
       delta
     );
     rootRef.current.position.y = reducedMotion ? 0 : Math.sin(clock.elapsedTime * 0.18) * 0.08;
@@ -636,16 +1038,24 @@ function MotionScene({ isCompact, pointerTargetRef, reducedMotion }) {
   return (
     <>
       <color attach="background" args={["#020504"]} />
-      <fog attach="fog" args={["#020504", 7.5, 18]} />
-      <ambientLight intensity={0.62} />
+      <fog attach="fog" args={["#020504", 7, 19]} />
+      <ambientLight intensity={0.66} />
+      <pointLight color={BACKGROUND_ACCENT_COLOR} distance={12} intensity={0.72} position={[-3.8, 2.8, 2.6]} />
       <group ref={rootRef}>
         <InterfaceGrid reducedMotion={reducedMotion} />
-        <ParticleField count={isCompact ? 120 : 240} reducedMotion={reducedMotion} />
+        <DepthRibbons isCompact={isCompact} reducedMotion={reducedMotion} />
+        <OrbitalHalo isCompact={isCompact} reducedMotion={reducedMotion} />
+        <ParticleField count={isCompact ? 160 : 320} reducedMotion={reducedMotion} />
         {RAILS.map((rail) => (
           <MotionRail key={`${rail.origin[0]}-${rail.phase}`} rail={rail} reducedMotion={reducedMotion} />
         ))}
+        <PanelLinks panels={panelList} isCompact={isCompact} reducedMotion={reducedMotion} />
         {panelList.map((panel) => (
-          <FloatingPanel key={`${panel.position[0]}-${panel.position[1]}`} panel={panel} reducedMotion={reducedMotion} />
+          <FloatingPanel
+            key={`${panel.position[0]}-${panel.position[1]}`}
+            panel={panel}
+            reducedMotion={reducedMotion}
+          />
         ))}
       </group>
     </>
@@ -655,12 +1065,13 @@ function MotionScene({ isCompact, pointerTargetRef, reducedMotion }) {
 export default function AnimatedWaveBackground() {
   const reducedMotion = useReducedMotion();
   const isCompact = useCompactViewport();
-  const pointerTargetRef = usePointerParallax();
+  const usesTilt = useTiltViewport();
+  const pointerTargetRef = useMotionParallax(usesTilt);
 
   return (
     <div className="animatedWaveBackground" aria-hidden="true">
       <Canvas
-        camera={{ fov: isCompact ? 58 : 50, position: [0, 1.55, 8.8], near: 0.1, far: 30 }}
+        camera={{ fov: isCompact ? 58 : 50, position: [0, 1.55, 8.8], near: 0.1, far: 32 }}
         className="animatedWaveBackgroundCanvas"
         dpr={[1, 1.45]}
         gl={{
