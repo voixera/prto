@@ -111,6 +111,13 @@ export default function App() {
   }, [isMobileUi, isTabletUi]);
 
   useEffect(() => {
+    if (!entered) return;
+    if (isMobileUi || isTabletUi) {
+      setFloatControlsCollapsed(true);
+    }
+  }, [entered, isMobileUi, isTabletUi]);
+
+  useEffect(() => {
     if (!entered) {
       setShowBackTop(false);
       setBackTopLeaving(false);
