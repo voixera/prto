@@ -9,18 +9,21 @@ import { getPlatform, useUiVariant } from "./ui/device";
 import MiniAudioPlayer from "./components/MiniAudioPlayer";
 import AnimatedWaveBackground from "./components/AnimatedWaveBackground";
 import { musicTracks } from "./content/music";
-import { ArrowUp, ChevronLeft, ChevronRight, Volume2, VolumeX } from "lucide-react";
+import { ArrowUp, ChevronLeft, ChevronRight } from "lucide-react";
 
-function NowPlayingIcon() {
+function MusicNoteIcon({ className = "" }) {
   return (
-    <svg viewBox="0 0 24 24" aria-hidden="true">
+    <svg className={className} viewBox="0 0 24 24" aria-hidden="true">
       <path
-        d="M6 7.5v9m4-11v13m4-9v5m4-7v9"
+        d="M9 18.2V7.1l9-2v10"
         fill="none"
         stroke="currentColor"
         strokeWidth="2.2"
         strokeLinecap="round"
+        strokeLinejoin="round"
       />
+      <circle cx="6.7" cy="18.2" r="2.35" fill="none" stroke="currentColor" strokeWidth="2.2" />
+      <circle cx="15.7" cy="15.2" r="2.35" fill="none" stroke="currentColor" strokeWidth="2.2" />
     </svg>
   );
 }
@@ -99,11 +102,27 @@ export default function App() {
     if (typeof nextMuted === "boolean") {
       setSoundMuted(nextMuted);
     }
-  }, []);
+
+    if (playerSnapshot?.track?.title) {
+      showNowPlayingToast(
+        playerSnapshot.track.title,
+        playerSnapshot.total ? `Track ${playerSnapshot.index + 1} of ${playerSnapshot.total}` : "Backsound update"
+      );
+    }
+  }, [playerSnapshot]);
 
   const handleFloatControlsToggle = useCallback(() => {
-    setFloatControlsCollapsed((current) => !current);
-  }, []);
+    setFloatControlsCollapsed((current) => {
+      if (current && playerSnapshot?.track?.title) {
+        showNowPlayingToast(
+          playerSnapshot.track.title,
+          playerSnapshot.total ? `Track ${playerSnapshot.index + 1} of ${playerSnapshot.total}` : "Backsound update"
+        );
+      }
+
+      return !current;
+    });
+  }, [playerSnapshot]);
 
   useEffect(() => {
     if (isMobileUi) import("./ui/mobile/mobile.css");
@@ -244,6 +263,11 @@ export default function App() {
     );
   }, [entered, playerSnapshot]);
 
+  const floatTrackTitle = nowPlayingToast.title || playerSnapshot?.track?.title || "";
+  const showFloatMusicToast = Boolean(
+    entered && nowPlayingToast.visible && !floatControlsCollapsed && floatTrackTitle
+  );
+
   return (
     <>
       <AnimatedWaveBackground />
@@ -274,24 +298,6 @@ export default function App() {
           }}
         />
 
-        <div
-          className={`nowPlayingToast${entered && nowPlayingToast.visible ? " isVisible" : ""}`}
-          role="status"
-          aria-live="polite"
-          aria-hidden={!entered || !nowPlayingToast.visible}
-        >
-          <div className="nowPlayingToastKicker">
-            <span className="nowPlayingToastIcon" aria-hidden="true">
-              <NowPlayingIcon />
-            </span>
-            <span>Now Playing</span>
-          </div>
-          <p className="nowPlayingToastTitle" title={nowPlayingToast.title}>
-            {nowPlayingToast.title}
-          </p>
-          <p className="nowPlayingToastDetail">{nowPlayingToast.detail}</p>
-        </div>
-
         <WelcomeScreen
           entered={entered}
           onEnter={handleEnter}
@@ -312,23 +318,37 @@ export default function App() {
               className={[
                 "portfolioFloatControls",
                 floatControlsCollapsed ? "isCollapsed" : "",
+                showBackTop && !floatControlsCollapsed ? "hasBackTop" : "isBackTopHidden",
+                backTopLeaving ? "isBackTopLeaving" : "",
               ].join(" ")}
               aria-label="Portfolio controls"
             >
+              <div
+                className={`portfolioMusicToast${showFloatMusicToast ? " isVisible" : ""}`}
+                role="status"
+                aria-live="polite"
+                aria-hidden={!showFloatMusicToast}
+              >
+                <span className="portfolioMusicDisc" aria-hidden="true">
+                  <span className="portfolioMusicDiscCenter" />
+                </span>
+                <span className="portfolioMusicText">
+                  <span className="portfolioMusicKicker">Now Playing</span>
+                  <span className="portfolioMusicTitle" title={floatTrackTitle}>
+                    {floatTrackTitle}
+                  </span>
+                </span>
+              </div>
               <div className="portfolioFloatActions" aria-hidden={floatControlsCollapsed}>
                 <button
                   type="button"
-                  className="portfolioFloatBtn"
+                  className={`portfolioFloatBtn portfolioMusicBtn${soundMuted ? " isMuted" : ""}`}
                   onClick={handleSoundToggle}
                   aria-label={soundMuted ? "Turn sound on" : "Turn sound off"}
                   title={soundMuted ? "Turn sound on" : "Turn sound off"}
                   tabIndex={floatControlsCollapsed ? -1 : 0}
                 >
-                  {soundMuted ? (
-                    <VolumeX size={20} strokeWidth={2.25} aria-hidden="true" />
-                  ) : (
-                    <Volume2 size={20} strokeWidth={2.25} aria-hidden="true" />
-                  )}
+                  <MusicNoteIcon />
                 </button>
                 <button
                   type="button"
