@@ -83,43 +83,136 @@ export const profile = {
       name: "Car Driving Indonesia",
       category: "Exploiting",
       description:
-        "A safe exploit service provider primarily focused on 3 Games.",
+        "An Atomic script focused on Exploiting Roblox map.",
       iconSrc: "/roblox-script-icons/cdidd.jpg",
       videoSrc: "/roblox-script-videos/CDID.mp4",
       features: [
-        "Autofarm Money",
-        "Buy Limited Car (If Available)",
-        "Clean UI",
+        "Autofarm",
+        "Auto buy limited car",
+        "Clean UI workflow showcase",
       ],
       stack: ["Lua", "Figma", "Luau", "Roblox Studio"],
-    },
-    {
-      name: "Violence Disctrict",
-      category: "Exploiting",
-      description:
-        "A safe exploit service provider primarily focused on 3 Games.",
-      iconSrc: "/roblox-script-icons/vd.jpg",
-      videoSrc: "/roblox-script-videos/Violence District.mp4",
-      features: [
-        "Toggle Button",
-        "Keybind Feature",
-        "Auto Done Game (ban risk)",
-      ],
-      stack: ["Lua", "Figma", "Luau", "Roblox Studio"],
+      status: "Update since 2022",
     },
     {
       name: "Drag Drive Simulator",
       category: "Exploiting",
       description:
-        "A safe exploit service provider primarily focused on 3 Games.",
+        "An Atomic script focused on Exploiting Roblox map.",
       iconSrc: "/roblox-script-icons/ddss.webp",
       videoSrc: "/roblox-script-videos/DDS.mp4",
       features: [
-        "Use Wind UI",
-        "Automation Farm Money",
-        "Easy To Use",
+        "Toggle button",
+        "Autofarm Money",
+        "Anti AFK",
       ],
       stack: ["Lua", "Figma", "Luau", "Roblox Studio"],
+      status: "Update since 2026",
+    },
+    {
+      name: " Violence District",
+      category: "Exploiting",
+      description:
+        "An Atomic script focused on Exploiting Roblox map.",
+      iconSrc: "/roblox-script-icons/vd.jpg",
+      videoSrc: "/roblox-script-videos/Violence District.mp4",
+      features: [
+        "Aimbot Feature",
+        "Generator Auto Complete",
+        "Invisible Avatar",
+      ],
+      stack: ["Lua", "Figma", "Luau", "Roblox Studio"],
+      status: "Update since 2026",
+    },
+    {
+      name: "Slime RNG",
+      category: "Limehub",
+      description:
+        "A Limehub script focused on Roblox Map.",
+      iconSrc: "/roblox-script-icons/Slime.jpg",
+      videoSrc: "/roblox-script-videos/SlimeRNG.mp4",
+      features: [
+        "Auto Gun",
+        "Auto Craft",
+        "Clean UI Surfaces",
+      ],
+      stack: ["Lua", "Figma", "Luau", "Roblox Studio"],
+      status: "Create and Update since 2026",
+    },
+    {
+      name: "Grow A Garden 2",
+      category: "Limehub",
+      description:
+        "A Limehub script showcase focused on toggle button, automation game, and seed predict stock.",
+      iconSrc: "/roblox-script-icons/gag2.png",
+      videoSrc: "/roblox-script-videos/gag2.mp4",
+      features: [
+        "Auto Harvest",
+        "Auto Sell",
+        "Auto Pet Finder",
+      ],
+      stack: ["Lua", "Figma", "Luau", "Roblox Studio"],
+      status: "Create Since 2026",
+    },
+    {
+      name: "Auto Walk Mount",
+      category: "Limehub",
+      description:
+        "A Limehub script focused on Auto Walk Mount on Roblox.",
+      iconSrc: "/roblox-script-icons/walk.jpg",
+      videoSrc: "/roblox-script-videos/Walk.mp4",
+      features: [
+        "Auto Esp Path",
+        "Auto Loop Walk",
+        "Config Save",
+      ],
+      stack: ["Lua", "Figma", "Luau", "Roblox Studio"],
+      status: "Create Since 2026",
+    },
+    {
+      name: "Sambung Kata",
+      category: "LYNX",
+      description:
+        "A LYNX script showcase focused Automatic Fill Many Word while On Game.",
+      iconSrc: "/roblox-script-icons/sambungkata.png",
+      videoSrc: "/roblox-script-videos/sambungkata.mp4",
+      features: [
+        "Automatic Fill",
+        "Easy Load Ui While Execute",
+        "14987 Words",
+      ],
+      stack: ["Lua", "Figma", "Luau", "Roblox Studio"],
+      status: "Create Since 2026",
+    },
+    {
+      name: "Sawah Indo",
+      category: "LYNX",
+      description:
+        "A LYNX script showcase Focused on Automation in Game and Speed Hack and Infinite Jump",
+      iconSrc: "/roblox-script-icons/sawahindo.png",
+      videoSrc: "/roblox-script-videos/Sawahindo.mp4",
+      features: [
+        "Automatic Sell Seed",
+        "Automatic Plant Seed",
+        "Automatic To Plant Location",
+      ],
+      stack: ["Lua", "Figma", "Luau", "Roblox Studio"],
+      status: "Since 2026",
+    },
+    {
+      name: "Fish It",
+      category: "LYNX",
+      description:
+        "A LYNX Focused On Auto Fast Reel,Teleport,Auto Sell,and Potato Low Mode.",
+      iconSrc: "/roblox-script-icons/fishit.png",
+      videoSrc: "/roblox-script-videos/FishIt.mp4",
+      features: [
+        "Auto Teleport",
+        "Auto Buy or Sell",
+        "Many In Game Automation",
+      ],
+      stack: ["Lua", "Figma", "Luau", "Roblox Studio"],
+      status: "Create Since 2024",
     },
   ],
   education: [

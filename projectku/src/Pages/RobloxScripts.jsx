@@ -16,19 +16,21 @@ function RobloxScriptCard({ script }) {
 
       <p className="robloxScriptDescription">{script.description}</p>
 
-      <div className="robloxScriptVideoFrame">
-        <video
-          className="robloxScriptVideo"
-          controls
-          muted
-          playsInline
-          preload="metadata"
-          poster={script.poster}
-          aria-label={`${script.name} video preview`}
-        >
-          <source src={script.videoSrc} type="video/mp4" />
-        </video>
-      </div>
+      {script.videoSrc ? (
+        <div className="robloxScriptVideoFrame">
+          <video
+            className="robloxScriptVideo"
+            controls
+            muted
+            playsInline
+            preload="metadata"
+            poster={script.poster}
+            aria-label={`${script.name} video preview`}
+          >
+            <source src={script.videoSrc} type="video/mp4" />
+          </video>
+        </div>
+      ) : null}
 
       <ul className="robloxScriptFeatures" aria-label={`${script.name} highlights`}>
         {script.features.map((feature) => (
@@ -45,7 +47,7 @@ function RobloxScriptCard({ script }) {
         ))}
       </div>
 
-      <p className="robloxScriptStatus">{script.status}</p>
+      {script.status ? <p className="robloxScriptStatus">{script.status}</p> : null}
     </article>
   );
 }
