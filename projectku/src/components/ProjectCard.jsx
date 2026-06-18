@@ -148,7 +148,7 @@ export default function ProjectCard({ project, index = 0 }) {
                 aria-label={external ? `${link.label} (buka tab baru)` : link.label}
               >
                 <span className="pillLinkText">{link.label}</span>
-                <span aria-hidden="true">↗</span>
+                <span className="pillLinkIcon" aria-hidden="true" />
               </a>
             );
           })}
