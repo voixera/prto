@@ -128,7 +128,7 @@ export const profile = {
       name: "Slime RNG",
       category: "Limehub",
       description:
-        "A Limehub script focused on Roblox Map.",
+        "A Limehub Automation script focused on Slime RNG Roblox Map.",
       iconSrc: "/roblox-script-icons/Slime.jpg",
       videoSrc: "/roblox-script-videos/SlimeRNG.mp4",
       features: [
