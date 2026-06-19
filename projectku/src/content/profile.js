@@ -29,6 +29,13 @@ export const profile = {
         "Web, bot, and scripting project collaboration",
         "A shared learning space under A7OMIC",
       ],
+      projects: [
+        {
+          label: "Our Project",
+          href: "https://luaegis.net",
+          description: "luaegis.net",
+        },
+      ],
     },
   ],
   discordBots: [

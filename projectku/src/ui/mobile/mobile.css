@@ -968,7 +968,18 @@ html {
   border-radius: 8px;
 }
 
-.uiMobile .groupJoinText span {
+.uiMobile .groupProjectCard {
+  width: 100%;
+  min-width: 0;
+  min-height: 62px;
+  justify-content: space-between;
+  border-radius: 8px;
+  gap: 8px;
+  padding: 0.82rem 0.85rem;
+}
+
+.uiMobile .groupJoinText span,
+.uiMobile .groupProjectText span {
   min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;

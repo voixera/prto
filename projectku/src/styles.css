@@ -1501,8 +1501,8 @@ h3 { font-size: clamp(1.5rem, 3vw, 2rem); }
 }
 
 .btnIcon {
-  width: 18px;
-  height: 18px;
+  width: 14px;
+  height: 14px;
   display: inline-grid;
   place-items: center;
   opacity: 0.95;
@@ -8728,7 +8728,9 @@ html body .welcomeScreen .welcomeIconBtn svg {
 .groupSectionLabel,
 .groupInfoGrid,
 .groupFocusList,
-.groupJoin {
+.groupJoin,
+.groupProjectList,
+.groupProjectCard {
   position: relative;
   z-index: 1;
 }
@@ -8952,19 +8954,144 @@ html body .welcomeScreen .welcomeIconBtn svg {
 
 .groupJoinIcon {
   flex: 0 0 auto;
-  width: 34px;
-  height: 34px;
-  display: grid;
-  place-items: center;
-  border-radius: 10px;
-  border: 1px solid rgba(167, 243, 208, 0.18);
-  background: rgba(3, 9, 8, 0.45);
+  position: relative;
+  width: 14px;
+  height: 14px;
   color: #34d399;
+  transform: rotate(-45deg);
+  transform-origin: 50% 50%;
+  transition: transform 220ms var(--ease);
 }
 
-.groupJoinIcon svg {
-  width: 18px;
-  height: 18px;
+.groupJoinIcon::before,
+.groupJoinIcon::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+}
+
+.groupJoinIcon::before {
+  left: 2px;
+  right: 1px;
+  top: 50%;
+  height: 2px;
+  border-radius: 999px;
+  background: currentColor;
+  transform: translateY(-50%);
+}
+
+.groupJoinIcon::after {
+  right: 1px;
+  top: 50%;
+  width: 6px;
+  height: 6px;
+  border-top: 2px solid currentColor;
+  border-right: 2px solid currentColor;
+  border-radius: 1px;
+  transform: translateY(-50%) rotate(45deg);
+}
+
+.groupJoin:hover .groupJoinIcon,
+.groupJoin:focus-visible .groupJoinIcon,
+.groupJoin:active .groupJoinIcon {
+  transform: translateX(2px) rotate(0deg);
+}
+
+.groupProjectList {
+  display: grid;
+  gap: 10px;
+}
+
+.groupProjectCard {
+  width: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  min-height: 72px;
+  padding: 0.95rem 0.95rem 0.95rem 1rem;
+  border-radius: var(--radius);
+  border: 1px solid rgba(88, 101, 242, 0.3);
+  background:
+    linear-gradient(135deg, rgba(88, 101, 242, 0.18), rgba(52, 211, 153, 0.07)),
+    rgba(255, 255, 255, 0.028);
+  color: #dbeafe;
+  font-weight: 900;
+  text-decoration: none;
+  transition: transform 200ms var(--ease), border-color 200ms var(--ease), background 200ms var(--ease);
+}
+
+.groupProjectCard:hover {
+  transform: translateY(-1px);
+  border-color: rgba(147, 197, 253, 0.5);
+  background:
+    linear-gradient(135deg, rgba(88, 101, 242, 0.24), rgba(52, 211, 153, 0.1)),
+    rgba(255, 255, 255, 0.04);
+}
+
+.groupProjectText {
+  min-width: 0;
+  display: grid;
+  gap: 4px;
+}
+
+.groupProjectText strong {
+  color: #f8fafc;
+  font-size: 0.96rem;
+}
+
+.groupProjectText span {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: rgba(219, 234, 254, 0.72);
+  font-size: 0.78rem;
+}
+
+.groupProjectIcon {
+  flex: 0 0 auto;
+  position: relative;
+  width: 14px;
+  height: 14px;
+  color: #93c5fd;
+  transform: rotate(-45deg);
+  transform-origin: 50% 50%;
+  transition: transform 220ms var(--ease);
+}
+
+.groupProjectIcon::before,
+.groupProjectIcon::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+}
+
+.groupProjectIcon::before {
+  left: 2px;
+  right: 1px;
+  top: 50%;
+  height: 2px;
+  border-radius: 999px;
+  background: currentColor;
+  transform: translateY(-50%);
+}
+
+.groupProjectIcon::after {
+  right: 1px;
+  top: 50%;
+  width: 6px;
+  height: 6px;
+  border-top: 2px solid currentColor;
+  border-right: 2px solid currentColor;
+  border-radius: 1px;
+  transform: translateY(-50%) rotate(45deg);
+}
+
+.groupProjectCard:hover .groupProjectIcon,
+.groupProjectCard:focus-visible .groupProjectIcon,
+.groupProjectCard:active .groupProjectIcon {
+  transform: translateX(2px) rotate(0deg);
 }
 
 /* Plain CTA buttons: no green orbit */
@@ -9857,7 +9984,10 @@ body {
 
 .pillLink:hover .pillLinkIcon,
 .pillLink:focus-visible .pillLinkIcon,
-.pillLink:active .pillLinkIcon {
+.pillLink:active .pillLinkIcon,
+.btn2:hover .pillLinkIcon,
+.btn2:focus-visible .pillLinkIcon,
+.btn2:active .pillLinkIcon {
   transform: translateX(2px) rotate(0deg);
 }
 

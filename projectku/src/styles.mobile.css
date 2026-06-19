@@ -1194,6 +1194,13 @@
     justify-content: space-between;
     gap: 8px;
   }
+
+  .groupProjectCard {
+    width: 100%;
+    min-height: 62px;
+    gap: 8px;
+    padding: 0.82rem 0.85rem;
+  }
 }
 
 @media (max-width: 720px) {

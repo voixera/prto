@@ -57,21 +57,6 @@ const FAQ_ITEMS = [
   },
 ];
 
-function ArrowUpRightIcon() {
-  return (
-    <svg viewBox="0 0 24 24" aria-hidden="true">
-      <path
-        d="M7 17 17 7M10 7h7v7"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2.6"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
-
 function socialIcon(label) {
   const lower = label.toLowerCase();
   if (lower.includes("github")) return GithubIcon;
@@ -280,10 +265,8 @@ export default function HomeMobile() {
             <Reveal delayMs={180}>
               <div className="heroButtons">
                 <a className="btn2" href="#portfolio">
-                  Projects{" "}
-                  <span className="btnIcon" aria-hidden="true">
-                    <ArrowUpRightIcon />
-                  </span>
+                  <span>Projects</span>
+                  <span className="btnIcon pillLinkIcon" aria-hidden="true" />
                 </a>
               </div>
             </Reveal>

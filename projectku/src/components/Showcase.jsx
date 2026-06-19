@@ -370,6 +370,7 @@ function GroupCard({ item, delayMs }) {
   const href = item.inviteUrl ?? item.href;
   const inviteLabel =
     item.inviteLabel ?? href?.replace(/^mailto:/, "").replace(/^https?:\/\//, "");
+  const groupProjects = item.projects ?? [];
 
   return (
     <Reveal delayMs={delayMs}>
@@ -439,19 +440,28 @@ function GroupCard({ item, delayMs }) {
                 <strong>Join Discord</strong>
                 <span>{inviteLabel}</span>
               </span>
-              <span className="groupJoinIcon" aria-hidden="true">
-                <svg viewBox="0 0 24 24">
-                  <path
-                    d="M7 17 17 7M10 7h7v7"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2.4"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </span>
+              <span className="groupJoinIcon" aria-hidden="true" />
             </a>
+          ) : null}
+
+          {groupProjects.length ? (
+            <div className="groupProjectList" aria-label={`${item.name} projects`}>
+              {groupProjects.map((project) => (
+                <a
+                  className="groupProjectCard"
+                  href={project.href}
+                  key={project.href ?? project.label}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <span className="groupProjectText">
+                    <strong>{project.label}</strong>
+                    {project.description ? <span>{project.description}</span> : null}
+                  </span>
+                  <span className="groupProjectIcon" aria-hidden="true" />
+                </a>
+              ))}
+            </div>
           ) : null}
         </aside>
       </article>
