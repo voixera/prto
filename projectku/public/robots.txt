@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://www.portoazure48.my.id/sitemap.xml

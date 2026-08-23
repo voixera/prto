@@ -4,6 +4,7 @@ import App from "./App";
 import "./styles.css";
 import "./styles.mobile.css";
 import "./float-controls.css";
+import "./redesign.css";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
