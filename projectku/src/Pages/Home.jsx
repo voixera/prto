@@ -30,46 +30,75 @@ const NAV_ITEMS = [
 
 const SKILL_DOMAINS = [
   {
-    title: "Frontend Engineering",
-    desc: "Crafting performant web interfaces with fluid rendering, component isolation, and accessibility.",
-    tools: ["React", "Next.js", "TypeScript", "Tailwind CSS", "Three.js", "HTML5/CSS3"],
+    category: "FRONTEND ARCHITECTURE",
+    desc: "Component-driven, accessible UI systems built with strict typing and micro-interactions.",
+    skills: [
+      { name: "React", level: "Primary", tag: "v18+" },
+      { name: "Next.js", level: "Production", tag: "App Router" },
+      { name: "TypeScript", level: "Strict", tag: "Typed" },
+      { name: "Tailwind CSS", level: "Advanced", tag: "Design System" },
+      { name: "Three.js", level: "Interactive", tag: "WebGL" },
+      { name: "HTML5 / CSS3", level: "Semantic", tag: "Native" },
+    ],
   },
   {
-    title: "Backend & Systems",
-    desc: "Architecting reliable API routes, asynchronous workers, and scalable data layers.",
-    tools: ["Node.js", "Express", "PHP", "PostgreSQL", "MongoDB", "SQL"],
+    category: "BACKEND & DATABASES",
+    desc: "Robust API services, authentication protocols, and low-latency database queries.",
+    skills: [
+      { name: "Node.js", level: "Runtime", tag: "Async Engine" },
+      { name: "Express", level: "Services", tag: "REST APIs" },
+      { name: "PostgreSQL", level: "Relational", tag: "SQL" },
+      { name: "MongoDB", level: "Document", tag: "NoSQL" },
+      { name: "PHP", level: "Legacy/Server", tag: "Backend" },
+      { name: "Vercel", level: "Deployment", tag: "Serverless" },
+    ],
   },
   {
-    title: "Scripting & Automation",
-    desc: "Building Discord bot systems, game automation pipelines, and CLI dev tools.",
-    tools: ["Lua / Luau", "Discord.js", "Roblox Studio", "Git", "Vercel", "Linux"],
+    category: "SYSTEM AUTOMATION & LUA",
+    desc: "Real-time bot infrastructures, secure game script logic, and developer tooling.",
+    skills: [
+      { name: "Lua / Luau", level: "Specialist", tag: "Game & CLI" },
+      { name: "Discord.js", level: "Architect", tag: "Bot Systems" },
+      { name: "Git", level: "VCS", tag: "Version Control" },
+      { name: "Roblox Studio", level: "Engine", tag: "Luau Execution" },
+      { name: "Figma", level: "Wireframing", tag: "Prototyping" },
+      { name: "Linux / CLI", level: "Environment", tag: "POSIX" },
+    ],
   },
 ];
 
 const SERVICES_LIST = [
   {
+    num: "01",
     icon: CodeIcon,
-    title: "Custom Web Application Development",
-    desc: "Full-cycle web application delivery from responsive interactive frontend to serverless backend endpoints and database schemas.",
+    title: "Fullstack Web Engineering",
+    desc: "End-to-end development of bespoke, fast-loading web applications with React, Next.js, and serverless Node.js architecture.",
+    tags: ["React", "Next.js", "TypeScript", "REST APIs"],
   },
   {
+    num: "02",
     icon: TerminalIcon,
-    title: "Discord Bot Systems & Automation",
-    desc: "Robust bots with slash commands, ticketing architectures, role automation, security gates, and webhook integrations.",
+    title: "Discord Bot Ecosystems",
+    desc: "Permission-aware automation, community management bots, store ticketing workflows, and webhook integrations with high reliability.",
+    tags: ["Discord.js", "Node.js", "Slash Commands", "Async Queue"],
   },
   {
+    num: "03",
     icon: LayersIcon,
-    title: "Lua Scripting & Game Utilities",
-    desc: "High-performance Luau scripts, GUI components, and automation tools engineered for clean execution and zero latency.",
+    title: "Lua Scripting & Game Logic",
+    desc: "Custom Luau systems, runtime game optimizations, UI panels, and automation tools built with clean, maintainable script organization.",
+    tags: ["Luau", "Roblox Engine", "GUI Frameworks", "Automation"],
   },
   {
+    num: "04",
     icon: ServerStackIcon,
-    title: "Performance & UI/UX Optimization",
-    desc: "Refining web speed, smooth 60fps micro-interactions, responsive mobile views, and search engine metadata compliance.",
+    title: "Performance & UI Systems",
+    desc: "Auditing web performance, fluid 60fps animations, vector SVG art direction, responsive cross-device layouts, and SEO compliance.",
+    tags: ["WebGL", "Bespoke SVGs", "A11y", "Responsive"],
   },
 ];
 
-/* ── Scroll Reveal Component ── */
+/* ── Scroll Reveal Hook ── */
 function Reveal({ children, className = "", delay = 0 }) {
   const ref = useRef(null);
 
@@ -102,7 +131,7 @@ function Reveal({ children, className = "", delay = 0 }) {
 }
 
 /* ── Rotating Typewriter ── */
-function useTypewriter(phrases, speed = 80, pause = 2400) {
+function useTypewriter(phrases, speed = 70, pause = 2200) {
   const [text, setText] = useState("");
   const [idx, setIdx] = useState(0);
   const [deleting, setDeleting] = useState(false);
@@ -132,7 +161,7 @@ function useTypewriter(phrases, speed = 80, pause = 2400) {
   return text;
 }
 
-/* ── Interactive Project Case Modal ── */
+/* ── Case Study Modal ── */
 function ProjectModal({ project, onClose }) {
   if (!project) return null;
 
@@ -145,8 +174,8 @@ function ProjectModal({ project, onClose }) {
         aria-labelledby="case-modal-title"
         onClick={(e) => e.stopPropagation()}
       >
-        <button className="case-modal-close" onClick={onClose} aria-label="Close dialog">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+        <button className="case-modal-close" onClick={onClose} aria-label="Close case study details">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
             <line x1="18" y1="6" x2="6" y2="18" />
             <line x1="6" y1="6" x2="18" y2="18" />
           </svg>
@@ -154,7 +183,7 @@ function ProjectModal({ project, onClose }) {
 
         <div className="case-modal-tagline">
           <span className="case-tag-lead">{project.tags[0]}</span>
-          <span className="case-tag-type">PRODUCTION SYSTEM</span>
+          <span className="case-tag-type">PRODUCTION ARCHITECTURE</span>
         </div>
 
         <h2 id="case-modal-title" className="case-modal-title">{project.title}</h2>
@@ -162,7 +191,7 @@ function ProjectModal({ project, onClose }) {
 
         {project.showcase?.length ? (
           <div className="case-section-block">
-            <h3 className="case-subhead">System Capabilities & Modules</h3>
+            <h3 className="case-subhead">System Architecture & Features</h3>
             <ul className="case-feature-grid">
               {project.showcase.map((item) => (
                 <li key={item}>
@@ -175,7 +204,7 @@ function ProjectModal({ project, onClose }) {
         ) : null}
 
         <div className="case-section-block">
-          <h3 className="case-subhead">Engineering Stack</h3>
+          <h3 className="case-subhead">Technology Stack</h3>
           <div className="case-pill-cloud">
             {project.tags.map((t) => (
               <span key={t} className="case-pill">
@@ -203,12 +232,13 @@ function ProjectModal({ project, onClose }) {
   );
 }
 
-/* ── Main Portfolio Page ── */
+/* ── Main Component ── */
 export default function Home({ entered = true }) {
   const [activeFilter, setActiveFilter] = useState("All");
   const [selectedCase, setSelectedCase] = useState(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [copiedDiscord, setCopiedDiscord] = useState(false);
 
   const filters = ["All", "Web", "Discord", "Roblox"];
   const displayProjects =
@@ -221,26 +251,31 @@ export default function Home({ entered = true }) {
         );
 
   const typedRole = useTypewriter(
-    ["Fullstack Developer", "UI/UX Systems Engineer", "Discord Bot Architect", "Lua Specialist"],
+    ["Fullstack Developer", "UI Systems Engineer", "Discord Bot Architect", "Lua Specialist"],
     70,
     2200
   );
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 30);
-    };
+    const handleScroll = () => setIsScrolled(window.scrollY > 30);
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const handleCopyDiscord = (e) => {
+    e.preventDefault();
+    navigator.clipboard?.writeText("voixera");
+    setCopiedDiscord(true);
+    setTimeout(() => setCopiedDiscord(false), 2400);
+  };
+
   return (
     <div className="studio-layout">
-      {/* Background SVG Grid Pattern */}
+      {/* Background Architectural Vector Overlay */}
       <svg className="studio-bg-grid" width="100%" height="100%" aria-hidden="true">
         <defs>
-          <pattern id="grid-pattern" width="70" height="70" patternUnits="userSpaceOnUse">
-            <path d="M 70 0 L 0 0 0 70" fill="none" stroke="rgba(112, 186, 255, 0.045)" strokeWidth="1" />
+          <pattern id="grid-pattern" width="80" height="80" patternUnits="userSpaceOnUse">
+            <path d="M 80 0 L 0 0 0 80" fill="none" stroke="rgba(112, 186, 255, 0.035)" strokeWidth="1" />
           </pattern>
         </defs>
         <rect width="100%" height="100%" fill="url(#grid-pattern)" />
@@ -249,10 +284,10 @@ export default function Home({ entered = true }) {
       {/* ── Navigation Bar ── */}
       <header className={`studio-nav-header ${isScrolled ? "is-scrolled" : ""}`}>
         <div className="studio-nav-container">
-          <a className="studio-brand" href="#home">
-            <svg width="36" height="36" viewBox="0 0 36 36" fill="none" aria-hidden="true">
-              <rect x="1" y="1" width="34" height="34" rx="10" fill="rgba(112, 186, 255, 0.08)" stroke="rgba(112, 186, 255, 0.3)" strokeWidth="1.5" />
-              <text x="18" y="23" textAnchor="middle" fill="#70baff" fontSize="13" fontWeight="800" fontFamily="DM Mono, monospace">
+          <a className="studio-brand" href="#home" aria-label="Faisal Riza Homepage">
+            <svg width="34" height="34" viewBox="0 0 34 34" fill="none" aria-hidden="true">
+              <rect x="1" y="1" width="32" height="32" rx="8" fill="rgba(112, 186, 255, 0.08)" stroke="rgba(112, 186, 255, 0.35)" strokeWidth="1.5" />
+              <text x="17" y="22" textAnchor="middle" fill="#70baff" fontSize="13" fontWeight="800" fontFamily="DM Mono, monospace">
                 FR
               </text>
             </svg>
@@ -292,7 +327,7 @@ export default function Home({ entered = true }) {
               rel="noreferrer"
             >
               <span className="status-blinker" />
-              <span>AVAILABLE FOR HIRE</span>
+              <span>AVAILABLE // 2026</span>
             </a>
           </div>
         </div>
@@ -306,19 +341,18 @@ export default function Home({ entered = true }) {
               <Reveal>
                 <div className="hero-pill-badge">
                   <span className="pill-dot" />
-                  FULLSTACK ENGINEER // PORTFOLIO 2026
+                  FULLSTACK DEVELOPER & SYSTEMS CREATOR
                 </div>
               </Reveal>
 
               <Reveal delay={100}>
                 <h1 className="hero-massive-headline">
-                  Engineering
-                  <span className="headline-hollow">Resilient</span>
-                  Digital Systems.
+                  Faisal
+                  <span className="headline-hollow">Riza</span>
                 </h1>
               </Reveal>
 
-              <Reveal delay={200}>
+              <Reveal delay={180}>
                 <div className="hero-dynamic-role">
                   <span className="role-glyph">{">"}</span>
                   <span className="role-current">{typedRole}</span>
@@ -326,13 +360,13 @@ export default function Home({ entered = true }) {
                 </div>
               </Reveal>
 
-              <Reveal delay={300}>
+              <Reveal delay={260}>
                 <p className="hero-explanatory-lead">
-                  I design and build production-ready web experiences, scalable Discord bot infrastructures, and high-precision automation tools with meticulous craftsmanship.
+                  I construct responsive web applications, high-concurrency Discord bot platforms, and performance-tuned Lua automation scripts with architectural discipline.
                 </p>
               </Reveal>
 
-              <Reveal delay={400}>
+              <Reveal delay={340}>
                 <div className="hero-button-row">
                   <a className="studio-btn studio-btn--primary" href="#projects">
                     <span>EXPLORE PROJECTS</span>
@@ -344,21 +378,21 @@ export default function Home({ entered = true }) {
                     target="_blank"
                     rel="noreferrer"
                   >
-                    <span>CONNECT ON DISCORD</span>
+                    <span>OPEN DISCORD</span>
                     <DiscordBrandIcon size={16} />
                   </a>
                 </div>
               </Reveal>
 
-              <Reveal delay={500}>
+              <Reveal delay={420}>
                 <div className="hero-stats-band">
                   <div className="stat-unit">
                     <strong>3+</strong>
-                    <span>Years Active</span>
+                    <span>Years Experience</span>
                   </div>
                   <div className="stat-unit">
                     <strong>{profile.projects.length}+</strong>
-                    <span>Production Builds</span>
+                    <span>Shipped Projects</span>
                   </div>
                   <div className="stat-unit">
                     <strong>100%</strong>
@@ -373,8 +407,8 @@ export default function Home({ entered = true }) {
                 <div className="hero-scene-wrapper">
                   <Hero3DScene />
                   <div className="hero-scene-badge">
-                    <span className="scene-coord">XYZ // 3D CANVAS</span>
-                    <span className="scene-hint">INTERACTIVE ORBIT</span>
+                    <span className="scene-coord">XYZ // THREE.JS ENGINE</span>
+                    <span className="scene-hint">CURSOR-REACTIVE ORBIT</span>
                   </div>
                 </div>
               </Reveal>
@@ -382,7 +416,7 @@ export default function Home({ entered = true }) {
           </div>
 
           <div className="hero-scroll-cue" aria-hidden="true">
-            <a href="#about" className="scroll-cue-link" aria-label="Scroll to About section">
+            <a href="#about" className="scroll-cue-link" aria-label="Scroll down to About section">
               <span>EXPLORE</span>
               <ArrowDownIcon size={14} />
             </a>
@@ -400,42 +434,39 @@ export default function Home({ entered = true }) {
           <div className="section-main">
             <Reveal>
               <h2 className="section-headline">
-                Crafted through practice.<br />
-                Driven by <em>pure curiosity.</em>
+                Built from curiosity.<br />
+                Refined through <em>practice.</em>
               </h2>
             </Reveal>
 
             <Reveal delay={100}>
               <div className="about-editorial-text">
-                <p>{profile.about[0]}</p>
-                <p>{profile.about[1]} {profile.about[2]}</p>
+                <p>
+                  I'm an Information System student at Universitas Terbuka (UT) and a software developer focused on modern UI engineering, backend logic, and scalable interactive applications.
+                </p>
+                <p>
+                  Whether architecting permission-aware Discord bot systems, crafting fullstack web portals, or engineering Luau scripting frameworks, my workflow prioritizes clarity, performance, and clean code.
+                </p>
               </div>
             </Reveal>
 
             <Reveal delay={200}>
-              <div className="pillars-grid">
-                <div className="pillar-card">
-                  <div className="pillar-icon-box">
-                    <CodeIcon size={22} />
-                  </div>
-                  <h3>Modular & Pure</h3>
-                  <p>Writing deterministic, typed, and well-structured code without bloated abstractions or fragile dependencies.</p>
+              <div className="about-meta-grid">
+                <div className="meta-box">
+                  <span className="meta-box-label">LOCATION</span>
+                  <strong className="meta-box-val">Jawa Timur, Indonesia</strong>
                 </div>
-
-                <div className="pillar-card">
-                  <div className="pillar-icon-box">
-                    <LayersIcon size={22} />
-                  </div>
-                  <h3>Modern Interaction</h3>
-                  <p>Building responsive interfaces with thoughtful 3D canvas physics, custom vector SVG graphics, and 60fps motion.</p>
+                <div className="meta-box">
+                  <span className="meta-box-label">FOCUS</span>
+                  <strong className="meta-box-val">Fullstack & Bot Automation</strong>
                 </div>
-
-                <div className="pillar-card">
-                  <div className="pillar-icon-box">
-                    <ShieldCheckIcon size={22} />
-                  </div>
-                  <h3>Reliable Operations</h3>
-                  <p>End-to-end delivery from database architecture and permission-safe Discord bot servers to automated workflows.</p>
+                <div className="meta-box">
+                  <span className="meta-box-label">PRIMARY TOOLS</span>
+                  <strong className="meta-box-val">React, Node.js, Lua</strong>
+                </div>
+                <div className="meta-box">
+                  <span className="meta-box-label">STATUS</span>
+                  <strong className="meta-box-val">Available for Opportunities</strong>
                 </div>
               </div>
             </Reveal>
@@ -454,7 +485,7 @@ export default function Home({ entered = true }) {
             <Reveal>
               <h2 className="section-headline">
                 Specialized Technical<br />
-                <em>Capabilities & Services</em>
+                <em>Capabilities</em>
               </h2>
             </Reveal>
 
@@ -466,12 +497,17 @@ export default function Home({ entered = true }) {
                     <div className="service-card">
                       <div className="service-header">
                         <div className="service-icon-wrap">
-                          <IconComponent size={20} />
+                          <IconComponent size={22} />
                         </div>
-                        <span className="service-num">0{idx + 1}</span>
+                        <span className="service-num">{service.num}</span>
                       </div>
                       <h3 className="service-title">{service.title}</h3>
                       <p className="service-desc">{service.desc}</p>
+                      <div className="service-tags">
+                        {service.tags.map((t) => (
+                          <span key={t} className="service-tag-pill">{t}</span>
+                        ))}
+                      </div>
                     </div>
                   </Reveal>
                 );
@@ -480,7 +516,7 @@ export default function Home({ entered = true }) {
           </div>
         </section>
 
-        {/* ── 04. SKILLS & TECHNOLOGIES ── */}
+        {/* ── 04. SKILLS & ARSENAL ── */}
         <section className="content-section" id="skills">
           <div className="section-rail">
             <span className="rail-number">03</span>
@@ -491,26 +527,32 @@ export default function Home({ entered = true }) {
           <div className="section-main">
             <Reveal>
               <h2 className="section-headline">
-                Tools & Technologies<br />
-                <em>Used in Production</em>
+                Technical Systems &<br />
+                <em>Tooling</em>
               </h2>
             </Reveal>
 
             <div className="skills-domain-grid">
               {SKILL_DOMAINS.map((domain, idx) => (
-                <Reveal key={domain.title} delay={idx * 100}>
+                <Reveal key={domain.category} delay={idx * 100}>
                   <div className="domain-card">
                     <div className="domain-header">
                       <CpuChipIcon size={18} />
-                      <h3>{domain.title}</h3>
+                      <h3>{domain.category}</h3>
                     </div>
                     <p className="domain-desc">{domain.desc}</p>
-                    <div className="domain-chips-flex">
-                      {domain.tools.map((t) => (
-                        <span key={t} className="tech-chip">
-                          <span className="tech-chip-dot" />
-                          {t}
-                        </span>
+                    <div className="domain-items-list">
+                      {domain.skills.map((skill) => (
+                        <div key={skill.name} className="domain-item-row">
+                          <div className="domain-item-left">
+                            <span className="domain-dot" />
+                            <strong>{skill.name}</strong>
+                          </div>
+                          <div className="domain-item-right">
+                            <span className="domain-tag">{skill.tag}</span>
+                            <span className="domain-level">{skill.level}</span>
+                          </div>
+                        </div>
                       ))}
                     </div>
                   </div>
@@ -558,12 +600,12 @@ export default function Home({ entered = true }) {
                       onClick={() => setSelectedCase(project)}
                       role="button"
                       tabIndex={0}
-                      aria-label={`Open details for ${project.title}`}
+                      aria-label={`Open case overview for ${project.title}`}
                     >
                       {project.thumbnail ? (
                         <img
                           src={project.thumbnail}
-                          alt={`${project.title} thumbnail`}
+                          alt={`${project.title} preview`}
                           loading={idx > 1 ? "lazy" : "eager"}
                           className="project-image"
                         />
@@ -573,7 +615,7 @@ export default function Home({ entered = true }) {
                         </div>
                       )}
                       <div className="visual-inspect-banner">
-                        <span>INSPECT CASE STUDY</span>
+                        <span>INSPECT CASE OVERVIEW</span>
                         <LaunchArrow size={14} />
                       </div>
                     </div>
@@ -625,7 +667,7 @@ export default function Home({ entered = true }) {
           </div>
         </section>
 
-        {/* ── 06. EXPERIENCE & JOURNEY ── */}
+        {/* ── 06. EXPERIENCE & TIMELINE ── */}
         <section className="content-section" id="journey">
           <div className="section-rail">
             <span className="rail-number">05</span>
@@ -637,7 +679,7 @@ export default function Home({ entered = true }) {
             <Reveal>
               <h2 className="section-headline">
                 Milestones &<br />
-                <em>Professional Experience</em>
+                <em>Experience</em>
               </h2>
             </Reveal>
 
@@ -645,9 +687,7 @@ export default function Home({ entered = true }) {
               {[...profile.experience, ...profile.education].map((item, idx) => (
                 <Reveal key={`${item.period}-${item.title}`} delay={idx * 60}>
                   <div className="timeline-entry">
-                    <div className="timeline-time-col">
-                      <span className="timeline-period-pill">{item.period}</span>
-                    </div>
+                    <div className="timeline-period-pill">{item.period}</div>
                     <div className="timeline-body-col">
                       <h3 className="timeline-role-title">{item.title}</h3>
                       <span className="timeline-role-subtitle">{item.subtitle}</span>
@@ -666,7 +706,7 @@ export default function Home({ entered = true }) {
             <Reveal>
               <div className="band-lead-tag">OPEN LABS</div>
               <h2 className="band-headline">Source Code, Bots & Experiments</h2>
-              <p className="band-desc">All open-source contributions and architecture prototypes are maintained publicly on GitHub.</p>
+              <p className="band-desc">All open-source contributions and automation systems are maintained publicly on GitHub.</p>
             </Reveal>
             <Reveal delay={150}>
               <a
@@ -676,7 +716,7 @@ export default function Home({ entered = true }) {
                 rel="noreferrer"
               >
                 <GithubBrandIcon size={18} />
-                <span>EXPLORE VOIXERA REPOSITORIES</span>
+                <span>EXPLORE GITHUB</span>
                 <LaunchArrow size={16} />
               </a>
             </Reveal>
@@ -701,7 +741,7 @@ export default function Home({ entered = true }) {
 
             <Reveal delay={100}>
               <p className="contact-sub-lead">
-                I am currently open for fullstack engineering roles, freelance builds, Discord bot systems, and technical consulting.
+                I am currently open for engineering roles, freelance software builds, Discord bot architectures, and technical collaborations.
               </p>
             </Reveal>
 
@@ -723,6 +763,21 @@ export default function Home({ entered = true }) {
                   <LaunchArrow size={18} className="contact-arrow" />
                 </a>
 
+                <button
+                  type="button"
+                  className="contact-card-btn contact-card-btn--copy"
+                  onClick={handleCopyDiscord}
+                >
+                  <div className="contact-btn-icon">
+                    <SparklesIcon size={22} />
+                  </div>
+                  <div className="contact-btn-text">
+                    <small>DISCORD USERNAME</small>
+                    <strong>{copiedDiscord ? "COPIED TO CLIPBOARD!" : "voixera (CLICK TO COPY)"}</strong>
+                  </div>
+                  <LaunchArrow size={18} className="contact-arrow" />
+                </button>
+
                 <a
                   className="contact-card-btn contact-card-btn--email"
                   href="mailto:rizafaisal173@gmail.com"
@@ -731,7 +786,7 @@ export default function Home({ entered = true }) {
                     <MailBrandIcon size={24} />
                   </div>
                   <div className="contact-btn-text">
-                    <small>EMAIL INQUIRIES</small>
+                    <small>DIRECT INQUIRY</small>
                     <strong>rizafaisal173@gmail.com</strong>
                   </div>
                   <LaunchArrow size={18} className="contact-arrow" />
@@ -759,12 +814,12 @@ export default function Home({ entered = true }) {
           </div>
 
           <div className="footer-bottom-col">
-            <span>© 2026 FAISAL RIZA. DESIGNED WITH PRECISION, THREE.JS & BESPOKE SVGS.</span>
+            <span>© 2026 FAISAL RIZA. ARCHITECTED WITH REACT & THREE.JS.</span>
           </div>
         </div>
       </footer>
 
-      {/* Case Study Modal */}
+      {/* Case Study Dialog Modal */}
       <ProjectModal project={selectedCase} onClose={() => setSelectedCase(null)} />
     </div>
   );
