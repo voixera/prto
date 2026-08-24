@@ -1,91 +1,64 @@
-import { ArrowLeft } from "lucide-react";
 import { profile } from "../content/profile";
-
-function RobloxScriptCard({ script }) {
-  return (
-    <article className="robloxScriptCard">
-      <div className="robloxScriptCardTop">
-        <span className="robloxScriptIcon" aria-hidden="true">
-          <img src={script.iconSrc} alt="" loading="lazy" decoding="async" />
-        </span>
-        <div>
-          <p className="robloxScriptCategory">{script.category}</p>
-          <h2>{script.name}</h2>
-        </div>
-      </div>
-
-      <p className="robloxScriptDescription">{script.description}</p>
-
-      {script.videoSrc ? (
-        <div className="robloxScriptVideoFrame">
-          <video
-            className="robloxScriptVideo"
-            controls
-            muted
-            playsInline
-            preload="metadata"
-            poster={script.poster}
-            aria-label={`${script.name} video preview`}
-          >
-            <source src={script.videoSrc} type="video/mp4" />
-          </video>
-        </div>
-      ) : null}
-
-      <ul className="robloxScriptFeatures" aria-label={`${script.name} highlights`}>
-        {script.features.map((feature) => (
-          <li key={feature}>
-            <span aria-hidden="true" />
-            {feature}
-          </li>
-        ))}
-      </ul>
-
-      <div className="robloxScriptStack" aria-label={`${script.name} stack`}>
-        {script.stack.map((item) => (
-          <span key={item}>{item}</span>
-        ))}
-      </div>
-
-      {script.status ? <p className="robloxScriptStatus">{script.status}</p> : null}
-    </article>
-  );
-}
+import SiteHeader from "../components/SiteHeader";
+import SiteFooter from "../components/SiteFooter";
+import Reveal from "../components/Reveal";
 
 export default function RobloxScripts() {
   const scripts = profile.robloxScripts ?? [];
 
   return (
-    <main className="robloxScriptsPage" id="roblox-scripts">
-      <section className="robloxScriptsHero">
-        <div className="container robloxScriptsHeroInner">
-          <a className="discordBotsBack" href="#portfolio">
-            <ArrowLeft size={17} strokeWidth={2.4} aria-hidden="true" />
-            <span>Back to Projects</span>
+    <div className="page subpage">
+      <SiteHeader />
+      <main>
+        <section className="sub-hero">
+          <a className="text-link" href="#work">
+            Back to work
           </a>
-
-          <h1>Roblox Lua script previews for clean UI experiments.</h1>
-          <p>
-            A small preview collection of Roblox Lua scripts focused on interface helpers,
-            simple automation patterns, and organized code structure for learning.
+          <h1 className="display">
+            Lua previews
+            <span>from game tooling.</span>
+          </h1>
+          <p className="lede">
+            A secondary catalog of Roblox Lua experiments, interfaces, and automation patterns.
           </p>
-        </div>
-      </section>
-
-      <section className="robloxScriptsCatalog" aria-label="Roblox Lua script previews">
-        <div className="container">
-          <div className="robloxScriptsCatalogHead">
-            <p className="kickerV2">Lua Preview</p>
-            <h2>Explore the script samples</h2>
-          </div>
-
-          <div className="robloxScriptGrid">
-            {scripts.map((script) => (
-              <RobloxScriptCard key={script.name} script={script} />
-            ))}
-          </div>
-        </div>
-      </section>
-    </main>
+        </section>
+        <section className="catalog">
+          {scripts.map((script, index) => (
+            <Reveal key={script.name} delay={index * 50}>
+              <article className="catalog-row lua-row">
+                <p className="case-num">{String(index + 1).padStart(2, "0")}</p>
+                <figure className="lua-thumb">
+                  {script.iconSrc ? <img src={script.iconSrc} alt="" loading="lazy" /> : null}
+                </figure>
+                <div>
+                  <p className="kicker">{script.category}</p>
+                  <h2>{script.name}</h2>
+                  <p>{script.description}</p>
+                  {script.videoSrc ? (
+                    <video
+                      className="lua-video"
+                      controls
+                      muted
+                      playsInline
+                      preload="metadata"
+                      aria-label={`${script.name} preview`}
+                    >
+                      <source src={script.videoSrc} type="video/mp4" />
+                    </video>
+                  ) : null}
+                  <ul className="tech-line">
+                    {script.stack.map((item) => (
+                      <li key={item}>{item}</li>
+                    ))}
+                  </ul>
+                </div>
+                {script.status ? <span className="catalog-aside">{script.status}</span> : null}
+              </article>
+            </Reveal>
+          ))}
+        </section>
+      </main>
+      <SiteFooter />
+    </div>
   );
 }

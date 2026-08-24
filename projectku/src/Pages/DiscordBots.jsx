@@ -1,85 +1,56 @@
-import { ArrowLeft, Bot, ExternalLink, ShieldCheck, Sparkles, Terminal } from "lucide-react";
 import { profile } from "../content/profile";
-
-const iconMap = [Bot, ShieldCheck, Terminal];
-
-function BotCard({ bot, index }) {
-  const Icon = iconMap[index % iconMap.length];
-
-  return (
-    <article className="discordBotCard">
-      <div className="discordBotCardTop">
-        <span className="discordBotIcon" aria-hidden="true">
-          <Icon size={22} strokeWidth={2.2} />
-        </span>
-        <div>
-          <p className="discordBotCategory">{bot.category}</p>
-          <h2>{bot.name}</h2>
-        </div>
-      </div>
-
-      <p className="discordBotDescription">{bot.description}</p>
-
-      <ul className="discordBotFeatures" aria-label={`${bot.name} features`}>
-        {bot.features.map((feature) => (
-          <li key={feature}>
-            <span aria-hidden="true" />
-            {feature}
-          </li>
-        ))}
-      </ul>
-
-      <div className="discordBotStack" aria-label={`${bot.name} stack`}>
-        {bot.stack.map((item) => (
-          <span key={item}>{item}</span>
-        ))}
-      </div>
-
-      <div className="discordBotFooter">
-        <span className="discordBotStatus">{bot.status}</span>
-        <a className="discordBotUse" href={bot.inviteUrl} target="_blank" rel="noreferrer">
-          <span>Use Bot</span>
-          <ExternalLink size={16} strokeWidth={2.4} aria-hidden="true" />
-        </a>
-      </div>
-    </article>
-  );
-}
+import SiteHeader from "../components/SiteHeader";
+import SiteFooter from "../components/SiteFooter";
+import Reveal from "../components/Reveal";
+import { LaunchArrow } from "../components/CustomIcons";
 
 export default function DiscordBots() {
   const bots = profile.discordBots ?? [];
 
   return (
-    <main className="discordBotsPage" id="discord-bots">
-      <section className="discordBotsHero">
-        <div className="container discordBotsHeroInner">
-          <a className="discordBotsBack" href="#portfolio">
-            <ArrowLeft size={17} strokeWidth={2.4} aria-hidden="true" />
-            <span>Back to Projects</span>
+    <div className="page subpage">
+      <SiteHeader />
+      <main>
+        <section className="sub-hero">
+          <a className="text-link" href="#work">
+            Back to work
           </a>
-
-          <h1>Discord bots built for cleaner, calmer communities.</h1>
-          <p>
-            A small collection of Discord bots I build with Discord.js, focused on server
-            utility, onboarding, moderation support, and readable automation.
+          <h1 className="display">
+            Discord bots
+            <span>for calmer servers.</span>
+          </h1>
+          <p className="lede">
+            Permission-aware utilities, tickets, and assistant workflows built with Discord.js.
           </p>
-        </div>
-      </section>
-
-      <section className="discordBotsCatalog" aria-label="Discord bot catalog">
-        <div className="container">
-          <div className="discordBotsCatalogHead">
-            <p className="kickerV2">Bot Collection</p>
-            <h2>Choose a bot for your server</h2>
-          </div>
-
-          <div className="discordBotGrid">
-            {bots.map((bot, index) => (
-              <BotCard key={bot.name} bot={bot} index={index} />
-            ))}
-          </div>
-        </div>
-      </section>
-    </main>
+        </section>
+        <section className="catalog">
+          {bots.map((bot, index) => (
+            <Reveal key={bot.name} delay={index * 80}>
+              <article className="catalog-row">
+                <p className="case-num">{String(index + 1).padStart(2, "0")}</p>
+                <div>
+                  <p className="kicker">{bot.category}</p>
+                  <h2>{bot.name}</h2>
+                  <p>{bot.description}</p>
+                  <ul className="tech-line">
+                    {bot.stack.map((item) => (
+                      <li key={item}>{item}</li>
+                    ))}
+                  </ul>
+                </div>
+                <div className="catalog-aside">
+                  <span>{bot.status}</span>
+                  <a className="btn btn-solid" href={bot.inviteUrl} target="_blank" rel="noreferrer">
+                    Use bot
+                    <LaunchArrow size={14} />
+                  </a>
+                </div>
+              </article>
+            </Reveal>
+          ))}
+        </section>
+      </main>
+      <SiteFooter />
+    </div>
   );
 }

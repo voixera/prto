@@ -11,13 +11,8 @@
   "dependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "gsap": "^3.12.5",
     "lenis": "^1.1.5",
-    "@react-three/fiber": "^8.16.8",
-    "@react-three/drei": "^9.115.1",
-    "three": "^0.167.1",
-    "lucide-react": "^0.445.0",
-    "clsx": "^2.1.1"
+    "three": "^0.167.1"
   },
   "devDependencies": {
     "@types/react": "^18.2.66",

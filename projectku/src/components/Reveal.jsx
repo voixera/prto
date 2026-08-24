@@ -1,26 +1,13 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import useReducedMotion from "../hooks/useReducedMotion";
 
-function prefersReducedMotion() {
-  return window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
-}
-
-export default function Reveal({
-  children,
-  className,
-  style,
-  delayMs = 0,
-  threshold = 0.18,
-  rootMargin = "0px 0px -10% 0px",
-}) {
+export default function Reveal({ children, className = "", delay = 0, as: Tag = "div" }) {
   const ref = useRef(null);
-  const [visible, setVisible] = useState(false);
-
-  const mergedStyle = useMemo(() => {
-    return { ...style, ["--d"]: `${delayMs}ms` };
-  }, [style, delayMs]);
+  const reduced = useReducedMotion();
+  const [visible, setVisible] = useState(reduced);
 
   useEffect(() => {
-    if (prefersReducedMotion()) {
+    if (reduced) {
       setVisible(true);
       return;
     }
@@ -28,31 +15,27 @@ export default function Reveal({
     const el = ref.current;
     if (!el) return;
 
-    if (typeof IntersectionObserver === "undefined") {
-      setVisible(true);
-      return;
-    }
-
     const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) setVisible(entry.isIntersecting);
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true);
+          observer.unobserve(el);
+        }
       },
-      { threshold, rootMargin }
+      { threshold: 0.12, rootMargin: "0px 0px -8% 0px" }
     );
 
     observer.observe(el);
     return () => observer.disconnect();
-  }, [threshold, rootMargin]);
+  }, [reduced]);
 
   return (
-    <div
+    <Tag
       ref={ref}
-      className={["reveal", visible ? "isVisible" : "", className ?? ""].join(
-        " "
-      )}
-      style={mergedStyle}
+      className={`reveal ${visible ? "is-visible" : ""} ${className}`.trim()}
+      style={delay ? { transitionDelay: `${delay}ms` } : undefined}
     >
       {children}
-    </div>
+    </Tag>
   );
 }

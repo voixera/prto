@@ -1,191 +1,186 @@
 import { useEffect, useRef } from "react";
 import * as THREE from "three";
+import useReducedMotion from "../hooks/useReducedMotion";
+
+function isMobileViewport() {
+  return window.matchMedia("(max-width: 860px)").matches || window.matchMedia("(pointer: coarse)").matches;
+}
 
 export default function Hero3DScene() {
   const containerRef = useRef(null);
+  const reduced = useReducedMotion();
 
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
 
-    // Check prefers-reduced-motion
-    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const mobile = isMobileViewport();
+    const width = container.clientWidth || 520;
+    const height = container.clientHeight || 520;
 
-    // Scene, Camera, Renderer
     const scene = new THREE.Scene();
-    const width = container.clientWidth || 500;
-    const height = container.clientHeight || 500;
-
-    const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
-    camera.position.z = 7;
+    const camera = new THREE.PerspectiveCamera(38, width / height, 0.1, 100);
+    camera.position.set(0, 0.2, mobile ? 8.2 : 7.1);
 
     const renderer = new THREE.WebGLRenderer({
       alpha: true,
-      antialias: true,
+      antialias: !mobile,
       powerPreference: "high-performance",
     });
     renderer.setSize(width, height);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, mobile ? 1.25 : 1.75));
     container.appendChild(renderer.domElement);
 
-    // Group for mouse rotation
-    const mainGroup = new THREE.Group();
-    scene.add(mainGroup);
+    const root = new THREE.Group();
+    scene.add(root);
 
-    // 1. Central Icosahedron Wireframe + Inner Core
-    const geoIcosa = new THREE.IcosahedronGeometry(1.8, 1);
-    const matWire = new THREE.MeshBasicMaterial({
-      color: 0x70baff,
-      wireframe: true,
+    const cyan = 0x8ecbff;
+    const paper = 0xe8ece8;
+    const lineMat = new THREE.LineBasicMaterial({
+      color: cyan,
       transparent: true,
-      opacity: 0.35,
+      opacity: 0.55,
     });
-    const meshWire = new THREE.Mesh(geoIcosa, matWire);
-    mainGroup.add(meshWire);
-
-    // Inner glowing sphere
-    const geoSphere = new THREE.SphereGeometry(0.9, 24, 24);
-    const matSphere = new THREE.MeshBasicMaterial({
-      color: 0x77d6b2,
-      wireframe: true,
+    const faintMat = new THREE.LineBasicMaterial({
+      color: paper,
       transparent: true,
-      opacity: 0.25,
+      opacity: 0.18,
     });
-    const innerSphere = new THREE.Mesh(geoSphere, matSphere);
-    mainGroup.add(innerSphere);
 
-    // 2. Torus Rings (Orbiting Coordinate Rings)
-    const geoTorus1 = new THREE.TorusGeometry(2.4, 0.015, 16, 100);
-    const matTorus1 = new THREE.MeshBasicMaterial({
-      color: 0x70baff,
-      transparent: true,
-      opacity: 0.5,
+    const frame = (w, h, d) => {
+      const geo = new THREE.EdgesGeometry(new THREE.BoxGeometry(w, h, d));
+      return new THREE.LineSegments(geo, lineMat.clone());
+    };
+
+    const board = frame(3.4, 2.1, 0.08);
+    board.position.set(-0.15, 0.15, 0);
+    root.add(board);
+
+    const panel = frame(1.7, 2.4, 0.08);
+    panel.position.set(1.55, -0.35, 0.7);
+    panel.rotation.y = 0.38;
+    root.add(panel);
+
+    const slab = frame(2.2, 0.9, 0.08);
+    slab.position.set(-1.2, -1.15, 0.45);
+    slab.rotation.x = -0.18;
+    root.add(slab);
+
+    const axis = new THREE.BufferGeometry().setFromPoints([
+      new THREE.Vector3(-2.6, 0, 0),
+      new THREE.Vector3(2.8, 0, 0),
+      new THREE.Vector3(0, -1.8, 0),
+      new THREE.Vector3(0, 1.9, 0),
+    ]);
+    root.add(new THREE.LineSegments(axis, faintMat));
+
+    const nodeGeo = new THREE.SphereGeometry(0.045, 10, 10);
+    const nodeMat = new THREE.MeshBasicMaterial({ color: cyan });
+    const nodes = [
+      [-1.7, 1.05, 0.2],
+      [1.7, 1.2, 0.4],
+      [0.2, -1.4, 0.6],
+      [2.1, -0.6, 1.1],
+    ].map(([x, y, z]) => {
+      const mesh = new THREE.Mesh(nodeGeo, nodeMat);
+      mesh.position.set(x, y, z);
+      root.add(mesh);
+      return mesh;
     });
-    const ring1 = new THREE.Mesh(geoTorus1, matTorus1);
-    ring1.rotation.x = Math.PI / 3;
-    mainGroup.add(ring1);
 
-    const geoTorus2 = new THREE.TorusGeometry(2.6, 0.015, 16, 100);
-    const matTorus2 = new THREE.MeshBasicMaterial({
-      color: 0xc7a6ff,
-      transparent: true,
-      opacity: 0.35,
-    });
-    const ring2 = new THREE.Mesh(geoTorus2, matTorus2);
-    ring2.rotation.y = Math.PI / 4;
-    ring2.rotation.x = -Math.PI / 6;
-    mainGroup.add(ring2);
+    const links = new THREE.BufferGeometry().setFromPoints([
+      new THREE.Vector3(-1.7, 1.05, 0.2),
+      new THREE.Vector3(1.7, 1.2, 0.4),
+      new THREE.Vector3(1.7, 1.2, 0.4),
+      new THREE.Vector3(2.1, -0.6, 1.1),
+      new THREE.Vector3(-1.7, 1.05, 0.2),
+      new THREE.Vector3(0.2, -1.4, 0.6),
+    ]);
+    root.add(new THREE.LineSegments(links, lineMat));
 
-    // 3. Surrounding Code Data Points (Particles)
-    const particleCount = 140;
-    const particleGeo = new THREE.BufferGeometry();
-    const particlePositions = new Float32Array(particleCount * 3);
-
-    for (let i = 0; i < particleCount * 3; i += 3) {
-      const radius = 2.2 + Math.random() * 2.4;
-      const theta = Math.random() * Math.PI * 2;
-      const phi = Math.acos(Math.random() * 2 - 1);
-
-      particlePositions[i] = radius * Math.sin(phi) * Math.cos(theta);
-      particlePositions[i + 1] = radius * Math.sin(phi) * Math.sin(theta);
-      particlePositions[i + 2] = radius * Math.cos(phi);
+    if (!mobile) {
+      const count = 48;
+      const positions = new Float32Array(count * 3);
+      for (let i = 0; i < count; i += 1) {
+        positions[i * 3] = (Math.random() - 0.5) * 6;
+        positions[i * 3 + 1] = (Math.random() - 0.5) * 4.2;
+        positions[i * 3 + 2] = (Math.random() - 0.5) * 3;
+      }
+      const points = new THREE.BufferGeometry();
+      points.setAttribute("position", new THREE.BufferAttribute(positions, 3));
+      root.add(
+        new THREE.Points(
+          points,
+          new THREE.PointsMaterial({
+            color: paper,
+            size: 0.028,
+            transparent: true,
+            opacity: 0.35,
+          })
+        )
+      );
     }
 
-    particleGeo.setAttribute("position", new THREE.BufferAttribute(particlePositions, 3));
-    const particleMat = new THREE.PointsMaterial({
-      color: 0xedf3f7,
-      size: 0.04,
-      transparent: true,
-      opacity: 0.65,
-    });
-    const particleSystem = new THREE.Points(particleGeo, particleMat);
-    mainGroup.add(particleSystem);
-
-    // Mouse Interaction
     let mouseX = 0;
     let mouseY = 0;
     let targetX = 0;
     let targetY = 0;
-
-    const handleMouseMove = (e) => {
+    const onMove = (event) => {
       const rect = container.getBoundingClientRect();
-      const clientX = e.clientX - rect.left;
-      const clientY = e.clientY - rect.top;
-      mouseX = (clientX / width) * 2 - 1;
-      mouseY = -(clientY / height) * 2 + 1;
+      mouseX = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+      mouseY = -(((event.clientY - rect.top) / rect.height) * 2 - 1);
     };
+    window.addEventListener("pointermove", onMove, { passive: true });
 
-    window.addEventListener("mousemove", handleMouseMove, { passive: true });
-
-    // Render loop
-    let animId;
-    let clock = new THREE.Clock();
-
+    const clock = new THREE.Clock();
+    let rafId = 0;
     const animate = () => {
-      animId = requestAnimationFrame(animate);
-
-      const elapsedTime = clock.getElapsedTime();
-
-      if (!prefersReducedMotion) {
-        // Smooth rotation
-        meshWire.rotation.y = elapsedTime * 0.2;
-        meshWire.rotation.x = elapsedTime * 0.12;
-
-        innerSphere.rotation.y = -elapsedTime * 0.3;
-
-        ring1.rotation.z = elapsedTime * 0.15;
-        ring2.rotation.z = -elapsedTime * 0.12;
-
-        particleSystem.rotation.y = elapsedTime * 0.05;
-
-        // Mouse Lerp
-        targetX += (mouseX * 0.6 - targetX) * 0.05;
-        targetY += (mouseY * 0.6 - targetY) * 0.05;
-
-        mainGroup.rotation.y = targetX;
-        mainGroup.rotation.x = -targetY;
+      rafId = requestAnimationFrame(animate);
+      const t = clock.getElapsedTime();
+      if (!reduced) {
+        board.rotation.y = Math.sin(t * 0.22) * 0.08;
+        panel.rotation.x = Math.sin(t * 0.18) * 0.06;
+        slab.rotation.z = Math.cos(t * 0.16) * 0.04;
+        nodes.forEach((node, index) => {
+          node.scale.setScalar(1 + Math.sin(t * 2 + index) * 0.18);
+        });
+        targetX += (mouseX * 0.35 - targetX) * 0.05;
+        targetY += (mouseY * 0.28 - targetY) * 0.05;
+        root.rotation.y = targetX;
+        root.rotation.x = targetY;
+        root.position.y = Math.sin(t * 0.6) * 0.06;
       }
-
       renderer.render(scene, camera);
     };
-
     animate();
 
-    // Resize observer
-    const resizeObserver = new ResizeObserver((entries) => {
-      for (let entry of entries) {
-        const newW = entry.contentRect.width;
-        const newH = entry.contentRect.height;
-        if (newW > 0 && newH > 0) {
-          camera.aspect = newW / newH;
-          camera.updateProjectionMatrix();
-          renderer.setSize(newW, newH);
-        }
+    const resize = new ResizeObserver((entries) => {
+      for (const entry of entries) {
+        const nextW = entry.contentRect.width;
+        const nextH = entry.contentRect.height;
+        if (nextW < 2 || nextH < 2) continue;
+        camera.aspect = nextW / nextH;
+        camera.updateProjectionMatrix();
+        renderer.setSize(nextW, nextH);
       }
     });
-
-    resizeObserver.observe(container);
+    resize.observe(container);
 
     return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
-      cancelAnimationFrame(animId);
-      resizeObserver.disconnect();
-      if (container.contains(renderer.domElement)) {
-        container.removeChild(renderer.domElement);
-      }
-      geoIcosa.dispose();
-      matWire.dispose();
-      geoSphere.dispose();
-      matSphere.dispose();
-      geoTorus1.dispose();
-      matTorus1.dispose();
-      geoTorus2.dispose();
-      matTorus2.dispose();
-      particleGeo.dispose();
-      particleMat.dispose();
+      cancelAnimationFrame(rafId);
+      resize.disconnect();
+      window.removeEventListener("pointermove", onMove);
+      if (container.contains(renderer.domElement)) container.removeChild(renderer.domElement);
       renderer.dispose();
+      scene.traverse((obj) => {
+        if (obj.geometry) obj.geometry.dispose();
+        if (obj.material) {
+          if (Array.isArray(obj.material)) obj.material.forEach((mat) => mat.dispose());
+          else obj.material.dispose();
+        }
+      });
     };
-  }, []);
+  }, [reduced]);
 
-  return <div ref={containerRef} className="hero-3d-canvas-container" aria-hidden="true" />;
+  return <div ref={containerRef} className="hero-canvas" aria-hidden="true" />;
 }
