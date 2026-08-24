@@ -12,28 +12,36 @@ export default function RobloxScripts() {
       <main>
         <section className="sub-hero">
           <a className="text-link" href="#work">
+            <span className="link-line" />
             Back to work
           </a>
           <h1 className="display">
-            Lua previews
+            Lua Scripts
             <span>from game tooling.</span>
           </h1>
           <p className="lede">
-            A secondary catalog of Roblox Lua experiments, interfaces, and automation patterns.
+            A secondary catalog of Roblox Lua experiments, 
+            automation patterns, and interface designs.
           </p>
         </section>
+
         <section className="catalog">
           {scripts.map((script, index) => (
             <Reveal key={script.name} delay={index * 50}>
               <article className="catalog-row lua-row">
                 <p className="case-num">{String(index + 1).padStart(2, "0")}</p>
-                <figure className="lua-thumb">
-                  {script.iconSrc ? <img src={script.iconSrc} alt="" loading="lazy" /> : null}
-                </figure>
+
+                {script.iconSrc ? (
+                  <figure className="lua-thumb">
+                    <img src={script.iconSrc} alt="" loading="lazy" />
+                  </figure>
+                ) : null}
+
                 <div>
                   <p className="kicker">{script.category}</p>
                   <h2>{script.name}</h2>
                   <p>{script.description}</p>
+
                   {script.videoSrc ? (
                     <video
                       className="lua-video"
@@ -46,18 +54,23 @@ export default function RobloxScripts() {
                       <source src={script.videoSrc} type="video/mp4" />
                     </video>
                   ) : null}
+
                   <ul className="tech-line">
                     {script.stack.map((item) => (
                       <li key={item}>{item}</li>
                     ))}
                   </ul>
                 </div>
-                {script.status ? <span className="catalog-aside">{script.status}</span> : null}
+
+                {script.status ? (
+                  <span className="catalog-aside">{script.status}</span>
+                ) : null}
               </article>
             </Reveal>
           ))}
         </section>
       </main>
+
       <SiteFooter />
     </div>
   );

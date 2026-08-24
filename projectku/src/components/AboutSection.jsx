@@ -8,25 +8,34 @@ export default function AboutSection() {
   return (
     <section id="about" className="section about">
       <div className="section-index">
-        <span>01</span>
+        <span className="index-num">01</span>
         <span>About</span>
       </div>
 
       <div className="section-body">
         <Reveal>
           <h2 className="section-title">
-            Student by day.
-            <em> Builder the rest of the time.</em>
+            What I build.
+            <em>Why it matters.</em>
           </h2>
         </Reveal>
+
         <Reveal delay={80}>
+          <p className="about-statement">
+            I turn ideas into working software — interfaces that feel right, 
+            systems that run clean, and tools people actually use.
+          </p>
+        </Reveal>
+
+        <Reveal delay={140}>
           <div className="about-copy">
             {profile.about.map((paragraph) => (
               <p key={paragraph}>{paragraph}</p>
             ))}
           </div>
         </Reveal>
-        <Reveal delay={140}>
+
+        <Reveal delay={200}>
           <dl className="meta-strip">
             {ABOUT_META.map((item) => (
               <div key={item.label}>
@@ -36,14 +45,15 @@ export default function AboutSection() {
             ))}
           </dl>
         </Reveal>
+
         {group ? (
-          <Reveal delay={180}>
+          <Reveal delay={260}>
             <aside className="group-note">
               <p className="kicker">{group.affiliation}</p>
               <h3>{group.name}</h3>
               <p>{group.summary}</p>
               <a href={group.inviteUrl} target="_blank" rel="noreferrer">
-                {group.inviteLabel}
+                {group.inviteLabel} →
               </a>
             </aside>
           </Reveal>

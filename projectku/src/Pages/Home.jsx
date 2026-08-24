@@ -15,16 +15,23 @@ export default function Home({ entered = true }) {
     if (!hash || hash.startsWith("#/")) return;
     const id = hash.slice(1);
     const timer = window.setTimeout(() => {
-      document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
-    }, entered ? 80 : 0);
+      const el = document.getElementById(id);
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth" });
+      }
+    }, entered ? 120 : 0);
     return () => window.clearTimeout(timer);
   }, [entered]);
 
   return (
     <div className="page">
+      {/* Custom cursor (desktop only) */}
       <CustomCursor />
-      <div className="page-grid" aria-hidden="true" />
+
+      {/* Fixed navigation */}
       <SiteHeader />
+
+      {/* Main content */}
       <main>
         <HeroSection />
         <AboutSection />
@@ -33,6 +40,8 @@ export default function Home({ entered = true }) {
         <JourneySection />
         <ContactSection />
       </main>
+
+      {/* Footer */}
       <SiteFooter />
     </div>
   );

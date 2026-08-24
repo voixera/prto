@@ -1,15 +1,28 @@
 import { profile } from "../content/profile";
 
 export default function SiteFooter() {
+  const year = new Date().getFullYear();
+
   return (
     <footer className="site-footer">
-      <svg className="footer-line" viewBox="0 0 1200 80" preserveAspectRatio="none" aria-hidden="true">
-        <path d="M0 40H1200" />
-        <path className="footer-draw" d="M0 40C180 12 360 68 540 40C720 12 900 68 1200 40" />
+      {/* Animated SVG line */}
+      <svg className="footer-svg" viewBox="0 0 1200 48" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M0 24H1200" opacity="0.3" />
+        <path
+          className="footer-path-animated"
+          d="M0 24C150 8 300 40 450 24C600 8 750 40 900 24C1050 8 1120 32 1200 24"
+          opacity="0.6"
+        />
       </svg>
-      <div className="footer-grid">
-        <strong>{profile.name}</strong>
-        <nav>
+
+      <div className="footer-inner">
+        {/* Brand */}
+        <strong className="footer-brand">
+          PORTO<span className="brand-accent">AZURE</span>48
+        </strong>
+
+        {/* Navigation links */}
+        <nav className="footer-links" aria-label="Footer navigation">
           {profile.socials.map((item) => (
             <a
               key={item.label}
@@ -24,7 +37,9 @@ export default function SiteFooter() {
             Discord
           </a>
         </nav>
-        <p>© {new Date().getFullYear()} / built in React</p>
+
+        {/* Copyright */}
+        <p className="footer-copy">© {year} — Built with intent</p>
       </div>
     </footer>
   );

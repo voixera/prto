@@ -3,7 +3,7 @@ import BrandMark from "../components/BrandMark";
 
 const TOTAL_STEPS = 100;
 const TICK_MS = 16;
-const EXIT_MS = 620;
+const EXIT_MS = 700;
 
 export default function WelcomeScreen({ entered = false, onEnter }) {
   const didEnterRef = useRef(false);
@@ -33,7 +33,7 @@ export default function WelcomeScreen({ entered = false, onEnter }) {
   }, [isExiting, onEnter, progress]);
 
   useEffect(() => {
-    if (progress < TOTAL_STEPS || isExiting || entered) return;
+    if (entered || isExiting || progress < TOTAL_STEPS) return;
     const handler = (event) => {
       if (event.key === "Enter" || event.key === " ") {
         event.preventDefault();
@@ -46,7 +46,7 @@ export default function WelcomeScreen({ entered = false, onEnter }) {
 
   useEffect(() => {
     if (progress >= TOTAL_STEPS && !isExiting && !entered) {
-      const auto = window.setTimeout(requestEnter, 420);
+      const auto = window.setTimeout(requestEnter, 350);
       return () => window.clearTimeout(auto);
     }
     return undefined;
@@ -61,27 +61,36 @@ export default function WelcomeScreen({ entered = false, onEnter }) {
   return (
     <div
       className={`screen-loader ${progress >= TOTAL_STEPS ? "is-ready" : ""} ${isExiting ? "is-exiting" : ""}`}
-      aria-label="Intro"
+      aria-label="Loading portfolio"
     >
-      <svg className="loader-frame" viewBox="0 0 100 100" aria-hidden="true">
-        <rect x="4" y="4" width="92" height="92" />
-        <path d="M4 18H96M4 82H96M18 4V96M82 4V96" />
+      {/* Background frame decoration */}
+      <svg className="loader-frame" viewBox="0 0 200 200" aria-hidden="true">
+        <rect x="10" y="10" width="180" height="180" />
+        <line x1="10" y1="60" x2="190" y2="60" />
+        <line x1="10" y1="140" x2="190" y2="140" />
+        <line x1="60" y1="10" x2="60" y2="190" />
+        <line x1="140" y1="10" x2="140" y2="190" />
+        <circle cx="100" cy="100" r="40" />
       </svg>
 
-      <div className="loader-panel">
-        <BrandMark size={42} />
-        <p className="kicker">Faisal Riza</p>
-        <h2>Opening the work.</h2>
-        <div className="loader-bar" aria-hidden="true">
+      {/* Main loader content */}
+      <div className="loader-content">
+        <BrandMark size={36} />
+        <p className="kicker">PORTOAZURE48</p>
+        <h2>Preparing the workspace.</h2>
+        
+        <div className="loader-bar" role="progressbar" aria-valuenow={progress} aria-valuemin={0} aria-valuemax={TOTAL_STEPS}>
           <span style={{ width: `${progress}%` }} />
         </div>
+
         <p className="loader-count">{String(progress).padStart(3, "0")}</p>
+
         {progress >= TOTAL_STEPS ? (
           <button type="button" className="btn btn-solid" onClick={requestEnter} autoFocus>
             Enter
           </button>
         ) : (
-          <p className="loader-hint">Hold on</p>
+          <p className="loader-hint">Loading assets...</p>
         )}
       </div>
     </div>

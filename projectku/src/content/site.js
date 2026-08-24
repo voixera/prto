@@ -1,9 +1,9 @@
 import { profile } from "./profile";
 
 export const NAV_ITEMS = [
-  { label: "Index", href: "#home" },
-  { label: "About", href: "#about" },
   { label: "Work", href: "#work" },
+  { label: "About", href: "#about" },
+  { label: "Stack", href: "#stack" },
   { label: "Journey", href: "#journey" },
   { label: "Contact", href: "#contact" },
 ];
@@ -21,8 +21,8 @@ export const STACK_GROUPS = [
   },
   {
     id: "systems",
-    label: "Systems",
-    items: ["Lua", "Vercel"],
+    label: "Systems & Tools",
+    items: ["Lua", "Vercel", "Git", "Three.js", "GSAP"],
   },
 ];
 

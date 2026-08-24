@@ -13,16 +13,20 @@ export default function DiscordBots() {
       <main>
         <section className="sub-hero">
           <a className="text-link" href="#work">
+            <span className="link-line" />
             Back to work
+            <LaunchArrow size={13} />
           </a>
           <h1 className="display">
-            Discord bots
+            Discord Bots
             <span>for calmer servers.</span>
           </h1>
           <p className="lede">
-            Permission-aware utilities, tickets, and assistant workflows built with Discord.js.
+            Permission-aware utilities, ticket systems, and assistant workflows 
+            built with Discord.js and Node.js.
           </p>
         </section>
+
         <section className="catalog">
           {bots.map((bot, index) => (
             <Reveal key={bot.name} delay={index * 80}>
@@ -40,9 +44,15 @@ export default function DiscordBots() {
                 </div>
                 <div className="catalog-aside">
                   <span>{bot.status}</span>
-                  <a className="btn btn-solid" href={bot.inviteUrl} target="_blank" rel="noreferrer">
-                    Use bot
-                    <LaunchArrow size={14} />
+                  <a
+                    className="btn btn-solid"
+                    href={bot.inviteUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    style={{ marginTop: 8 }}
+                  >
+                    Use Bot
+                    <LaunchArrow size={13} />
                   </a>
                 </div>
               </article>
@@ -50,6 +60,7 @@ export default function DiscordBots() {
           ))}
         </section>
       </main>
+
       <SiteFooter />
     </div>
   );

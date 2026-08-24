@@ -8,8 +8,22 @@ export default function BrandMark({ size = 28 }) {
       aria-hidden="true"
       className="brand-mark"
     >
-      <rect x="1" y="1" width="30" height="30" stroke="currentColor" strokeOpacity="0.35" />
-      <path d="M8 24V8h7.2c3.4 0 5.6 1.9 5.6 4.7 0 1.8-1 3.2-2.7 4l3.4 7.3h-3.3l-3-6.6H11V24H8Zm3-9.3h3.8c1.6 0 2.6-.8 2.6-2.1S16.4 10.5 14.8 10.5H11V14.7Z" fill="currentColor" />
+      {/* Minimal geometric mark — abstract "P" / "48" reference */}
+      <rect
+        x="2"
+        y="2"
+        width="28"
+        height="28"
+        stroke="currentColor"
+        strokeWidth="1.2"
+        fill="none"
+        opacity="0.4"
+      />
+      <path
+        d="M9 24V8h6.5c3.1 0 5.2 1.7 5.2 4.4 0 1.7-0.9 3-2.4 3.8L20 24h-3.4l-2.8-6H12v6H9Zm3-8.8h3.3c1.5 0 2.4-0.75 2.4-1.95S16.8 11.3 15.3 11.3H12V15.2Z"
+        fill="currentColor"
+        opacity="0.85"
+      />
     </svg>
   );
 }
