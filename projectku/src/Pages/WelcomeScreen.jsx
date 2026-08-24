@@ -1,608 +1,214 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
-const LOADING_TICK_MS = 28;
-const EXIT_ANIMATION_MS = 760;
+const TOTAL_STEPS = 100;
+const LOADING_TICK_MS = 22;
+const EXIT_ANIMATION_MS = 750;
 
-const WELCOME_PARTICLES = Array.from({ length: 54 }, (_, index) => {
-  const x = (index * 37 + 9) % 100;
-  const y = (index * 59 + 14) % 100;
-  const size = 1.1 + (index % 5) * 0.62;
-  const driftX = ((index % 9) - 4) * 11;
-  const driftY = -20 - (index % 7) * 8;
-  const driftMidX = Math.round(driftX * 0.48);
-  const driftMidY = Math.round(driftY * 0.54);
-  const duration = 8600 + (index % 8) * 960;
-  const delay = -(index % 13) * 520;
-  const opacity = 0.28 + (index % 4) * 0.075;
-
-  return { x, y, size, driftX, driftY, driftMidX, driftMidY, duration, delay, opacity };
-});
-
-const PALETTES = [
-  {
-    id: "midnight",
-    label: "Midnight",
-    bg: "#0b0c12",
-    bg2: "#10121a",
-    lav: "199, 166, 255",
-    sky: "154, 223, 255",
-    mint: "170, 255, 214",
-    pink: "255, 183, 213",
-  },
-  {
-    id: "lavender",
-    label: "Lavender",
-    bg: "#0d0c16",
-    bg2: "#141327",
-    lav: "212, 173, 255",
-    sky: "174, 216, 255",
-    mint: "191, 250, 237",
-    pink: "255, 188, 233",
-  },
-  {
-    id: "ocean",
-    label: "Ocean",
-    bg: "#061019",
-    bg2: "#0c1f2a",
-    lav: "111, 182, 255",
-    sky: "96, 225, 255",
-    mint: "93, 246, 214",
-    pink: "166, 213, 255",
-  },
-  {
-    id: "mint",
-    label: "Mint",
-    bg: "#071312",
-    bg2: "#0b1f1b",
-    lav: "143, 238, 201",
-    sky: "133, 244, 225",
-    mint: "102, 255, 198",
-    pink: "195, 255, 226",
-  },
-  {
-    id: "rose",
-    label: "Rose",
-    bg: "#160910",
-    bg2: "#24101b",
-    lav: "255, 160, 210",
-    sky: "255, 188, 228",
-    mint: "255, 221, 232",
-    pink: "255, 128, 170",
-  },
-  {
-    id: "sunset",
-    label: "Sunset",
-    bg: "#180c07",
-    bg2: "#2b1610",
-    lav: "255, 170, 120",
-    sky: "255, 201, 132",
-    mint: "255, 225, 168",
-    pink: "255, 128, 115",
-  },
-  {
-    id: "ember",
-    label: "Ember",
-    bg: "#170806",
-    bg2: "#260f0b",
-    lav: "255, 123, 94",
-    sky: "255, 170, 90",
-    mint: "255, 214, 140",
-    pink: "255, 93, 93",
-  },
-  {
-    id: "aurora",
-    label: "Aurora",
-    bg: "#07101c",
-    bg2: "#11253b",
-    lav: "87, 144, 255",
-    sky: "74, 238, 255",
-    mint: "130, 255, 207",
-    pink: "134, 178, 255",
-  },
-  {
-    id: "cobalt",
-    label: "Cobalt",
-    bg: "#080a18",
-    bg2: "#11163a",
-    lav: "103, 122, 255",
-    sky: "129, 167, 255",
-    mint: "120, 222, 255",
-    pink: "148, 137, 255",
-  },
-  {
-    id: "neon",
-    label: "Neon",
-    bg: "#060914",
-    bg2: "#111424",
-    lav: "169, 109, 255",
-    sky: "94, 244, 255",
-    mint: "122, 255, 144",
-    pink: "255, 88, 149",
-  },
-  {
-    id: "forest",
-    label: "Forest",
-    bg: "#06110c",
-    bg2: "#0c2117",
-    lav: "126, 214, 167",
-    sky: "108, 236, 190",
-    mint: "93, 255, 174",
-    pink: "167, 255, 210",
-  },
-  {
-    id: "ice",
-    label: "Ice",
-    bg: "#08111a",
-    bg2: "#102434",
-    lav: "168, 218, 255",
-    sky: "126, 244, 255",
-    mint: "199, 255, 250",
-    pink: "196, 223, 255",
-  },
-  {
-    id: "plum",
-    label: "Plum",
-    bg: "#120917",
-    bg2: "#22112c",
-    lav: "215, 132, 255",
-    sky: "186, 156, 255",
-    mint: "232, 194, 255",
-    pink: "255, 140, 214",
-  },
-  {
-    id: "gold",
-    label: "Gold",
-    bg: "#171108",
-    bg2: "#2a1d0d",
-    lav: "255, 198, 110",
-    sky: "255, 224, 138",
-    mint: "255, 241, 173",
-    pink: "255, 171, 104",
-  },
-  {
-    id: "berry",
-    label: "Berry",
-    bg: "#16070d",
-    bg2: "#2b0d18",
-    lav: "255, 116, 182",
-    sky: "255, 156, 206",
-    mint: "255, 205, 231",
-    pink: "255, 84, 132",
-  },
-  {
-    id: "steel",
-    label: "Steel",
-    bg: "#0b1018",
-    bg2: "#182433",
-    lav: "146, 169, 210",
-    sky: "166, 202, 255",
-    mint: "177, 229, 235",
-    pink: "183, 169, 224",
-  },
-  {
-    id: "peach",
-    label: "Peach",
-    bg: "#180d0a",
-    bg2: "#2b1710",
-    lav: "255, 170, 149",
-    sky: "255, 201, 162",
-    mint: "255, 228, 197",
-    pink: "255, 144, 122",
-  },
-  {
-    id: "storm",
-    label: "Storm",
-    bg: "#090c14",
-    bg2: "#141a29",
-    lav: "128, 139, 202",
-    sky: "111, 183, 255",
-    mint: "147, 216, 223",
-    pink: "146, 153, 255",
-  },
+const BOOT_LOGS = [
+  "SYS_INIT: Bootstrapping core modules...",
+  "RESOLVE: Parsing vector coordinates & SVGs...",
+  "GPU_ACCEL: Compiling interactive canvas shaders...",
+  "AUDIO_BUS: Initializing spatial background frequency...",
+  "SYNC: Fetching developer artifacts & repositories...",
+  "SYSTEM_ONLINE: All systems operational.",
 ];
 
-const PALETTE_SURFACES = {
-  midnight: {
-    panel: "rgba(233, 238, 255, 0.045)",
-    panel2: "rgba(199, 166, 255, 0.08)",
-    border: "rgba(198, 207, 255, 0.10)",
-    border2: "rgba(170, 214, 255, 0.18)",
-    accent3: "rgba(200, 208, 255, 0.12)",
-    fxFlowA: "199, 166, 255",
-    fxFlowB: "154, 223, 255",
-    fxFlowC: "170, 255, 214",
-    fxSparkA: "215, 226, 255",
-    fxSparkB: "178, 201, 255",
-  },
-  lavender: {
-    panel: "rgba(241, 230, 255, 0.05)",
-    panel2: "rgba(212, 173, 255, 0.09)",
-    border: "rgba(225, 206, 255, 0.11)",
-    border2: "rgba(191, 214, 255, 0.19)",
-    accent3: "rgba(226, 212, 255, 0.13)",
-    fxFlowA: "212, 173, 255",
-    fxFlowB: "174, 216, 255",
-    fxFlowC: "191, 250, 237",
-    fxSparkA: "245, 230, 255",
-    fxSparkB: "214, 205, 255",
-  },
-  ocean: {
-    panel: "rgba(183, 233, 255, 0.045)",
-    panel2: "rgba(96, 225, 255, 0.09)",
-    border: "rgba(127, 211, 255, 0.11)",
-    border2: "rgba(93, 246, 214, 0.18)",
-    accent3: "rgba(124, 214, 255, 0.12)",
-    fxFlowA: "111, 182, 255",
-    fxFlowB: "96, 225, 255",
-    fxFlowC: "93, 246, 214",
-    fxSparkA: "171, 228, 255",
-    fxSparkB: "132, 239, 255",
-  },
-  mint: {
-    panel: "rgba(185, 255, 233, 0.045)",
-    panel2: "rgba(102, 255, 198, 0.085)",
-    border: "rgba(141, 244, 214, 0.11)",
-    border2: "rgba(133, 244, 225, 0.18)",
-    accent3: "rgba(176, 255, 228, 0.12)",
-    fxFlowA: "143, 238, 201",
-    fxFlowB: "133, 244, 225",
-    fxFlowC: "102, 255, 198",
-    fxSparkA: "212, 255, 239",
-    fxSparkB: "166, 255, 220",
-  },
-  rose: {
-    panel: "rgba(255, 221, 239, 0.05)",
-    panel2: "rgba(255, 160, 210, 0.09)",
-    border: "rgba(255, 188, 228, 0.11)",
-    border2: "rgba(255, 128, 170, 0.18)",
-    accent3: "rgba(255, 215, 233, 0.13)",
-    fxFlowA: "255, 160, 210",
-    fxFlowB: "255, 188, 228",
-    fxFlowC: "255, 221, 232",
-    fxSparkA: "255, 228, 238",
-    fxSparkB: "255, 184, 214",
-  },
-  sunset: {
-    panel: "rgba(255, 223, 190, 0.05)",
-    panel2: "rgba(255, 170, 120, 0.09)",
-    border: "rgba(255, 201, 132, 0.11)",
-    border2: "rgba(255, 225, 168, 0.18)",
-    accent3: "rgba(255, 224, 188, 0.13)",
-    fxFlowA: "255, 170, 120",
-    fxFlowB: "255, 201, 132",
-    fxFlowC: "255, 225, 168",
-    fxSparkA: "255, 228, 192",
-    fxSparkB: "255, 188, 130",
-  },
-  ember: {
-    panel: "rgba(255, 214, 188, 0.05)",
-    panel2: "rgba(255, 123, 94, 0.095)",
-    border: "rgba(255, 170, 90, 0.11)",
-    border2: "rgba(255, 93, 93, 0.18)",
-    accent3: "rgba(255, 212, 184, 0.12)",
-    fxFlowA: "255, 123, 94",
-    fxFlowB: "255, 170, 90",
-    fxFlowC: "255, 214, 140",
-    fxSparkA: "255, 225, 188",
-    fxSparkB: "255, 139, 106",
-  },
-  aurora: {
-    panel: "rgba(197, 233, 255, 0.045)",
-    panel2: "rgba(87, 144, 255, 0.09)",
-    border: "rgba(130, 255, 207, 0.11)",
-    border2: "rgba(74, 238, 255, 0.18)",
-    accent3: "rgba(181, 226, 255, 0.12)",
-    fxFlowA: "87, 144, 255",
-    fxFlowB: "74, 238, 255",
-    fxFlowC: "130, 255, 207",
-    fxSparkA: "194, 236, 255",
-    fxSparkB: "134, 178, 255",
-  },
-  cobalt: {
-    panel: "rgba(198, 207, 255, 0.045)",
-    panel2: "rgba(103, 122, 255, 0.09)",
-    border: "rgba(129, 167, 255, 0.11)",
-    border2: "rgba(148, 137, 255, 0.18)",
-    accent3: "rgba(191, 197, 255, 0.12)",
-    fxFlowA: "103, 122, 255",
-    fxFlowB: "129, 167, 255",
-    fxFlowC: "120, 222, 255",
-    fxSparkA: "204, 212, 255",
-    fxSparkB: "158, 168, 255",
-  },
-  neon: {
-    panel: "rgba(224, 203, 255, 0.045)",
-    panel2: "rgba(169, 109, 255, 0.1)",
-    border: "rgba(94, 244, 255, 0.11)",
-    border2: "rgba(255, 88, 149, 0.18)",
-    accent3: "rgba(221, 204, 255, 0.13)",
-    fxFlowA: "169, 109, 255",
-    fxFlowB: "94, 244, 255",
-    fxFlowC: "255, 88, 149",
-    fxSparkA: "221, 255, 255",
-    fxSparkB: "196, 147, 255",
-  },
-  forest: {
-    panel: "rgba(205, 255, 226, 0.045)",
-    panel2: "rgba(93, 255, 174, 0.085)",
-    border: "rgba(126, 214, 167, 0.11)",
-    border2: "rgba(108, 236, 190, 0.18)",
-    accent3: "rgba(196, 255, 224, 0.12)",
-    fxFlowA: "126, 214, 167",
-    fxFlowB: "108, 236, 190",
-    fxFlowC: "93, 255, 174",
-    fxSparkA: "214, 255, 231",
-    fxSparkB: "143, 226, 184",
-  },
-  ice: {
-    panel: "rgba(223, 245, 255, 0.045)",
-    panel2: "rgba(168, 218, 255, 0.08)",
-    border: "rgba(126, 244, 255, 0.11)",
-    border2: "rgba(199, 255, 250, 0.18)",
-    accent3: "rgba(226, 246, 255, 0.12)",
-    fxFlowA: "168, 218, 255",
-    fxFlowB: "126, 244, 255",
-    fxFlowC: "199, 255, 250",
-    fxSparkA: "237, 250, 255",
-    fxSparkB: "187, 226, 255",
-  },
-  plum: {
-    panel: "rgba(241, 214, 255, 0.045)",
-    panel2: "rgba(215, 132, 255, 0.09)",
-    border: "rgba(186, 156, 255, 0.11)",
-    border2: "rgba(255, 140, 214, 0.18)",
-    accent3: "rgba(239, 215, 255, 0.12)",
-    fxFlowA: "215, 132, 255",
-    fxFlowB: "186, 156, 255",
-    fxFlowC: "232, 194, 255",
-    fxSparkA: "244, 223, 255",
-    fxSparkB: "224, 162, 255",
-  },
-  gold: {
-    panel: "rgba(255, 236, 196, 0.05)",
-    panel2: "rgba(255, 198, 110, 0.09)",
-    border: "rgba(255, 224, 138, 0.11)",
-    border2: "rgba(255, 171, 104, 0.18)",
-    accent3: "rgba(255, 236, 188, 0.13)",
-    fxFlowA: "255, 198, 110",
-    fxFlowB: "255, 224, 138",
-    fxFlowC: "255, 241, 173",
-    fxSparkA: "255, 243, 206",
-    fxSparkB: "255, 202, 118",
-  },
-  berry: {
-    panel: "rgba(255, 214, 236, 0.05)",
-    panel2: "rgba(255, 116, 182, 0.095)",
-    border: "rgba(255, 156, 206, 0.11)",
-    border2: "rgba(255, 84, 132, 0.18)",
-    accent3: "rgba(255, 214, 236, 0.13)",
-    fxFlowA: "255, 116, 182",
-    fxFlowB: "255, 156, 206",
-    fxFlowC: "255, 205, 231",
-    fxSparkA: "255, 227, 241",
-    fxSparkB: "255, 133, 188",
-  },
-  steel: {
-    panel: "rgba(214, 227, 245, 0.045)",
-    panel2: "rgba(146, 169, 210, 0.08)",
-    border: "rgba(166, 202, 255, 0.11)",
-    border2: "rgba(183, 169, 224, 0.18)",
-    accent3: "rgba(216, 225, 241, 0.12)",
-    fxFlowA: "146, 169, 210",
-    fxFlowB: "166, 202, 255",
-    fxFlowC: "177, 229, 235",
-    fxSparkA: "227, 235, 245",
-    fxSparkB: "183, 197, 223",
-  },
-  peach: {
-    panel: "rgba(255, 225, 210, 0.05)",
-    panel2: "rgba(255, 170, 149, 0.09)",
-    border: "rgba(255, 201, 162, 0.11)",
-    border2: "rgba(255, 144, 122, 0.18)",
-    accent3: "rgba(255, 227, 212, 0.13)",
-    fxFlowA: "255, 170, 149",
-    fxFlowB: "255, 201, 162",
-    fxFlowC: "255, 228, 197",
-    fxSparkA: "255, 236, 224",
-    fxSparkB: "255, 181, 150",
-  },
-  storm: {
-    panel: "rgba(208, 218, 245, 0.045)",
-    panel2: "rgba(128, 139, 202, 0.09)",
-    border: "rgba(111, 183, 255, 0.11)",
-    border2: "rgba(146, 153, 255, 0.18)",
-    accent3: "rgba(210, 220, 248, 0.12)",
-    fxFlowA: "128, 139, 202",
-    fxFlowB: "111, 183, 255",
-    fxFlowC: "147, 216, 223",
-    fxSparkA: "222, 230, 255",
-    fxSparkB: "162, 172, 232",
-  },
-};
-
-const MONOCHROME_THEME = {
-  id: "monochrome",
-  bg: "#050505",
-  bg2: "#111111",
-  lav: "232, 232, 232",
-  sky: "255, 255, 255",
-  mint: "172, 172, 172",
-  pink: "210, 210, 210",
-  surface: {
-    panel: "rgba(255, 255, 255, 0.055)",
-    panel2: "rgba(255, 255, 255, 0.082)",
-    border: "rgba(255, 255, 255, 0.13)",
-    border2: "rgba(255, 255, 255, 0.24)",
-    accent3: "rgba(255, 255, 255, 0.12)",
-    fxFlowA: "255, 255, 255",
-    fxFlowB: "190, 190, 190",
-    fxFlowC: "128, 128, 128",
-    fxSparkA: "255, 255, 255",
-    fxSparkB: "170, 170, 170",
-  },
-};
-
-function applyBackgroundVars(palette = MONOCHROME_THEME) {
-  if (typeof document === "undefined") return;
-  const root = document.documentElement;
-  const activePalette = palette.id === MONOCHROME_THEME.id ? palette : MONOCHROME_THEME;
-  const surface = activePalette.surface ?? PALETTE_SURFACES[activePalette.id] ?? PALETTE_SURFACES.midnight;
-  root.style.setProperty("--bg", activePalette.bg);
-  root.style.setProperty("--bg2", activePalette.bg2);
-  root.style.setProperty("--p-lav", activePalette.lav);
-  root.style.setProperty("--p-sky", activePalette.sky);
-  root.style.setProperty("--p-mint", activePalette.mint);
-  root.style.setProperty("--p-pink", activePalette.pink);
-  root.style.setProperty("--accent", "rgba(255, 255, 255, 0.96)");
-  root.style.setProperty("--accent2", "rgba(214, 214, 214, 0.82)");
-  root.style.setProperty("--premium-gold", "255, 255, 255");
-  root.style.setProperty("--premium-red", "150, 150, 150");
-  root.style.setProperty("--panel", surface.panel);
-  root.style.setProperty("--panel2", surface.panel2);
-  root.style.setProperty("--border", surface.border);
-  root.style.setProperty("--border2", surface.border2);
-  root.style.setProperty("--accent3", surface.accent3);
-  root.style.setProperty("--fx-flow-a", surface.fxFlowA);
-  root.style.setProperty("--fx-flow-b", surface.fxFlowB);
-  root.style.setProperty("--fx-flow-c", surface.fxFlowC);
-  root.style.setProperty("--fx-spark-a", surface.fxSparkA);
-  root.style.setProperty("--fx-spark-b", surface.fxSparkB);
-  root.dataset.palette = activePalette.id;
-}
-
 export default function WelcomeScreen({ entered = false, onEnter }) {
-  const defaultPalette = useMemo(() => MONOCHROME_THEME, []);
   const didEnterRef = useRef(false);
   const exitTimerRef = useRef(0);
-  const [progress, setProgress] = useState(1);
+  const [progress, setProgress] = useState(0);
   const [isExiting, setIsExiting] = useState(false);
   const [isGone, setIsGone] = useState(false);
-  const loadingComplete = progress >= 100;
-
-  useEffect(() => {
-    applyBackgroundVars(defaultPalette);
-  }, [defaultPalette]);
+  const [logIndex, setLogIndex] = useState(0);
 
   useEffect(() => {
     didEnterRef.current = entered;
   }, [entered]);
 
-  const requestEnter = useCallback(() => {
-    if (!loadingComplete) return;
-    if (isExiting) return;
-    if (didEnterRef.current) return;
+  useEffect(() => {
+    if (entered || isExiting || progress >= TOTAL_STEPS) return;
+    const timer = setInterval(() => {
+      setProgress((prev) => {
+        const next = Math.min(prev + 1, TOTAL_STEPS);
+        const idx = Math.min(
+          Math.floor((next / TOTAL_STEPS) * BOOT_LOGS.length),
+          BOOT_LOGS.length - 1
+        );
+        setLogIndex(idx);
+        return next;
+      });
+    }, LOADING_TICK_MS);
+    return () => clearInterval(timer);
+  }, [entered, isExiting, progress]);
 
+  const requestEnter = useCallback(() => {
+    if (progress < TOTAL_STEPS || isExiting || didEnterRef.current) return;
     didEnterRef.current = true;
     setIsExiting(true);
     onEnter?.();
-
-    if (exitTimerRef.current) {
-      window.clearTimeout(exitTimerRef.current);
-    }
-
     exitTimerRef.current = window.setTimeout(() => {
       setIsGone(true);
     }, EXIT_ANIMATION_MS);
-  }, [isExiting, loadingComplete, onEnter]);
+  }, [isExiting, onEnter, progress]);
 
   useEffect(() => {
-    if (entered || isExiting || loadingComplete || typeof window === "undefined") return;
-
-    const timer = window.setInterval(() => {
-      setProgress((current) => Math.min(current + 1, 100));
-    }, LOADING_TICK_MS);
-
-    return () => window.clearInterval(timer);
-  }, [entered, isExiting, loadingComplete]);
-
-  useEffect(() => {
-    if (entered || isExiting || !loadingComplete || typeof window === "undefined") return;
-
-    const handleKeyDown = (event) => {
-      if (event.key === "Enter" || event.key === " ") {
-        event.preventDefault();
+    if (progress < TOTAL_STEPS || isExiting || entered) return;
+    const handler = (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
         requestEnter();
       }
     };
-
-    window.addEventListener("keydown", handleKeyDown);
-    return () => {
-      window.removeEventListener("keydown", handleKeyDown);
-    };
-  }, [entered, isExiting, loadingComplete, requestEnter]);
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, [entered, isExiting, progress, requestEnter]);
 
   useEffect(() => {
     return () => {
-      if (exitTimerRef.current) {
-        window.clearTimeout(exitTimerRef.current);
-      }
+      if (exitTimerRef.current) clearTimeout(exitTimerRef.current);
     };
   }, []);
 
   if (isGone) return null;
 
   return (
-    <main
-      className={[
-        "welcomeScreen",
-        "welcomeScreenMinimal",
-        loadingComplete ? "isReady" : "",
-        isExiting ? "isExiting" : "",
-      ].join(" ")}
-      aria-label="Welcome"
-      aria-hidden={isExiting || entered}
-      inert={isExiting || entered ? "" : undefined}
+    <div
+      className={`screen-loader ${progress >= TOTAL_STEPS ? "is-ready" : ""} ${
+        isExiting ? "is-exiting" : ""
+      }`}
+      aria-label="System Loader"
     >
-      <div className="welcomeParticleField" aria-hidden="true">
-        {WELCOME_PARTICLES.map((particle, index) => (
-          <span
-            key={`welcome-particle-${index}`}
-            className="welcomeParticle"
-            style={{
-              "--particle-x": `${particle.x}%`,
-              "--particle-y": `${particle.y}%`,
-              "--particle-size": `${particle.size}px`,
-              "--particle-drift-x": `${particle.driftX}px`,
-              "--particle-drift-y": `${particle.driftY}px`,
-              "--particle-drift-mid-x": `${particle.driftMidX}px`,
-              "--particle-drift-mid-y": `${particle.driftMidY}px`,
-              "--particle-duration": `${particle.duration}ms`,
-              "--particle-delay": `${particle.delay}ms`,
-              "--particle-opacity": particle.opacity,
-            }}
-          />
-        ))}
-      </div>
+      {/* Background Cyber SVG Grids & Circles */}
+      <svg className="loader-bg-svg" viewBox="0 0 1000 1000" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+        <defs>
+          <radialGradient id="loader-glow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stopColor="rgba(112, 186, 255, 0.15)" />
+            <stop offset="100%" stopColor="transparent" />
+          </radialGradient>
+          <linearGradient id="cyber-line" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stopColor="rgba(112, 186, 255, 0.4)" />
+            <stop offset="100%" stopColor="rgba(119, 214, 178, 0.1)" />
+          </linearGradient>
+        </defs>
 
-      <div className="container welcomeInner welcomeMinimalInner">
-        <div
-          className="welcomeMinimalLoader"
-          style={{ "--welcome-progress": `${progress}%` }}
-        >
-          <div
-            className="welcomeMinimalTrack"
-            role="progressbar"
-            aria-label="Portfolio loading progress"
-            aria-valuemin={1}
-            aria-valuemax={100}
-            aria-valuenow={progress}
-          >
-            <span className="welcomeMinimalFill" />
-          </div>
-          <span className="welcomeProgressNumber">{progress}%</span>
+        <rect width="1000" height="1000" fill="url(#loader-glow)" />
+
+        {/* Outer Rotating Radar Ring */}
+        <g className="loader-radar-group">
+          <circle cx="500" cy="500" r="380" fill="none" stroke="rgba(112, 186, 255, 0.08)" strokeWidth="1" strokeDasharray="6 8" />
+          <circle cx="500" cy="500" r="320" fill="none" stroke="rgba(119, 214, 178, 0.1)" strokeWidth="1" strokeDasharray="14 10" />
+          <circle cx="500" cy="500" r="240" fill="none" stroke="rgba(112, 186, 255, 0.15)" strokeWidth="1.5" strokeDasharray="40 180" />
+        </g>
+
+        {/* Orbiting Tech Nodes */}
+        <g className="loader-orbit-group">
+          <circle cx="500" cy="180" r="4" fill="#70baff" className="pulse-dot" />
+          <circle cx="820" cy="500" r="3.5" fill="#77d6b2" className="pulse-dot" />
+          <circle cx="500" cy="820" r="3" fill="#c7a6ff" className="pulse-dot" />
+          <circle cx="180" cy="500" r="4" fill="#70baff" className="pulse-dot" />
+        </g>
+
+        {/* Diagonal Tech Crosshairs */}
+        <line x1="150" y1="150" x2="250" y2="250" stroke="url(#cyber-line)" strokeWidth="1" />
+        <line x1="850" y1="150" x2="750" y2="250" stroke="url(#cyber-line)" strokeWidth="1" />
+        <line x1="150" y1="850" x2="250" y2="750" stroke="url(#cyber-line)" strokeWidth="1" />
+        <line x1="850" y1="850" x2="750" y2="750" stroke="url(#cyber-line)" strokeWidth="1" />
+
+        {/* Center Target Box */}
+        <g className="loader-target-box" stroke="rgba(112, 186, 255, 0.35)" strokeWidth="1.5" fill="none">
+          <path d="M 440 420 L 420 420 L 420 440" />
+          <path d="M 560 420 L 580 420 L 580 440" />
+          <path d="M 440 580 L 420 580 L 420 560" />
+          <path d="M 560 580 L 580 580 L 580 560" />
+        </g>
+      </svg>
+
+      <div className="loader-panel">
+        {/* Monogram Hexagon Badge */}
+        <div className="loader-badge-wrap">
+          <svg className="loader-hexagon-svg" viewBox="0 0 100 115" width="84" height="96">
+            <polygon
+              points="50 1, 95 27, 95 78, 50 104, 5 78, 5 27"
+              fill="rgba(12, 17, 24, 0.85)"
+              stroke="rgba(112, 186, 255, 0.4)"
+              strokeWidth="2"
+              className="hex-bg"
+            />
+            <polygon
+              points="50 8, 88 30, 88 74, 50 96, 12 74, 12 30"
+              fill="none"
+              stroke="rgba(119, 214, 178, 0.6)"
+              strokeWidth="1.5"
+              strokeDasharray="60 30"
+              className="hex-glow-ring"
+            />
+            <text x="50" y="62" textAnchor="middle" fill="#edf3f7" fontSize="22" fontWeight="800" fontFamily="DM Mono, monospace" letterSpacing="-1px">
+              FR<tspan fill="#70baff">.</tspan>
+            </text>
+          </svg>
         </div>
 
-        {loadingComplete && (
-          <button
-            type="button"
-            className="welcomeEnter welcomeEnterMinimal"
-            onClick={requestEnter}
-            disabled={isExiting}
-          >
-            <span className="welcomeEnterCopy">Enter Portfolio</span>
-          </button>
-        )}
+        <div className="loader-header">
+          <div className="loader-tag">
+            <span className="live-blink" />
+            INITIALIZING WORKSPACE // 2026
+          </div>
+          <h2 className="loader-title">FAISAL RIZA</h2>
+          <p className="loader-subtitle">FULLSTACK & SYSTEMS DEVELOPER</p>
+        </div>
+
+        {/* Progress Bar with Precision Indicators */}
+        <div className="loader-bar-box">
+          <div className="loader-bar-track">
+            <div
+              className="loader-bar-fill"
+              style={{ width: `${progress}%` }}
+            >
+              <span className="loader-bar-glint" />
+            </div>
+          </div>
+          <div className="loader-meta-row">
+            <span className="loader-counter">
+              <span className="loader-num">{progress.toString().padStart(3, "0")}</span>
+              <span className="loader-pct">%</span>
+            </span>
+            <span className="loader-status-indicator">
+              {progress < 100 ? "COMPILING" : "READY TO LAUNCH"}
+            </span>
+          </div>
+        </div>
+
+        {/* Terminal Boot Log */}
+        <div className="loader-terminal-box">
+          <div className="loader-term-head">
+            <span>CONSOLE.OUT</span>
+            <span>UTF-8 // ACTIVE</span>
+          </div>
+          <p className="loader-term-log">
+            <span className="term-prompt">{">"}</span> {BOOT_LOGS[logIndex]}
+          </p>
+        </div>
+
+        {/* Interaction Trigger */}
+        <div className="loader-action-area">
+          {progress >= TOTAL_STEPS ? (
+            <button
+              type="button"
+              className="loader-launch-btn"
+              onClick={requestEnter}
+              autoFocus
+            >
+              <span>ACCESS INTERFACE</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12" />
+                <polyline points="12 5 19 12 12 19" />
+              </svg>
+            </button>
+          ) : (
+            <div className="loader-wait-hint">PRESS [SPACE / ENTER] ON COMPLETION</div>
+          )}
+        </div>
       </div>
-    </main>
+    </div>
   );
 }
