@@ -1,160 +1,99 @@
 import { useState, useEffect, useRef } from "react";
 import { profile } from "../content/profile";
+import Hero3DScene from "../components/Hero3DScene";
 import {
-  CodeBracketsIcon,
-  CpuChipIcon,
-  LayersIcon,
+  CodeIcon,
   TerminalIcon,
+  LayersIcon,
+  CpuChipIcon,
   ServerStackIcon,
+  ShieldCheckIcon,
   SparklesIcon,
   LaunchArrow,
+  ArrowDownIcon,
   GithubBrandIcon,
   DiscordBrandIcon,
+  MailBrandIcon,
+  LinkedInBrandIcon,
+  SectionDecorSVG,
 } from "../components/CustomIcons";
 
-const NAVIGATION_ITEMS = [
+const NAV_ITEMS = [
   ["Home", "home"],
   ["About", "about"],
-  ["Projects", "projects"],
+  ["Expertise", "services"],
   ["Stack", "skills"],
+  ["Projects", "projects"],
+  ["Journey", "journey"],
   ["Contact", "contact"],
 ];
 
-const TECH_CATEGORIES = {
-  Frontend: ["React", "Next.js", "TypeScript", "Tailwind CSS", "HTML5", "CSS3"],
-  Backend: ["Node.js", "PHP", "Express"],
-  Data: ["PostgreSQL", "MongoDB", "SQL"],
-  "Automation & Systems": ["Lua", "Discord.js", "Git", "Vercel"],
-};
+const SKILL_DOMAINS = [
+  {
+    title: "Frontend Engineering",
+    desc: "Crafting performant web interfaces with fluid rendering, component isolation, and accessibility.",
+    tools: ["React", "Next.js", "TypeScript", "Tailwind CSS", "Three.js", "HTML5/CSS3"],
+  },
+  {
+    title: "Backend & Systems",
+    desc: "Architecting reliable API routes, asynchronous workers, and scalable data layers.",
+    tools: ["Node.js", "Express", "PHP", "PostgreSQL", "MongoDB", "SQL"],
+  },
+  {
+    title: "Scripting & Automation",
+    desc: "Building Discord bot systems, game automation pipelines, and CLI dev tools.",
+    tools: ["Lua / Luau", "Discord.js", "Roblox Studio", "Git", "Vercel", "Linux"],
+  },
+];
 
-/* ── Interactive Hero SVG Graphic with Motion Geometry ── */
-function HeroGraphic() {
-  return (
-    <div className="hero-visual-wrap" aria-hidden="true">
-      <svg className="hero-svg-canvas" viewBox="0 0 720 540" fill="none">
-        <defs>
-          <radialGradient id="hero-core-glow" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stopColor="rgba(112, 186, 255, 0.2)" />
-            <stop offset="60%" stopColor="rgba(119, 214, 178, 0.05)" />
-            <stop offset="100%" stopColor="transparent" />
-          </radialGradient>
-          <linearGradient id="cyber-frame-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="rgba(112, 186, 255, 0.6)" />
-            <stop offset="50%" stopColor="rgba(119, 214, 178, 0.2)" />
-            <stop offset="100%" stopColor="rgba(199, 166, 255, 0.5)" />
-          </linearGradient>
-          <pattern id="dot-matrix" x="0" y="0" width="24" height="24" patternUnits="userSpaceOnUse">
-            <circle cx="2" cy="2" r="1" fill="rgba(112, 186, 255, 0.15)" />
-          </pattern>
-        </defs>
+const SERVICES_LIST = [
+  {
+    icon: CodeIcon,
+    title: "Custom Web Application Development",
+    desc: "Full-cycle web application delivery from responsive interactive frontend to serverless backend endpoints and database schemas.",
+  },
+  {
+    icon: TerminalIcon,
+    title: "Discord Bot Systems & Automation",
+    desc: "Robust bots with slash commands, ticketing architectures, role automation, security gates, and webhook integrations.",
+  },
+  {
+    icon: LayersIcon,
+    title: "Lua Scripting & Game Utilities",
+    desc: "High-performance Luau scripts, GUI components, and automation tools engineered for clean execution and zero latency.",
+  },
+  {
+    icon: ServerStackIcon,
+    title: "Performance & UI/UX Optimization",
+    desc: "Refining web speed, smooth 60fps micro-interactions, responsive mobile views, and search engine metadata compliance.",
+  },
+];
 
-        {/* Ambient Core Glow */}
-        <circle cx="360" cy="270" r="240" fill="url(#hero-core-glow)" />
-
-        {/* Dot Matrix Screen Area */}
-        <rect x="80" y="60" width="560" height="420" rx="16" fill="url(#dot-matrix)" />
-
-        {/* Rotating Outer Gyro Rings */}
-        <g className="hero-gyro-ring hero-gyro--outer">
-          <circle cx="360" cy="270" r="180" stroke="rgba(112, 186, 255, 0.18)" strokeWidth="1.5" strokeDasharray="30 20 10 20" />
-          <circle cx="360" cy="90" r="5" fill="#70baff" className="pulse-dot" />
-          <circle cx="540" cy="270" r="4" fill="#77d6b2" className="pulse-dot" />
-        </g>
-        <g className="hero-gyro-ring hero-gyro--mid">
-          <circle cx="360" cy="270" r="130" stroke="rgba(119, 214, 178, 0.25)" strokeWidth="1" strokeDasharray="60 40" />
-          <circle cx="360" cy="400" r="4.5" fill="#c7a6ff" className="pulse-dot" />
-        </g>
-
-        {/* Central Isometric Dev Cube Structure */}
-        <g className="hero-isometric-cube" transform="translate(360, 270)">
-          {/* Top Face */}
-          <polygon
-            points="0,-70 60,-35 0,0 -60,-35"
-            fill="rgba(112, 186, 255, 0.12)"
-            stroke="rgba(112, 186, 255, 0.7)"
-            strokeWidth="1.5"
-            className="cube-face cube-top"
-          />
-          {/* Left Face */}
-          <polygon
-            points="-60,-35 0,0 0,70 -60,35"
-            fill="rgba(12, 17, 24, 0.85)"
-            stroke="rgba(112, 186, 255, 0.45)"
-            strokeWidth="1.5"
-            className="cube-face cube-left"
-          />
-          {/* Right Face */}
-          <polygon
-            points="0,0 60,-35 60,35 0,70"
-            fill="rgba(19, 36, 54, 0.6)"
-            stroke="rgba(119, 214, 178, 0.5)"
-            strokeWidth="1.5"
-            className="cube-face cube-right"
-          />
-          {/* Inner Glyph */}
-          <text x="0" y="24" textAnchor="middle" fill="#70baff" fontSize="13" fontFamily="DM Mono, monospace" fontWeight="700">
-            {"{ code }"}
-          </text>
-        </g>
-
-        {/* Floating Cyber Badges / Code Pills */}
-        <g className="hero-floating-pill pill-a" transform="translate(130, 140)">
-          <rect width="130" height="34" rx="8" fill="rgba(12, 17, 24, 0.85)" stroke="rgba(112, 186, 255, 0.3)" strokeWidth="1" />
-          <circle cx="16" cy="17" r="4" fill="#77d6b2" />
-          <text x="32" y="21" fill="#edf3f7" fontSize="11" fontFamily="DM Mono, monospace">React 18 & Vite</text>
-        </g>
-
-        <g className="hero-floating-pill pill-b" transform="translate(480, 110)">
-          <rect width="138" height="34" rx="8" fill="rgba(12, 17, 24, 0.85)" stroke="rgba(119, 214, 178, 0.3)" strokeWidth="1" />
-          <circle cx="16" cy="17" r="4" fill="#70baff" />
-          <text x="32" y="21" fill="#edf3f7" fontSize="11" fontFamily="DM Mono, monospace">Node.js Engine</text>
-        </g>
-
-        <g className="hero-floating-pill pill-c" transform="translate(440, 390)">
-          <rect width="144" height="34" rx="8" fill="rgba(12, 17, 24, 0.85)" stroke="rgba(199, 166, 255, 0.3)" strokeWidth="1" />
-          <circle cx="16" cy="17" r="4" fill="#c7a6ff" />
-          <text x="32" y="21" fill="#edf3f7" fontSize="11" fontFamily="DM Mono, monospace">Lua Automation</text>
-        </g>
-
-        {/* Tech Corner Crosshairs */}
-        <g stroke="rgba(112, 186, 255, 0.4)" strokeWidth="1.5">
-          <path d="M 90 75 L 75 75 L 75 90" />
-          <path d="M 630 75 L 645 75 L 645 90" />
-          <path d="M 90 465 L 75 465 L 75 450" />
-          <path d="M 630 465 L 645 465 L 645 450" />
-        </g>
-      </svg>
-    </div>
-  );
-}
-
-/* ── Scroll Reveal Hook ── */
-function useReveal() {
+/* ── Scroll Reveal Component ── */
+function Reveal({ children, className = "", delay = 0 }) {
   const ref = useRef(null);
+
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          el.classList.add("is-revealed");
+          el.classList.add("revealed");
           observer.unobserve(el);
         }
       },
-      { threshold: 0.1 }
+      { threshold: 0.08 }
     );
     observer.observe(el);
     return () => observer.disconnect();
   }, []);
-  return ref;
-}
 
-function Reveal({ children, className = "", delay = 0 }) {
-  const ref = useReveal();
   return (
     <div
       ref={ref}
-      className={`reveal-unit ${className}`}
+      className={`reveal-box ${className}`}
       style={delay ? { transitionDelay: `${delay}ms` } : undefined}
     >
       {children}
@@ -162,14 +101,14 @@ function Reveal({ children, className = "", delay = 0 }) {
   );
 }
 
-/* ── Rotating Typewriter Hook ── */
-function useTypingEffect(words, speed = 80, pause = 2200) {
+/* ── Rotating Typewriter ── */
+function useTypewriter(phrases, speed = 80, pause = 2400) {
   const [text, setText] = useState("");
-  const [index, setIndex] = useState(0);
+  const [idx, setIdx] = useState(0);
   const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
-    const word = words[index];
+    const word = phrases[idx];
     const timer = setTimeout(
       () => {
         if (!deleting) {
@@ -181,88 +120,53 @@ function useTypingEffect(words, speed = 80, pause = 2200) {
           setText(word.slice(0, text.length - 1));
           if (text.length === 0) {
             setDeleting(false);
-            setIndex((prev) => (prev + 1) % words.length);
+            setIdx((prev) => (prev + 1) % phrases.length);
           }
         }
       },
       deleting ? speed / 2 : speed
     );
     return () => clearTimeout(timer);
-  }, [text, index, deleting, words, speed, pause]);
+  }, [text, idx, deleting, phrases, speed, pause]);
 
   return text;
 }
 
-/* ── Counter Animation ── */
-function Counter({ target, suffix = "" }) {
-  const [count, setCount] = useState(0);
-  const ref = useRef(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          let start = 0;
-          const step = Math.max(1, Math.floor(target / 30));
-          const interval = setInterval(() => {
-            start += step;
-            if (start >= target) {
-              setCount(target);
-              clearInterval(interval);
-            } else {
-              setCount(start);
-            }
-          }, 35);
-          observer.unobserve(entry.target);
-        }
-      },
-      { threshold: 0.4 }
-    );
-    if (ref.current) observer.observe(ref.current);
-    return () => observer.disconnect();
-  }, [target]);
-
-  return (
-    <span ref={ref}>
-      {count}
-      {suffix}
-    </span>
-  );
-}
-
-/* ── Project Dialog Modal ── */
-function ProjectDialog({ project, onClose }) {
+/* ── Interactive Project Case Modal ── */
+function ProjectModal({ project, onClose }) {
   if (!project) return null;
 
   return (
-    <div className="modal-backdrop" role="presentation" onClick={onClose}>
+    <div className="case-modal-overlay" role="presentation" onClick={onClose}>
       <article
-        className="modal-card"
+        className="case-modal-card"
         role="dialog"
         aria-modal="true"
-        aria-labelledby="modal-title"
+        aria-labelledby="case-modal-title"
         onClick={(e) => e.stopPropagation()}
       >
-        <button className="modal-close-btn" onClick={onClose} aria-label="Close details">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+        <button className="case-modal-close" onClick={onClose} aria-label="Close dialog">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
             <line x1="18" y1="6" x2="6" y2="18" />
             <line x1="6" y1="6" x2="18" y2="18" />
           </svg>
         </button>
-        <div className="modal-badge-row">
-          <span className="section-tag">{project.tags[0]}</span>
-          <span className="modal-scope">PRODUCTION PROJECT</span>
+
+        <div className="case-modal-tagline">
+          <span className="case-tag-lead">{project.tags[0]}</span>
+          <span className="case-tag-type">PRODUCTION SYSTEM</span>
         </div>
-        <h2 id="modal-title">{project.title}</h2>
-        <p className="modal-desc">{project.description}</p>
+
+        <h2 id="case-modal-title" className="case-modal-title">{project.title}</h2>
+        <p className="case-modal-summary">{project.description}</p>
 
         {project.showcase?.length ? (
-          <div className="modal-features-wrap">
-            <h3>Key Capabilities</h3>
-            <ul className="modal-feature-list">
+          <div className="case-section-block">
+            <h3 className="case-subhead">System Capabilities & Modules</h3>
+            <ul className="case-feature-grid">
               {project.showcase.map((item) => (
                 <li key={item}>
-                  <SparklesIcon size={14} className="feature-icon" />
+                  <SparklesIcon size={14} className="case-sparkle" />
                   <span>{item}</span>
                 </li>
               ))}
@@ -270,11 +174,11 @@ function ProjectDialog({ project, onClose }) {
           </div>
         ) : null}
 
-        <div className="modal-tech-box">
-          <h3>Built With</h3>
-          <div className="modal-tag-cloud">
+        <div className="case-section-block">
+          <h3 className="case-subhead">Engineering Stack</h3>
+          <div className="case-pill-cloud">
             {project.tags.map((t) => (
-              <span key={t} className="tech-badge">
+              <span key={t} className="case-pill">
                 {t}
               </span>
             ))}
@@ -282,317 +186,434 @@ function ProjectDialog({ project, onClose }) {
         </div>
 
         {project.links?.[0] ? (
-          <a
-            className="action-btn action-btn--primary"
-            href={project.links[0].href}
-            target={project.links[0].href.startsWith("http") ? "_blank" : undefined}
-            rel="noreferrer"
-          >
-            <span>{project.links[0].label}</span>
-            <LaunchArrow size={16} />
-          </a>
+          <div className="case-modal-actions">
+            <a
+              className="studio-btn studio-btn--primary"
+              href={project.links[0].href}
+              target={project.links[0].href.startsWith("http") ? "_blank" : undefined}
+              rel="noreferrer"
+            >
+              <span>{project.links[0].label}</span>
+              <LaunchArrow size={16} />
+            </a>
+          </div>
         ) : null}
       </article>
     </div>
   );
 }
 
-/* ── Main Component ── */
+/* ── Main Portfolio Page ── */
 export default function Home({ entered = true }) {
-  const [navOpen, setNavOpen] = useState(false);
-  const [filter, setFilter] = useState("All");
-  const [selectedProject, setSelectedProject] = useState(null);
-  const [scrolled, setScrolled] = useState(false);
+  const [activeFilter, setActiveFilter] = useState("All");
+  const [selectedCase, setSelectedCase] = useState(null);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
 
   const filters = ["All", "Web", "Discord", "Roblox"];
-  const filteredProjects =
-    filter === "All"
+  const displayProjects =
+    activeFilter === "All"
       ? profile.projects
       : profile.projects.filter(
           (p) =>
-            p.tags.some((t) => t.toLowerCase().includes(filter.toLowerCase())) ||
-            p.title.toLowerCase().includes(filter.toLowerCase())
+            p.tags.some((t) => t.toLowerCase().includes(activeFilter.toLowerCase())) ||
+            p.title.toLowerCase().includes(activeFilter.toLowerCase())
         );
 
-  const timelineItems = [...profile.education, ...profile.experience];
-  const typingRole = useTypingEffect(
-    ["Fullstack Developer", "UI/UX Engineer", "Discord Bot Architect", "Roblox Lua Specialist"],
-    75,
+  const typedRole = useTypewriter(
+    ["Fullstack Developer", "UI/UX Systems Engineer", "Discord Bot Architect", "Lua Specialist"],
+    70,
     2200
   );
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 25);
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 30);
+    };
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
-    <div className="portfolio-app-root">
-      {/* ── Fixed Navigation Bar ── */}
-      <header className={`app-header ${scrolled ? "app-header--scrolled" : ""}`}>
-        <nav className="header-nav-container" aria-label="Main Navigation">
-          <a className="brand-monogram" href="#home" aria-label="Faisal Riza Home">
-            <svg width="34" height="34" viewBox="0 0 34 34" fill="none">
-              <rect x="1" y="1" width="32" height="32" rx="8" fill="rgba(112, 186, 255, 0.08)" stroke="rgba(112, 186, 255, 0.3)" strokeWidth="1.5" />
-              <text x="17" y="22" textAnchor="middle" fill="#70baff" fontSize="13" fontWeight="800" fontFamily="DM Mono, monospace">
+    <div className="studio-layout">
+      {/* Background SVG Grid Pattern */}
+      <svg className="studio-bg-grid" width="100%" height="100%" aria-hidden="true">
+        <defs>
+          <pattern id="grid-pattern" width="70" height="70" patternUnits="userSpaceOnUse">
+            <path d="M 70 0 L 0 0 0 70" fill="none" stroke="rgba(112, 186, 255, 0.045)" strokeWidth="1" />
+          </pattern>
+        </defs>
+        <rect width="100%" height="100%" fill="url(#grid-pattern)" />
+      </svg>
+
+      {/* ── Navigation Bar ── */}
+      <header className={`studio-nav-header ${isScrolled ? "is-scrolled" : ""}`}>
+        <div className="studio-nav-container">
+          <a className="studio-brand" href="#home">
+            <svg width="36" height="36" viewBox="0 0 36 36" fill="none" aria-hidden="true">
+              <rect x="1" y="1" width="34" height="34" rx="10" fill="rgba(112, 186, 255, 0.08)" stroke="rgba(112, 186, 255, 0.3)" strokeWidth="1.5" />
+              <text x="18" y="23" textAnchor="middle" fill="#70baff" fontSize="13" fontWeight="800" fontFamily="DM Mono, monospace">
                 FR
               </text>
             </svg>
-            <span className="brand-text">
-              Faisal<span className="brand-accent">.</span>
+            <span className="studio-brand-title">
+              faisal<span className="brand-dot">.</span>riza
             </span>
           </a>
 
           <button
-            className="mobile-nav-toggle"
-            aria-label="Toggle Menu"
-            aria-expanded={navOpen}
-            onClick={() => setNavOpen(!navOpen)}
+            className="studio-mobile-toggle"
+            aria-label="Toggle navigation menu"
+            aria-expanded={mobileMenuOpen}
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           >
-            <span className={`burger-bar ${navOpen ? "bar-1--open" : ""}`} />
-            <span className={`burger-bar ${navOpen ? "bar-2--open" : ""}`} />
+            <span className={`toggle-line ${mobileMenuOpen ? "line-open-1" : ""}`} />
+            <span className={`toggle-line ${mobileMenuOpen ? "line-open-2" : ""}`} />
           </button>
 
-          <div className={`nav-link-list ${navOpen ? "nav-link-list--open" : ""}`}>
-            {NAVIGATION_ITEMS.map(([label, id]) => (
+          <nav className={`studio-nav-links ${mobileMenuOpen ? "nav-open" : ""}`} aria-label="Main navigation">
+            {NAV_ITEMS.map(([label, id]) => (
               <a
-                href={`#${id}`}
                 key={id}
-                className="nav-item-link"
-                onClick={() => setNavOpen(false)}
+                href={`#${id}`}
+                className="studio-nav-link"
+                onClick={() => setMobileMenuOpen(false)}
               >
                 {label}
               </a>
             ))}
-          </div>
+          </nav>
 
-          <a
-            className="status-pill"
-            href={profile.discordInvite}
-            target="_blank"
-            rel="noreferrer"
-            title="Available for projects & roles"
-          >
-            <span className="status-orb" />
-            <span className="status-label">OPEN FOR WORK</span>
-          </a>
-        </nav>
+          <div className="studio-nav-status">
+            <a
+              className="status-chip"
+              href={profile.discordInvite}
+              target="_blank"
+              rel="noreferrer"
+            >
+              <span className="status-blinker" />
+              <span>AVAILABLE FOR HIRE</span>
+            </a>
+          </div>
+        </div>
       </header>
 
-      <main className="main-content-flow">
-        {/* ── 01. Hero Section ── */}
-        <section className="section-hero" id="home">
-          <div className="hero-split-grid">
-            <div className="hero-text-col">
+      <main className="studio-main-flow">
+        {/* ── 01. HERO SECTION ── */}
+        <section className="hero-studio-section" id="home">
+          <div className="hero-studio-grid">
+            <div className="hero-copy-col">
               <Reveal>
-                <div className="hero-eyebrow">
-                  <span className="eyebrow-dot" />
-                  FULLSTACK DEVELOPER // 2026
+                <div className="hero-pill-badge">
+                  <span className="pill-dot" />
+                  FULLSTACK ENGINEER // PORTFOLIO 2026
                 </div>
               </Reveal>
 
               <Reveal delay={100}>
-                <h1 className="hero-headline">
-                  Faisal
-                  <span className="hero-name-stroke">Riza</span>
+                <h1 className="hero-massive-headline">
+                  Engineering
+                  <span className="headline-hollow">Resilient</span>
+                  Digital Systems.
                 </h1>
               </Reveal>
 
-              <Reveal delay={180}>
-                <div className="hero-interactive-role">
-                  <span className="role-prefix">{">"} </span>
-                  <span className="role-text">{typingRole}</span>
-                  <span className="role-cursor">|</span>
+              <Reveal delay={200}>
+                <div className="hero-dynamic-role">
+                  <span className="role-glyph">{">"}</span>
+                  <span className="role-current">{typedRole}</span>
+                  <span className="role-caret">_</span>
                 </div>
               </Reveal>
 
-              <Reveal delay={260}>
-                <p className="hero-bio">
-                  Crafting resilient web architectures, modern interface systems, automated Discord tools, and high-performance Lua code.
+              <Reveal delay={300}>
+                <p className="hero-explanatory-lead">
+                  I design and build production-ready web experiences, scalable Discord bot infrastructures, and high-precision automation tools with meticulous craftsmanship.
                 </p>
               </Reveal>
 
-              <Reveal delay={340}>
-                <div className="hero-cta-group">
-                  <a className="action-btn action-btn--primary" href="#projects">
-                    <span>EXPLORE WORK</span>
+              <Reveal delay={400}>
+                <div className="hero-button-row">
+                  <a className="studio-btn studio-btn--primary" href="#projects">
+                    <span>EXPLORE PROJECTS</span>
                     <LaunchArrow size={16} />
                   </a>
                   <a
-                    className="action-btn action-btn--ghost"
+                    className="studio-btn studio-btn--secondary"
                     href={profile.discordInvite}
                     target="_blank"
                     rel="noreferrer"
                   >
-                    <span>GET IN TOUCH</span>
+                    <span>CONNECT ON DISCORD</span>
                     <DiscordBrandIcon size={16} />
                   </a>
                 </div>
               </Reveal>
 
-              <Reveal delay={420}>
-                <div className="hero-metric-strip">
-                  <div className="metric-cell">
-                    <strong className="metric-val">
-                      <Counter target={profile.yearsExperience} suffix="+" />
-                    </strong>
-                    <span className="metric-key">Years Experience</span>
+              <Reveal delay={500}>
+                <div className="hero-stats-band">
+                  <div className="stat-unit">
+                    <strong>3+</strong>
+                    <span>Years Active</span>
                   </div>
-                  <div className="metric-cell">
-                    <strong className="metric-val">
-                      <Counter target={profile.projects.length} suffix="+" />
-                    </strong>
-                    <span className="metric-key">Completed Projects</span>
+                  <div className="stat-unit">
+                    <strong>{profile.projects.length}+</strong>
+                    <span>Production Builds</span>
                   </div>
-                  <div className="metric-cell">
-                    <strong className="metric-val">
-                      <Counter target={profile.skills.length} />
-                    </strong>
-                    <span className="metric-key">Core Technologies</span>
+                  <div className="stat-unit">
+                    <strong>100%</strong>
+                    <span>Crafted With Code</span>
                   </div>
                 </div>
               </Reveal>
             </div>
 
-            <div className="hero-graphic-col">
-              <Reveal delay={200}>
-                <HeroGraphic />
+            <div className="hero-3d-col">
+              <Reveal delay={150}>
+                <div className="hero-scene-wrapper">
+                  <Hero3DScene />
+                  <div className="hero-scene-badge">
+                    <span className="scene-coord">XYZ // 3D CANVAS</span>
+                    <span className="scene-hint">INTERACTIVE ORBIT</span>
+                  </div>
+                </div>
               </Reveal>
             </div>
           </div>
+
+          <div className="hero-scroll-cue" aria-hidden="true">
+            <a href="#about" className="scroll-cue-link" aria-label="Scroll to About section">
+              <span>EXPLORE</span>
+              <ArrowDownIcon size={14} />
+            </a>
+          </div>
         </section>
 
-        {/* ── 02. About Section ── */}
-        <section className="section-block" id="about">
-          <div className="section-index-col">
-            <span className="section-num">01</span>
-            <span className="section-subtext">PHILOSOPHY</span>
+        {/* ── 02. ABOUT SECTION ── */}
+        <section className="content-section" id="about">
+          <div className="section-rail">
+            <span className="rail-number">01</span>
+            <span className="rail-label">ABOUT</span>
+            <SectionDecorSVG />
           </div>
 
-          <div className="section-body-col">
+          <div className="section-main">
             <Reveal>
-              <h2 className="section-title">
-                Engineered with precision.<br />
-                Refined through <em>continuous creation.</em>
+              <h2 className="section-headline">
+                Crafted through practice.<br />
+                Driven by <em>pure curiosity.</em>
               </h2>
             </Reveal>
 
             <Reveal delay={100}>
-              <p className="section-desc-lead">{profile.about.join(" ")}</p>
+              <div className="about-editorial-text">
+                <p>{profile.about[0]}</p>
+                <p>{profile.about[1]} {profile.about[2]}</p>
+              </div>
             </Reveal>
 
             <Reveal delay={200}>
-              <div className="value-cards-grid">
-                <div className="value-card">
-                  <div className="value-icon-box">
-                    <CodeBracketsIcon size={22} />
+              <div className="pillars-grid">
+                <div className="pillar-card">
+                  <div className="pillar-icon-box">
+                    <CodeIcon size={22} />
                   </div>
-                  <h3>Resilient Code</h3>
-                  <p>Writing clean, maintainable, self-documenting code with modern standards and typed safety.</p>
+                  <h3>Modular & Pure</h3>
+                  <p>Writing deterministic, typed, and well-structured code without bloated abstractions or fragile dependencies.</p>
                 </div>
 
-                <div className="value-card">
-                  <div className="value-icon-box">
+                <div className="pillar-card">
+                  <div className="pillar-icon-box">
                     <LayersIcon size={22} />
                   </div>
-                  <h3>Sharp UI & Motion</h3>
-                  <p>Delivering fast, accessible interfaces with rich SVG graphics and intentional interactive motion.</p>
+                  <h3>Modern Interaction</h3>
+                  <p>Building responsive interfaces with thoughtful 3D canvas physics, custom vector SVG graphics, and 60fps motion.</p>
                 </div>
 
-                <div className="value-card">
-                  <div className="value-icon-box">
-                    <ServerStackIcon size={22} />
+                <div className="pillar-card">
+                  <div className="pillar-icon-box">
+                    <ShieldCheckIcon size={22} />
                   </div>
-                  <h3>Full-Stack Systems</h3>
-                  <p>Building everything from scalable Node.js backend pipelines to reliable cloud deployments on Vercel.</p>
+                  <h3>Reliable Operations</h3>
+                  <p>End-to-end delivery from database architecture and permission-safe Discord bot servers to automated workflows.</p>
                 </div>
               </div>
             </Reveal>
           </div>
         </section>
 
-        {/* ── 03. Selected Projects ── */}
-        <section className="section-block" id="projects">
-          <div className="section-index-col">
-            <span className="section-num">02</span>
-            <span className="section-subtext">SELECTED WORK</span>
+        {/* ── 03. SERVICES / WHAT I DO ── */}
+        <section className="content-section" id="services">
+          <div className="section-rail">
+            <span className="rail-number">02</span>
+            <span className="rail-label">SERVICES</span>
+            <SectionDecorSVG />
           </div>
 
-          <div className="section-body-col">
-            <div className="projects-header-bar">
+          <div className="section-main">
+            <Reveal>
+              <h2 className="section-headline">
+                Specialized Technical<br />
+                <em>Capabilities & Services</em>
+              </h2>
+            </Reveal>
+
+            <div className="services-showcase-grid">
+              {SERVICES_LIST.map((service, idx) => {
+                const IconComponent = service.icon;
+                return (
+                  <Reveal key={service.title} delay={idx * 80}>
+                    <div className="service-card">
+                      <div className="service-header">
+                        <div className="service-icon-wrap">
+                          <IconComponent size={20} />
+                        </div>
+                        <span className="service-num">0{idx + 1}</span>
+                      </div>
+                      <h3 className="service-title">{service.title}</h3>
+                      <p className="service-desc">{service.desc}</p>
+                    </div>
+                  </Reveal>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+
+        {/* ── 04. SKILLS & TECHNOLOGIES ── */}
+        <section className="content-section" id="skills">
+          <div className="section-rail">
+            <span className="rail-number">03</span>
+            <span className="rail-label">ARSENAL</span>
+            <SectionDecorSVG />
+          </div>
+
+          <div className="section-main">
+            <Reveal>
+              <h2 className="section-headline">
+                Tools & Technologies<br />
+                <em>Used in Production</em>
+              </h2>
+            </Reveal>
+
+            <div className="skills-domain-grid">
+              {SKILL_DOMAINS.map((domain, idx) => (
+                <Reveal key={domain.title} delay={idx * 100}>
+                  <div className="domain-card">
+                    <div className="domain-header">
+                      <CpuChipIcon size={18} />
+                      <h3>{domain.title}</h3>
+                    </div>
+                    <p className="domain-desc">{domain.desc}</p>
+                    <div className="domain-chips-flex">
+                      {domain.tools.map((t) => (
+                        <span key={t} className="tech-chip">
+                          <span className="tech-chip-dot" />
+                          {t}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </Reveal>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ── 05. FEATURED PROJECTS ── */}
+        <section className="content-section" id="projects">
+          <div className="section-rail">
+            <span className="rail-number">04</span>
+            <span className="rail-label">PROJECTS</span>
+            <SectionDecorSVG />
+          </div>
+
+          <div className="section-main">
+            <div className="projects-top-bar">
               <Reveal>
-                <h2 className="section-title">Featured Projects</h2>
+                <h2 className="section-headline">Selected Projects</h2>
               </Reveal>
 
               <Reveal delay={100}>
-                <div className="filter-button-group" role="tablist">
-                  {filters.map((item) => (
+                <div className="project-filter-dock">
+                  {filters.map((f) => (
                     <button
-                      key={item}
-                      className={`filter-btn ${filter === item ? "filter-btn--active" : ""}`}
-                      onClick={() => setFilter(item)}
+                      key={f}
+                      className={`filter-dock-btn ${activeFilter === f ? "is-active" : ""}`}
+                      onClick={() => setActiveFilter(f)}
                     >
-                      {item}
+                      {f}
                     </button>
                   ))}
                 </div>
               </Reveal>
             </div>
 
-            <div className="projects-showcase-grid">
-              {filteredProjects.map((project, idx) => (
+            <div className="editorial-projects-stack">
+              {displayProjects.map((project, idx) => (
                 <Reveal key={project.title} delay={idx * 70}>
-                  <article className={`project-item-card ${idx === 0 ? "project-item-card--featured" : ""}`}>
+                  <article className={`editorial-project-row ${idx % 2 === 1 ? "row-reversed" : ""}`}>
                     <div
-                      className="project-thumb-frame"
-                      onClick={() => setSelectedProject(project)}
+                      className="project-visual-frame"
+                      onClick={() => setSelectedCase(project)}
                       role="button"
                       tabIndex={0}
-                      aria-label={`View details of ${project.title}`}
+                      aria-label={`Open details for ${project.title}`}
                     >
                       {project.thumbnail ? (
                         <img
                           src={project.thumbnail}
-                          alt={`${project.title} preview`}
+                          alt={`${project.title} thumbnail`}
                           loading={idx > 1 ? "lazy" : "eager"}
+                          className="project-image"
                         />
                       ) : (
-                        <div className="project-thumb-fallback">
-                          <TerminalIcon size={36} />
+                        <div className="project-fallback-visual">
+                          <TerminalIcon size={40} />
                         </div>
                       )}
-                      <div className="thumb-hover-overlay">
-                        <span className="inspect-pill">
-                          <span>INSPECT PROJECT</span>
-                          <LaunchArrow size={14} />
-                        </span>
+                      <div className="visual-inspect-banner">
+                        <span>INSPECT CASE STUDY</span>
+                        <LaunchArrow size={14} />
                       </div>
                     </div>
 
-                    <div className="project-detail-pane">
-                      <div className="project-index-tag">
-                        #{String(idx + 1).padStart(2, "0")}
+                    <div className="project-narrative-box">
+                      <div className="project-index-badge">
+                        <span>CASE #{String(idx + 1).padStart(2, "0")}</span>
+                        <span className="project-tag-accent">{project.tags[0]}</span>
                       </div>
-                      <div className="project-text-content">
-                        <h3 className="project-heading">{project.title}</h3>
-                        <p className="project-snippet">{project.description}</p>
-                        <div className="project-tag-row">
-                          {project.tags.map((t) => (
-                            <span key={t} className="project-mini-tag">
-                              {t}
-                            </span>
-                          ))}
-                        </div>
+
+                      <h3 className="project-title-large">{project.title}</h3>
+                      <p className="project-summary-text">{project.description}</p>
+
+                      <div className="project-tags-cloud">
+                        {project.tags.map((tag) => (
+                          <span key={tag} className="project-tag-item">
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+
+                      <div className="project-links-row">
+                        <button
+                          type="button"
+                          className="studio-text-action"
+                          onClick={() => setSelectedCase(project)}
+                        >
+                          <span>OVERVIEW</span>
+                          <LaunchArrow size={14} />
+                        </button>
+
                         {project.links?.[0] ? (
                           <a
-                            className="project-direct-link"
+                            className="studio-text-action studio-text-action--dim"
                             href={project.links[0].href}
                             target={project.links[0].href.startsWith("http") ? "_blank" : undefined}
                             rel="noreferrer"
                           >
                             <span>{project.links[0].label}</span>
-                            <LaunchArrow size={13} />
+                            <LaunchArrow size={14} />
                           </a>
                         ) : null}
                       </div>
@@ -604,65 +625,33 @@ export default function Home({ entered = true }) {
           </div>
         </section>
 
-        {/* ── 04. Tech Stack ── */}
-        <section className="section-block" id="skills">
-          <div className="section-index-col">
-            <span className="section-num">03</span>
-            <span className="section-subtext">ARSENAL</span>
+        {/* ── 06. EXPERIENCE & JOURNEY ── */}
+        <section className="content-section" id="journey">
+          <div className="section-rail">
+            <span className="rail-number">05</span>
+            <span className="rail-label">JOURNEY</span>
+            <SectionDecorSVG />
           </div>
 
-          <div className="section-body-col">
+          <div className="section-main">
             <Reveal>
-              <h2 className="section-title">
-                Technical Stack &<br />
-                <em>Core Competencies</em>
+              <h2 className="section-headline">
+                Milestones &<br />
+                <em>Professional Experience</em>
               </h2>
             </Reveal>
 
-            <Reveal delay={120}>
-              <div className="tech-category-grid">
-                {Object.entries(TECH_CATEGORIES).map(([catName, techList]) => (
-                  <div key={catName} className="tech-cat-card">
-                    <div className="tech-cat-header">
-                      <CpuChipIcon size={16} />
-                      <h4>{catName}</h4>
+            <div className="journey-timeline">
+              {[...profile.experience, ...profile.education].map((item, idx) => (
+                <Reveal key={`${item.period}-${item.title}`} delay={idx * 60}>
+                  <div className="timeline-entry">
+                    <div className="timeline-time-col">
+                      <span className="timeline-period-pill">{item.period}</span>
                     </div>
-                    <div className="tech-pills-wrap">
-                      {techList.map((tech) => (
-                        <div key={tech} className="tech-badge-chip">
-                          <span className="chip-indicator" />
-                          <span>{tech}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </Reveal>
-          </div>
-        </section>
-
-        {/* ── 05. Journey & Experience ── */}
-        <section className="section-block" id="journey">
-          <div className="section-index-col">
-            <span className="section-num">04</span>
-            <span className="section-subtext">EXPERIENCE</span>
-          </div>
-
-          <div className="section-body-col">
-            <Reveal>
-              <h2 className="section-title">Timeline & Milestones</h2>
-            </Reveal>
-
-            <div className="timeline-ladder">
-              {timelineItems.map((item, i) => (
-                <Reveal key={`${item.period}-${item.title}`} delay={i * 60}>
-                  <div className="timeline-node">
-                    <div className="timeline-period-badge">{item.period}</div>
-                    <div className="timeline-content-card">
-                      <h3 className="timeline-role">{item.title}</h3>
-                      <span className="timeline-sub">{item.subtitle}</span>
-                      {item.details ? <p className="timeline-desc">{item.details}</p> : null}
+                    <div className="timeline-body-col">
+                      <h3 className="timeline-role-title">{item.title}</h3>
+                      <span className="timeline-role-subtitle">{item.subtitle}</span>
+                      {item.details ? <p className="timeline-role-desc">{item.details}</p> : null}
                     </div>
                   </div>
                 </Reveal>
@@ -671,71 +660,81 @@ export default function Home({ entered = true }) {
           </div>
         </section>
 
-        {/* ── 06. GitHub / Open Source Strip ── */}
-        <section className="github-cta-banner">
-          <div className="github-cta-inner">
+        {/* ── 07. GITHUB STRIP ── */}
+        <section className="github-highlight-band">
+          <div className="github-band-content">
             <Reveal>
-              <div className="section-tag">OPEN SOURCE & LABS</div>
-              <h2 className="cta-headline">Explore source code, bots & experimental systems.</h2>
+              <div className="band-lead-tag">OPEN LABS</div>
+              <h2 className="band-headline">Source Code, Bots & Experiments</h2>
+              <p className="band-desc">All open-source contributions and architecture prototypes are maintained publicly on GitHub.</p>
             </Reveal>
             <Reveal delay={150}>
               <a
-                className="action-btn action-btn--primary"
+                className="studio-btn studio-btn--primary"
                 href={profile.socials[0].href}
                 target="_blank"
                 rel="noreferrer"
               >
                 <GithubBrandIcon size={18} />
-                <span>GITHUB REPOSITORIES</span>
+                <span>EXPLORE VOIXERA REPOSITORIES</span>
                 <LaunchArrow size={16} />
               </a>
             </Reveal>
           </div>
         </section>
 
-        {/* ── 07. Contact Section ── */}
-        <section className="section-block section-contact" id="contact">
-          <div className="section-index-col">
-            <span className="section-num">05</span>
-            <span className="section-subtext">INITIATE</span>
+        {/* ── 08. CONTACT SECTION ── */}
+        <section className="content-section section-contact-studio" id="contact">
+          <div className="section-rail">
+            <span className="rail-number">06</span>
+            <span className="rail-label">CONTACT</span>
+            <SectionDecorSVG />
           </div>
 
-          <div className="section-body-col">
+          <div className="section-main">
             <Reveal>
-              <h2 className="contact-huge-title">
+              <h2 className="contact-huge-headline">
                 Let's Build<br />
-                <em>Something Great.</em>
+                <em>Something Distinct.</em>
               </h2>
             </Reveal>
 
-            <Reveal delay={120}>
-              <p className="contact-lead">
-                Open for full-time roles, freelance opportunities, discord automation, and web application builds.
+            <Reveal delay={100}>
+              <p className="contact-sub-lead">
+                I am currently open for fullstack engineering roles, freelance builds, Discord bot systems, and technical consulting.
               </p>
             </Reveal>
 
             <Reveal delay={200}>
-              <div className="contact-buttons-row">
+              <div className="contact-action-dock">
                 <a
-                  className="action-btn action-btn--discord"
+                  className="contact-card-btn contact-card-btn--discord"
                   href={profile.discordInvite}
                   target="_blank"
                   rel="noreferrer"
                 >
-                  <DiscordBrandIcon size={20} />
-                  <div className="discord-btn-text">
-                    <small>CHAT ON DISCORD</small>
+                  <div className="contact-btn-icon">
+                    <DiscordBrandIcon size={24} />
+                  </div>
+                  <div className="contact-btn-text">
+                    <small>DIRECT MESSAGE // DISCORD</small>
                     <strong>@voixera</strong>
                   </div>
-                  <LaunchArrow size={16} />
+                  <LaunchArrow size={18} className="contact-arrow" />
                 </a>
 
                 <a
-                  className="action-btn action-btn--ghost"
+                  className="contact-card-btn contact-card-btn--email"
                   href="mailto:rizafaisal173@gmail.com"
                 >
-                  <span>SEND DIRECT EMAIL</span>
-                  <LaunchArrow size={16} />
+                  <div className="contact-btn-icon">
+                    <MailBrandIcon size={24} />
+                  </div>
+                  <div className="contact-btn-text">
+                    <small>EMAIL INQUIRIES</small>
+                    <strong>rizafaisal173@gmail.com</strong>
+                  </div>
+                  <LaunchArrow size={18} className="contact-arrow" />
                 </a>
               </div>
             </Reveal>
@@ -743,30 +742,30 @@ export default function Home({ entered = true }) {
         </section>
       </main>
 
-      {/* ── App Footer ── */}
-      <footer className="app-footer">
-        <div className="footer-inner-container">
-          <div className="footer-identity">
-            <strong>FAISAL RIZA</strong>
-            <span>FULLSTACK DEVELOPER // EAST JAVA, INDONESIA</span>
+      {/* ── Studio Footer ── */}
+      <footer className="studio-footer">
+        <div className="footer-content-wrap">
+          <div className="footer-identity-col">
+            <strong className="footer-name">FAISAL RIZA</strong>
+            <span className="footer-role">FULLSTACK & SYSTEMS DEVELOPER // JAWA TIMUR, ID</span>
           </div>
 
-          <div className="footer-social-links">
+          <div className="footer-socials-col">
             {profile.socials.map((s) => (
-              <a key={s.label} href={s.href} target="_blank" rel="noreferrer" className="footer-social-item">
+              <a key={s.label} href={s.href} target="_blank" rel="noreferrer" className="footer-nav-item">
                 {s.label}
               </a>
             ))}
           </div>
 
-          <div className="footer-copyright">
-            <span>© 2026 FAISAL RIZA. CRAFTED WITH REACT & BESPOKE SVGS.</span>
+          <div className="footer-bottom-col">
+            <span>© 2026 FAISAL RIZA. DESIGNED WITH PRECISION, THREE.JS & BESPOKE SVGS.</span>
           </div>
         </div>
       </footer>
 
-      {/* Project Modal */}
-      <ProjectDialog project={selectedProject} onClose={() => setSelectedProject(null)} />
+      {/* Case Study Modal */}
+      <ProjectModal project={selectedCase} onClose={() => setSelectedCase(null)} />
     </div>
   );
 }

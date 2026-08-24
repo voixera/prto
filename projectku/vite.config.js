@@ -94,5 +94,15 @@ export default defineConfig(({ mode }) => {
       __APP_BUILD_ID__: JSON.stringify(buildId),
     },
     plugins: [react(), contactApiPlugin()],
+    build: {
+      rollupOptions: {
+        output: {
+          manualChunks: {
+            three: ["three"],
+            react: ["react", "react-dom"],
+          },
+        },
+      },
+    },
   };
 });
