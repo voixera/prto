@@ -1,4 +1,4 @@
-import Reveal from "./Reveal";
+import { profile } from "../content/profile";
 
 export default function JourneySection() {
   return (
