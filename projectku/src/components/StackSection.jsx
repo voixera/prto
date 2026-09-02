@@ -1,6 +1,5 @@
 import { useState } from "react";
-import { STACK_GROUPS } from "../content/site";
-import Reveal from "./Reveal";
+import { STACK_GROUPS, TECH_ASSETS } from "../content/site";
 
 const techDescriptions = {
   "HTML": "Semantic, accessible markup foundations.",
@@ -16,80 +15,56 @@ const techDescriptions = {
   "Discord.js": "Bot development, slash commands, events.",
   "Lua": "Roblox scripting, game automation, UI tools.",
   "Vercel": "Edge functions, deployments, analytics.",
+  "Three.js": "WebGL, 3D scenes, shaders, interactivity.",
+  "Git": "Version control, branching, team workflows.",
 };
 
 export default function StackSection() {
-  const [active, setActive] = useState("React");
+  const [activeTech, setActiveTech] = useState("React");
 
   return (
-    <section id="stack" className="section stack">
+    <section id="stack" className="section">
       <div className="section-index">
         <span className="index-num">02</span>
-        <span>Stack</span>
+        <span>TECH STACK</span>
       </div>
 
-      <div className="section-body">
-        <Reveal>
-          <h2 className="section-title">
-            Tools I use.
-            <em>What they build.</em>
-          </h2>
-        </Reveal>
+      <h2 className="section-title">
+        Ecosystem & Tools.
+        <em>What powers the build.</em>
+      </h2>
 
-        <div className="stack-board">
-          {STACK_GROUPS.map((group, groupIndex) => (
-            <Reveal key={group.id} delay={groupIndex * 100} className="stack-col">
-              <p className="stack-category">{group.label}</p>
-              <ul>
-                {group.items.map((item) => (
-                  <li key={item}>
-                    <button
-                      type="button"
-                      className={active === item ? "is-active" : ""}
-                      onMouseEnter={() => setActive(item)}
-                      onFocus={() => setActive(item)}
-                      aria-label={`${item}: ${techDescriptions[item] || ""}`}
-                    >
-                      {item}
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            </Reveal>
-          ))}
+      <div className="stack-grid">
+        {STACK_GROUPS.flatMap((g) => g.items).map((tech) => {
+          const imgSrc = TECH_ASSETS[tech];
+          return (
+            <div
+              key={tech}
+              className={`tech-card ${activeTech === tech ? "is-active" : ""}`}
+              onClick={() => setActiveTech(tech)}
+              onMouseEnter={() => setActiveTech(tech)}
+            >
+              {imgSrc ? (
+                <img src={imgSrc} alt={tech} className="tech-card-img" />
+              ) : (
+                <div className="tech-card-img" style={{ background: '#1e293b', display: 'grid', placeItems: 'center', color: '#38bdf8', fontWeight: 'bold' }}>
+                  {tech[0]}
+                </div>
+              )}
+              <span className="tech-card-name">{tech}</span>
+            </div>
+          );
+        })}
+      </div>
 
-          {/* Decorative SVG */}
-          <svg
-            className="stack-decor"
-            viewBox="0 0 280 160"
-            fill="none"
-            aria-hidden="true"
-          >
-            <rect x="20" y="20" width="240" height="120" stroke="currentColor" strokeWidth="0.5" />
-            <line x1="20" y1="80" x2="260" y2="80" stroke="currentColor" strokeWidth="0.5" strokeDasharray="4 6" opacity="0.5" />
-            <circle cx="20" cy="80" r="3" fill="currentColor" />
-            <circle cx="260" cy="80" r="3" fill="currentColor" />
-            <text x="30" y="50" fill="currentColor" fontSize="9" fontFamily="Roboto Mono, monospace" opacity="0.4">ACTIVE: {active}</text>
-          </svg>
-        </div>
-
-        {/* Active technology description */}
-        {techDescriptions[active] && (
-          <p
-            style={{
-              marginTop: 24,
-              fontFamily: "var(--font-mono)",
-              fontSize: "0.8125rem",
-              color: "var(--muted)",
-              maxWidth: "42ch",
-              lineHeight: 1.7,
-              transition: "opacity 0.3s ease",
-            }}
-          >
-            {techDescriptions[active]}
+      {techDescriptions[activeTech] && (
+        <div style={{ marginTop: 32, padding: '16px 24px', background: 'var(--bg-card)', border: '1px solid var(--border-subtle)', borderRadius: '12px', display: 'inline-block' }}>
+          <span className="mono" style={{ color: 'var(--accent-cyan)', fontSize: '0.8125rem' }}>SELECTED: {activeTech}</span>
+          <p className="project-desc" style={{ margin: 0, marginTop: 4 }}>
+            {techDescriptions[activeTech]}
           </p>
-        )}
-      </div>
+        </div>
+      )}
     </section>
   );
 }

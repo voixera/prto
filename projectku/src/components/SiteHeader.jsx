@@ -1,72 +1,64 @@
 import { useState, useEffect } from "react";
 import { profile } from "../content/profile";
 import { NAV_ITEMS } from "../content/site";
-import BrandMark from "./BrandMark";
 
 export default function SiteHeader() {
-  const [open, setOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState("home");
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 60);
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+    const handleScroll = () => {
+      const sections = NAV_ITEMS.map((item) => item.href.substring(1));
+      const scrollPos = window.scrollY + 200;
 
-  // Close mobile menu on resize
-  useEffect(() => {
-    const onResize = () => {
-      if (window.innerWidth > 900) setOpen(false);
+      for (const section of sections) {
+        const el = document.getElementById(section);
+        if (el) {
+          const top = el.offsetTop;
+          const height = el.offsetHeight;
+          if (scrollPos >= top && scrollPos < top + height) {
+            setActiveSection(section);
+            break;
+          }
+        }
+      }
     };
-    window.addEventListener("resize", onResize);
-    return () => window.removeEventListener("resize", onResize);
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
-    <header className={`site-header ${scrolled ? "is-scrolled" : ""}`}>
-      {/* Brand */}
-      <a className="brand" href="#home" onClick={() => setOpen(false)}>
-        <BrandMark size={18} />
-        <span>
-          PORTO<span className="brand-accent">AZURE</span>48
-        </span>
+    <header className="site-header">
+      <a className="nav-brand" href="#">
+        <div className="brand-dot" />
+        <span>PORTOAZURE48</span>
       </a>
 
-      {/* Navigation */}
-      <nav className={`site-nav ${open ? "is-open" : ""}`} aria-label="Primary">
-        {NAV_ITEMS.map((item) => (
-          <a
-            key={item.href}
-            href={item.href}
-            onClick={() => setOpen(false)}
-          >
-            {item.label}
-          </a>
-        ))}
-      </nav>
+      <ul className="nav-menu">
+        {NAV_ITEMS.map((item) => {
+          const sec = item.href.substring(1);
+          return (
+            <li key={item.href}>
+              <a
+                href={item.href}
+                className={activeSection === sec ? "active" : ""}
+              >
+                {item.label}
+              </a>
+            </li>
+          );
+        })}
+      </ul>
 
-      {/* Status */}
       <a
-        className="header-status"
+        className="btn btn-glass"
+        style={{ padding: "6px 16px", fontSize: "0.8125rem", borderRadius: "100px" }}
         href={profile.discordInvite}
         target="_blank"
         rel="noreferrer"
       >
-        <span className="status-dot" aria-label="Available on Discord" />
         Discord
       </a>
-
-      {/* Mobile toggle */}
-      <button
-        className={`nav-toggle ${open ? "is-open" : ""}`}
-        type="button"
-        aria-expanded={open}
-        aria-label="Toggle navigation"
-        onClick={() => setOpen((v) => !v)}
-      >
-        <span />
-        <span />
-      </button>
     </header>
   );
 }

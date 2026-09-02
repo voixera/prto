@@ -1,74 +1,48 @@
-import { useState } from "react";
 import { profile } from "../content/profile";
-import { discordUsername } from "../content/site";
-import Reveal from "./Reveal";
-import MagneticButton from "./MagneticButton";
-import { DiscordBrandIcon, LaunchArrow } from "./CustomIcons";
 
 export default function ContactSection() {
-  const [copied, setCopied] = useState(false);
-  const handle = discordUsername();
-
-  const copy = async () => {
-    try {
-      await navigator.clipboard.writeText(handle);
-      setCopied(true);
-      window.setTimeout(() => setCopied(false), 2200);
-    } catch {
-      setCopied(false);
-    }
-  };
+  const githubSocial = profile.socials.find((s) => s.label === "GitHub");
 
   return (
-    <section id="contact" className="section contact">
-      <div className="section-index">
-        <span className="index-num">05</span>
-        <span>Contact</span>
-      </div>
+    <section id="contact" className="section">
+      <div className="contact-wrapper">
+        <div className="section-index" style={{ justifyContent: 'center' }}>
+          <span className="index-num">05</span>
+          <span>INITIATE CONTACT</span>
+        </div>
 
-      <div className="section-body">
-        <Reveal>
-          <h2 className="contact-title">
-            Have an idea
-            <em>worth building?</em>
-          </h2>
-        </Reveal>
+        <h2 className="contact-hero-text">
+          LET'S BUILD <br />
+          <span className="text-highlight">SOMETHING REAL.</span>
+        </h2>
 
-        <Reveal delay={80}>
-          <p className="lede contact-lede">
-            The fastest way to reach me is Discord. Whether you need a website, 
-            a bot, or help turning a rough concept into something real — send a message.
-          </p>
-        </Reveal>
+        <p className="lede" style={{ margin: '0 auto 32px' }}>
+          Have a project idea, web application, Discord bot, or script automation in mind? Connect directly via Discord or inspect source code on GitHub.
+        </p>
 
-        <Reveal delay={160}>
-          <div className="discord-stage">
-            <MagneticButton strength={0.2}>
-              <a
-                className="discord-main"
-                href={profile.discordInvite}
-                target="_blank"
-                rel="noreferrer"
-                data-cursor-label="OPEN"
-              >
-                <DiscordBrandIcon size={24} />
-                <span>
-                  <small>Open Discord</small>
-                  <strong>{profile.discordHandle}</strong>
-                </span>
-                <LaunchArrow size={16} />
-              </a>
-            </MagneticButton>
-            <button
-              type="button"
-              className="discord-copy"
-              onClick={copy}
-              aria-label={`Copy username ${handle}`}
+        <div className="contact-actions">
+          <a
+            className="btn btn-solid"
+            style={{ padding: '14px 32px', fontSize: '1rem' }}
+            href={profile.discordInvite}
+            target="_blank"
+            rel="noreferrer"
+          >
+            DISCORD ({profile.discordHandle})
+          </a>
+
+          {githubSocial && (
+            <a
+              className="btn btn-glass"
+              style={{ padding: '14px 32px', fontSize: '1rem' }}
+              href={githubSocial.href}
+              target="_blank"
+              rel="noreferrer"
             >
-              {copied ? "✓ Copied to clipboard" : `Copy ${handle}`}
-            </button>
-          </div>
-        </Reveal>
+              GITHUB REPOSITORIES
+            </a>
+          )}
+        </div>
       </div>
     </section>
   );

@@ -1,5 +1,38 @@
 import { profile } from "./profile";
 
+import vercelImg from "../assets/tech-stack/vercel.jpg";
+import typescriptImg from "../assets/tech-stack/typescript.jpg";
+import threejsImg from "../assets/tech-stack/threejs.jpg";
+import tailwindcssImg from "../assets/tech-stack/tailwindcss.png";
+import sqlImg from "../assets/tech-stack/sql.jpg";
+import reactImg from "../assets/tech-stack/react.png";
+import phpImg from "../assets/tech-stack/php.png";
+import nodejsImg from "../assets/tech-stack/nodejs.jpg";
+import nextjsImg from "../assets/tech-stack/nextjs.jpg";
+import mongodbImg from "../assets/tech-stack/mongodb.jpg";
+import luaImg from "../assets/tech-stack/lua.jpg";
+import htmlImg from "../assets/tech-stack/html.jpg";
+import gitImg from "../assets/tech-stack/git.jpg";
+import cssImg from "../assets/tech-stack/css.jpg";
+
+export const TECH_ASSETS = {
+  "HTML": htmlImg,
+  "CSS": cssImg,
+  "React": reactImg,
+  "Next.js": nextjsImg,
+  "TypeScript": typescriptImg,
+  "Tailwind CSS": tailwindcssImg,
+  "Node.js": nodejsImg,
+  "PHP": phpImg,
+  "SQL": sqlImg,
+  "MongoDB": mongodbImg,
+  "Discord.js": nodejsImg,
+  "Lua": luaImg,
+  "Vercel": vercelImg,
+  "Three.js": threejsImg,
+  "Git": gitImg,
+};
+
 export const NAV_ITEMS = [
   { label: "Work", href: "#work" },
   { label: "About", href: "#about" },
@@ -22,7 +55,7 @@ export const STACK_GROUPS = [
   {
     id: "systems",
     label: "Systems & Tools",
-    items: ["Lua", "Vercel", "Git", "Three.js", "GSAP"],
+    items: ["Lua", "Vercel"],
   },
 ];
 

@@ -1,157 +1,165 @@
+import { useEffect, useRef } from "react";
+import gsap from "gsap";
 import { profile } from "../content/profile";
 import { WEB_PROJECTS, DISCORD_PROJECT, ROBLOX_PROJECT, isExternalHref } from "../content/site";
-import Reveal from "./Reveal";
-import { LaunchArrow } from "./CustomIcons";
 
-/**
- * ProjectVisual — Individual project thumbnail with hover state
- */
-function ProjectVisual({ project, index = 0 }) {
+function TiltProjectCard({ project, index }) {
+  const cardRef = useRef(null);
+
+  useEffect(() => {
+    const el = cardRef.current;
+    if (!el) return;
+
+    const handleMouseMove = (e) => {
+      const rect = el.getBoundingClientRect();
+      const x = e.clientX - rect.left - rect.width / 2;
+      const y = e.clientY - rect.top - rect.height / 2;
+
+      gsap.to(el, {
+        rotateY: x / 25,
+        rotateX: -y / 25,
+        ease: "power2.out",
+        duration: 0.4
+      });
+    };
+
+    const handleMouseLeave = () => {
+      gsap.to(el, {
+        rotateY: 0,
+        rotateX: 0,
+        ease: "power2.out",
+        duration: 0.6
+      });
+    };
+
+    el.addEventListener("mousemove", handleMouseMove);
+    el.addEventListener("mouseleave", handleMouseLeave);
+
+    return () => {
+      el.removeEventListener("mousemove", handleMouseMove);
+      el.removeEventListener("mouseleave", handleMouseLeave);
+    };
+  }, []);
+
   return (
-    <a
-      className="case-visual"
-      href={project.links?.[0]?.href ?? "#contact"}
-      target={isExternalHref(project.links?.[0]?.href) ? "_blank" : undefined}
-      rel={isExternalHref(project.links?.[0]?.href) ? "noreferrer" : undefined}
-      data-cursor
-      data-cursor-label="VIEW"
-    >
-      {project.thumbnail ? (
-        <img
-          src={project.thumbnail}
-          alt={`${project.title} preview`}
-          loading={index > 0 ? "lazy" : "eager"}
-        />
-      ) : (
-        /* Fallback visual for projects without thumbnails */
-        <div
-          style={{
-            width: "100%",
-            height: "100%",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            background: "var(--bg-surface)",
-            fontFamily: "var(--font-serif)",
-            fontSize: "clamp(1.5rem, 3vw, 2.5rem)",
-            color: "var(--faint)",
-            fontStyle: "italic",
-          }}
-        >
-          {project.title.charAt(0)}
+    <article ref={cardRef} className="project-card tilt-card">
+      <div className="project-media">
+        {project.thumbnail ? (
+          <img src={project.thumbnail} alt={project.title} loading="lazy" />
+        ) : (
+          <div style={{ width: '100%', height: '100%', display: 'grid', placeItems: 'center', background: '#0f172a', color: '#64748b' }}>
+            {project.title}
+          </div>
+        )}
+      </div>
+
+      <div className="project-info">
+        <div>
+          <span className="project-num">PROJECT {String(index + 1).padStart(2, '0')}</span>
+          <h3 className="project-name">{project.title}</h3>
+          <p className="project-desc">{project.description}</p>
+
+          <div className="project-tags">
+            {project.tags.map((tag) => (
+              <span key={tag} className="project-tag">{tag}</span>
+            ))}
+          </div>
         </div>
-      )}
-      <span className="case-hover">
-        View Project
-        <LaunchArrow size={12} />
-      </span>
-    </a>
+
+        {project.links?.[0] && (
+          <a
+            href={project.links[0].href}
+            target={isExternalHref(project.links[0].href) ? "_blank" : undefined}
+            rel={isExternalHref(project.links[0].href) ? "noreferrer" : undefined}
+            className="btn btn-solid"
+            style={{ width: 'fit-content', padding: '10px 20px', fontSize: '0.875rem' }}
+          >
+            {project.links[0].label} →
+          </a>
+        )}
+      </div>
+    </article>
   );
 }
 
 export default function ProjectsSection() {
   return (
-    <section id="work" className="section work">
+    <section id="work" className="section">
       <div className="section-index">
         <span className="index-num">03</span>
-        <span>Work</span>
+        <span>SELECTED WORK</span>
       </div>
 
-      <div className="section-body">
-        <Reveal>
-          <h2 className="section-title">
-            Selected work.
-            <em>Built with intent.</em>
-          </h2>
-        </Reveal>
+      <h2 className="section-title">
+        Featured Projects.
+        <em>Web applications & tools.</em>
+      </h2>
 
-        {/* Main project showcase */}
-        <div className="case-list">
-          {WEB_PROJECTS.map((project, index) => (
-            <Reveal key={project.title} delay={index * 80}>
-              <article className={`case-row ${index % 2 !== 0 ? "is-flip" : ""}`}>
-                <ProjectVisual project={project} index={index} />
-                <div className="case-copy">
-                  <p className="case-num">Project {String(index + 1).padStart(2, "0")}</p>
-                  <h3>{project.title}</h3>
-                  <p>{project.description}</p>
-                  <ul className="tech-line">
-                    {project.tags.map((tag) => (
-                      <li key={tag}>{tag}</li>
-                    ))}
-                  </ul>
-                  {project.links?.[0] ? (
-                    <a
-                      className="text-link"
-                      href={project.links[0].href}
-                      target={isExternalHref(project.links[0].href) ? "_blank" : undefined}
-                      rel={isExternalHref(project.links[0].href) ? "noreferrer" : undefined}
-                    >
-                      <span className="link-line" />
-                      {project.links[0].label}
-                      <LaunchArrow size={13} />
-                    </a>
-                  ) : null}
+      <div className="projects-list">
+        {WEB_PROJECTS.map((project, index) => (
+          <TiltProjectCard key={project.title} project={project} index={index} />
+        ))}
+      </div>
+
+      {DISCORD_PROJECT && (
+        <div style={{ marginTop: 64 }}>
+          <div className="section-index">
+            <span className="index-num">03.B</span>
+            <span>BOT SYSTEMS</span>
+          </div>
+          <h3 className="section-title" style={{ fontSize: '2rem' }}>Discord Bots</h3>
+
+          <div className="sub-showcase-grid">
+            {profile.discordBots.map((bot) => (
+              <div key={bot.name} className="sub-card">
+                <div>
+                  <span className="project-num">{bot.category}</span>
+                  <h4 style={{ fontSize: '1.25rem', fontFamily: 'var(--font-display)', marginBottom: 8 }}>{bot.name}</h4>
+                  <p className="project-desc" style={{ fontSize: '0.875rem' }}>{bot.description}</p>
                 </div>
-              </article>
-            </Reveal>
-          ))}
+                <a
+                  href={bot.inviteUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="btn btn-glass"
+                  style={{ marginTop: 16, fontSize: '0.8125rem', padding: '8px 16px' }}
+                >
+                  Invite Bot →
+                </a>
+              </div>
+            ))}
+          </div>
         </div>
+      )}
 
-        {/* Discord Bots section */}
-        {DISCORD_PROJECT ? (
-          <Reveal>
-            <article className="band-case">
-              <div>
-                <p className="kicker">Discord Systems</p>
-                <h3>{DISCORD_PROJECT.title}</h3>
-                <p>{DISCORD_PROJECT.description}</p>
-                <a className="text-link" href="#/discord-bots">
-                  <span className="link-line" />
-                  View all bots
-                  <LaunchArrow size={14} />
+      {ROBLOX_PROJECT && (
+        <div style={{ marginTop: 64 }}>
+          <div className="section-index">
+            <span className="index-num">03.C</span>
+            <span>AUTOMATION</span>
+          </div>
+          <h3 className="section-title" style={{ fontSize: '2rem' }}>Roblox Lua Scripts</h3>
+
+          <div className="sub-showcase-grid">
+            {profile.robloxScripts.slice(0, 4).map((script) => (
+              <div key={script.name} className="sub-card">
+                <div>
+                  <span className="project-num">{script.category}</span>
+                  <h4 style={{ fontSize: '1.25rem', fontFamily: 'var(--font-display)', marginBottom: 8 }}>{script.name}</h4>
+                  <p className="project-desc" style={{ fontSize: '0.875rem' }}>{script.description}</p>
+                </div>
+                <a
+                  href="#/roblox-scripts"
+                  className="btn btn-glass"
+                  style={{ marginTop: 16, fontSize: '0.8125rem', padding: '8px 16px' }}
+                >
+                  View Showcase →
                 </a>
               </div>
-              <ul className="bot-list">
-                {profile.discordBots.map((bot) => (
-                  <li key={bot.name}>
-                    <strong>{bot.name}</strong>
-                    <span>{bot.category}</span>
-                  </li>
-                ))}
-              </ul>
-            </article>
-          </Reveal>
-        ) : null}
-
-        {/* Roblox Scripts section */}
-        {ROBLOX_PROJECT ? (
-          <Reveal>
-            <article className="lua-case">
-              <div className="lua-copy">
-                <p className="kicker">Secondary Practice</p>
-                <h3>{ROBLOX_PROJECT.title}</h3>
-                <p>{ROBLOX_PROJECT.description}</p>
-                <a className="text-link" href="#/roblox-scripts">
-                  <span className="line" />
-                  Script previews
-                  <LaunchArrow size={14} />
-                </a>
-              </div>
-              <div className="lua-strip">
-                {profile.robloxScripts.slice(0, 4).map((script) => (
-                  <figure key={script.name}>
-                    {script.iconSrc ? (
-                      <img src={script.iconSrc} alt="" loading="lazy" />
-                    ) : null}
-                    <figcaption>{script.name}</figcaption>
-                  </figure>
-                ))}
-              </div>
-            </article>
-          </Reveal>
-        ) : null}
-      </div>
+            ))}
+          </div>
+        </div>
+      )}
     </section>
   );
 }
