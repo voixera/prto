@@ -29,20 +29,23 @@ export default function Reveal({ children, className = "", delay = 0, as: Tag = 
     return () => observer.disconnect();
   }, [reduced]);
 
-  // compute style based on variant
+  // compute style based on variant and visibility
   const baseStyle = delay ? { transitionDelay: `${delay}ms` } : {};
-  const variantStyle = variant === "clip"
-    ? {
+  const variantStyle = (() => {
+    if (variant === "clip") {
+      return {
         clipPath: visible ? "inset(0% 0% 0% 0%)" : "inset(100% 0% 0% 0%)",
         transition: `clip-path ${duration}ms ease`,
-      }
-    : {};
+      };
+    }
+    return {};
+  })();
   const combinedStyle = { ...baseStyle, ...variantStyle };
 
   return (
     <Tag
       ref={ref}
-      className={`reveal ${visible ? "is-visible" : ""} ${className}`.trim()}
+      className={`reveal ${variant === "clip" ? "clip-reveal" : ""} ${visible ? "is-visible" : ""} ${className}`.trim()}
       style={combinedStyle}
     >
       {children}

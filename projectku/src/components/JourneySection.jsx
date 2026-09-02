@@ -1,5 +1,5 @@
 import { profile } from "../content/profile";
-
+import Reveal from "./Reveal";
 export default function JourneySection() {
   return (
     <section id="journey" className="section">
