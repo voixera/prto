@@ -1,98 +1,151 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { profile } from "../content/profile";
+import { HeroLandscape } from "./LandscapeSVG";
+import Reveal from "./Reveal";
 
 export default function HeroSection() {
-  const heroRef = useRef(null);
-  const titleRef = useRef(null);
+  const wrapRef = useRef(null);
+  const parallaxRef = useRef(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.from(".hero-anim", {
-        y: 40,
+      // Staggered entrance for hero elements
+      gsap.from(".hero-anim-el", {
+        y: 36,
         opacity: 0,
-        duration: 1,
-        stagger: 0.15,
+        duration: 1.2,
+        stagger: 0.12,
         ease: "power3.out",
-        delay: 0.2
+        delay: 0.1,
       });
 
+      // Mouse parallax on the landscape
       const handleMouseMove = (e) => {
-        const { clientX, clientY } = e;
-        const xPos = (clientX / window.innerWidth - 0.5) * 30;
-        const yPos = (clientY / window.innerHeight - 0.5) * 30;
-
-        gsap.to(".hero-parallax-layer", {
-          x: xPos,
-          y: yPos,
-          duration: 1,
-          ease: "power2.out"
-        });
+        const xPct = (e.clientX / window.innerWidth - 0.5);
+        const yPct = (e.clientY / window.innerHeight - 0.5);
+        if (parallaxRef.current) {
+          gsap.to(parallaxRef.current, {
+            x: xPct * 24,
+            y: yPct * 16,
+            duration: 1.4,
+            ease: "power2.out",
+          });
+        }
       };
 
-      window.addEventListener("mousemove", handleMouseMove);
+      window.addEventListener("mousemove", handleMouseMove, { passive: true });
       return () => window.removeEventListener("mousemove", handleMouseMove);
-    }, heroRef);
+    }, wrapRef);
 
     return () => ctx.revert();
   }, []);
 
+  const nameParts = profile.name.split(" ");
+  const firstName = nameParts[0]; // Audrey
+  const lastName = nameParts.slice(1).join(" "); // Faisal Riza
+
   return (
-    <section ref={heroRef} id="home" className="section hero-wrapper">
-      {/* Background AI Landscape Visual Accent */}
-      <div className="hero-landscape-bg hero-parallax-layer">
-        <svg viewBox="0 0 1440 600" fill="none" width="100%" height="100%">
-          <path d="M0 450 L300 250 L600 400 L900 180 L1200 350 L1440 200 V600 H0 Z" fill="rgba(15, 23, 42, 0.4)" />
-          <path d="M0 500 L400 350 L800 480 L1200 300 L1440 420 V600 H0 Z" fill="rgba(30, 41, 59, 0.6)" />
-          <line x1="0" y1="200" x2="1440" y2="200" stroke="rgba(56, 189, 248, 0.15)" strokeDasharray="6 6" />
-        </svg>
+    <section ref={wrapRef} id="home" className="hero-wrapper">
+      {/* Left: editorial content */}
+      <div className="hero-content">
+        {/* Availability */}
+        <div className="hero-availability hero-anim-el">
+          <span className="hero-availability-dot" aria-hidden="true" />
+          AVAILABLE FOR PROJECTS
+        </div>
+
+        {/* Name — massive display type */}
+        <div aria-label={profile.name}>
+          <span className="hero-name hero-anim-el">
+            <span className="hero-name-first">{firstName.toUpperCase()}</span>
+            <span className="hero-name-last">{lastName}</span>
+          </span>
+        </div>
+
+        <div className="hero-divider hero-anim-el" aria-hidden="true" />
+
+        {/* Role + tagline */}
+        <p className="hero-role hero-anim-el">
+          {profile.role}
+        </p>
+
+        <p className="hero-tagline hero-anim-el">
+          {profile.tagline}
+        </p>
+
+        {/* CTA */}
+        <div className="hero-anim-el" style={{ display: "flex", gap: "14px", flexWrap: "wrap" }}>
+          <a
+            href="#work"
+            className="btn btn-outline"
+            data-cursor-label="EXPLORE"
+          >
+            Selected Work
+            <span style={{ width: 16, height: 1, background: "currentColor", display: "inline-block" }} aria-hidden="true" />
+          </a>
+          <a
+            href={profile.discordInvite}
+            target="_blank"
+            rel="noreferrer"
+            className="btn btn-ghost"
+            data-cursor-label="DISCORD"
+          >
+            {profile.discordHandle}
+          </a>
+        </div>
+
+        {/* Metadata strip */}
+        <div className="hero-meta-strip hero-anim-el">
+          <div className="hero-meta-item">
+            <span className="hero-meta-label">Location</span>
+            <span className="hero-meta-value">{profile.location}</span>
+          </div>
+          <div className="hero-meta-item">
+            <span className="hero-meta-label">Age</span>
+            <span className="hero-meta-value">{profile.age}</span>
+          </div>
+          <div className="hero-meta-item">
+            <span className="hero-meta-label">Experience</span>
+            <span className="hero-meta-value">{profile.yearsExperience} Years</span>
+          </div>
+          <div className="hero-meta-item">
+            <span className="hero-meta-label">Status</span>
+            <span className="hero-meta-value">UT Student</span>
+          </div>
+        </div>
       </div>
 
-      <div className="hero-badge hero-anim">
-        <span className="brand-dot" />
-        <span>AVAILABLE FOR PROJECTS & BOT DEVS</span>
+      {/* Right: cinematic landscape */}
+      <div className="hero-visual" aria-hidden="true">
+        <div ref={parallaxRef} style={{ position: "absolute", inset: "-5%", width: "110%", height: "110%" }}>
+          <HeroLandscape style={{ width: "100%", height: "100%" }} />
+        </div>
+
+        {/* Coordinate decoration */}
+        <span className="hero-coord">
+          07°15'S / 112°44'E<br />
+          JAWA TIMUR
+        </span>
       </div>
 
-      <h1 ref={titleRef} className="hero-title hero-anim">
-        <span className="text-gradient">{profile.name.split(' ')[0]}</span>{' '}
-        <span className="text-highlight">{profile.name.split(' ').slice(1).join(' ')}</span>
-      </h1>
-
-      <p className="lede hero-anim" style={{ maxWidth: '54ch' }}>
-        {profile.tagline}
-      </p>
-
-      <div className="hero-anim" style={{ marginTop: 32, display: 'flex', gap: 16, flexWrap: 'wrap' }}>
-        <a className="btn btn-solid" href="#work">
-          EXPLORE WORK
-        </a>
-        <a
-          className="btn btn-glass"
-          href={profile.discordInvite}
-          target="_blank"
-          rel="noreferrer"
-        >
-          DISCORD COMMUNITY
-        </a>
-      </div>
-
-      <div className="hero-meta-grid hero-anim">
-        <div className="hero-meta-item">
-          <label>LOCATION</label>
-          <span>{profile.location}</span>
-        </div>
-        <div className="hero-meta-item">
-          <label>ROLE</label>
-          <span>{profile.role}</span>
-        </div>
-        <div className="hero-meta-item">
-          <label>DISCORD</label>
-          <span>{profile.discordHandle}</span>
-        </div>
-        <div className="hero-meta-item">
-          <label>EDUCATION</label>
-          <span>Universitas Terbuka</span>
-        </div>
+      {/* Scroll cue — centered below */}
+      <div
+        className="hero-scroll-cue"
+        aria-hidden="true"
+        style={{ gridColumn: "1 / -1" }}
+      >
+        <span className="hero-scroll-line" />
+        <span style={{
+          fontFamily: "var(--font-mono)",
+          fontSize: "0.5rem",
+          letterSpacing: "0.25em",
+          color: "var(--text-dim)",
+          textTransform: "uppercase",
+          marginTop: 8,
+        }}>
+          SCROLL
+        </span>
       </div>
     </section>
   );

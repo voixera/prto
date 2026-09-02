@@ -85,80 +85,90 @@ function TiltProjectCard({ project, index }) {
 export default function ProjectsSection() {
   return (
     <section id="work" className="section">
-      <div className="section-index">
-        <span className="index-num">03</span>
-        <span>SELECTED WORK</span>
-      </div>
+      <Reveal as="div" className="section-index-reveal" variant="fade" duration={400}>
+        <div className="section-index">
+          <span className="index-num">03</span>
+          <span>SELECTED WORK</span>
+        </div>
+      </Reveal>
 
-      <h2 className="section-title">
-        Featured Projects.
-        <em>Web applications & tools.</em>
-      </h2>
+      <Reveal as="h2" className="section-title-reveal" variant="fade" duration={500} delay={100}>
+        <h2 className="section-title">
+          Featured Projects.
+          <em>Web applications & tools.</em>
+        </h2>
+      </Reveal>
 
-      <div className="projects-list">
-        {WEB_PROJECTS.map((project, index) => (
-          <TiltProjectCard key={project.title} project={project} index={index} />
-        ))}
-      </div>
+      <Reveal as="div" className="projects-list-reveal" variant="fade" duration={500} delay={200}>
+        <div className="projects-list">
+          {WEB_PROJECTS.map((project, index) => (
+            <TiltProjectCard key={project.title} project={project} index={index} />
+          ))}
+        </div>
+      </Reveal>
 
       {DISCORD_PROJECT && (
-        <div style={{ marginTop: 64 }}>
-          <div className="section-index">
-            <span className="index-num">03.B</span>
-            <span>BOT SYSTEMS</span>
-          </div>
-          <h3 className="section-title" style={{ fontSize: '2rem' }}>Discord Bots</h3>
+        <Reveal as="div" className="discord-section-reveal" variant="fade" duration={500} delay={300}>
+          <div style={{ marginTop: 64 }}>
+            <div className="section-index">
+              <span className="index-num">03.B</span>
+              <span>BOT SYSTEMS</span>
+            </div>
+            <h3 className="section-title" style={{ fontSize: '2rem' }}>Discord Bots</h3>
 
-          <div className="sub-showcase-grid">
-            {profile.discordBots.map((bot) => (
-              <div key={bot.name} className="sub-card">
-                <div>
-                  <span className="project-num">{bot.category}</span>
-                  <h4 style={{ fontSize: '1.25rem', fontFamily: 'var(--font-display)', marginBottom: 8 }}>{bot.name}</h4>
-                  <p className="project-desc" style={{ fontSize: '0.875rem' }}>{bot.description}</p>
+            <div className="sub-showcase-grid">
+              {profile.discordBots.map((bot) => (
+                <div key={bot.name} className="sub-card">
+                  <div>
+                    <span className="project-num">{bot.category}</span>
+                    <h4 style={{ fontSize: '1.25rem', fontFamily: 'var(--font-display)', marginBottom: 8 }}>{bot.name}</h4>
+                    <p className="project-desc" style={{ fontSize: '0.875rem' }}>{bot.description}</p>
+                  </div>
+                  <a
+                    href={bot.inviteUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="btn btn-glass"
+                    style={{ marginTop: 16, fontSize: '0.8125rem', padding: '8px 16px' }}
+                  >
+                    Invite Bot →
+                  </a>
                 </div>
-                <a
-                  href={bot.inviteUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="btn btn-glass"
-                  style={{ marginTop: 16, fontSize: '0.8125rem', padding: '8px 16px' }}
-                >
-                  Invite Bot →
-                </a>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
+        </Reveal>
       )}
 
       {ROBLOX_PROJECT && (
-        <div style={{ marginTop: 64 }}>
-          <div className="section-index">
-            <span className="index-num">03.C</span>
-            <span>AUTOMATION</span>
-          </div>
-          <h3 className="section-title" style={{ fontSize: '2rem' }}>Roblox Lua Scripts</h3>
+        <Reveal as="div" className="roblox-section-reveal" variant="fade" duration={500} delay={400}>
+          <div style={{ marginTop: 64 }}>
+            <div className="section-index">
+              <span className="index-num">03.C</span>
+              <span>AUTOMATION</span>
+            </div>
+            <h3 className="section-title" style={{ fontSize: '2rem' }}>Roblox Lua Scripts</h3>
 
-          <div className="sub-showcase-grid">
-            {profile.robloxScripts.slice(0, 4).map((script) => (
-              <div key={script.name} className="sub-card">
-                <div>
-                  <span className="project-num">{script.category}</span>
-                  <h4 style={{ fontSize: '1.25rem', fontFamily: 'var(--font-display)', marginBottom: 8 }}>{script.name}</h4>
-                  <p className="project-desc" style={{ fontSize: '0.875rem' }}>{script.description}</p>
+            <div className="sub-showcase-grid">
+              {profile.robloxScripts.slice(0, 4).map((script) => (
+                <div key={script.name} className="sub-card">
+                  <div>
+                    <span className="project-num">{script.category}</span>
+                    <h4 style={{ fontSize: '1.25rem', fontFamily: 'var(--font-display)', marginBottom: 8 }}>{script.name}</h4>
+                    <p className="project-desc" style={{ fontSize: '0.875rem' }}>{script.description}</p>
+                  </div>
+                  <a
+                    href="#/roblox-scripts"
+                    className="btn btn-glass"
+                    style={{ marginTop: 16, fontSize: '0.8125rem', padding: '8px 16px' }}
+                  >
+                    View Showcase →
+                  </a>
                 </div>
-                <a
-                  href="#/roblox-scripts"
-                  className="btn btn-glass"
-                  style={{ marginTop: 16, fontSize: '0.8125rem', padding: '8px 16px' }}
-                >
-                  View Showcase →
-                </a>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
+        </Reveal>
       )}
     </section>
   );

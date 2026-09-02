@@ -1,111 +1,98 @@
-import { useEffect, useRef } from "react";
-import gsap from "gsap";
 import { profile } from "../content/profile";
-import { ABOUT_META } from "../content/site";
+import { AboutLandscape } from "./LandscapeSVG";
+import Reveal from "./Reveal";
 
 export default function AboutSection() {
-  const group = profile.groups?.[0];
-  const cardRef = useRef(null);
-
-  useEffect(() => {
-    const el = cardRef.current;
-    if (!el) return;
-
-    const handleMouseMove = (e) => {
-      const rect = el.getBoundingClientRect();
-      const x = e.clientX - rect.left - rect.width / 2;
-      const y = e.clientY - rect.top - rect.height / 2;
-
-      gsap.to(el, {
-        rotateY: x / 20,
-        rotateX: -y / 20,
-        ease: "power2.out",
-        duration: 0.4
-      });
-    };
-
-    const handleMouseLeave = () => {
-      gsap.to(el, {
-        rotateY: 0,
-        rotateX: 0,
-        ease: "power2.out",
-        duration: 0.6
-      });
-    };
-
-    el.addEventListener("mousemove", handleMouseMove);
-    el.addEventListener("mouseleave", handleMouseLeave);
-
-    return () => {
-      el.removeEventListener("mousemove", handleMouseMove);
-      el.removeEventListener("mouseleave", handleMouseLeave);
-    };
-  }, []);
-
   return (
-    <section id="about" className="section">
-      <div className="section-index">
-        <span className="index-num">01</span>
-        <span>ABOUT</span>
-      </div>
-
-      <h2 className="section-title">
-        Building digital tools.
-        <em>Driven by UX and execution.</em>
-      </h2>
-
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 32, marginTop: 40 }}>
-        <div>
-          <div className="about-copy">
-            {profile.about.map((paragraph, i) => (
-              <p key={i} className="lede" style={{ marginBottom: 20 }}>
-                {paragraph}
-              </p>
-            ))}
-          </div>
-
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20, marginTop: 32 }}>
-            {ABOUT_META.map((item) => (
-              <div key={item.label} className="hero-meta-item">
-                <label>{item.label}</label>
-                <span>{item.value}</span>
-              </div>
-            ))}
-          </div>
+    <section id="about" style={{ padding: 0 }}>
+      {/* Full-bleed grid layout */}
+      <div className="about-grid">
+        {/* Visual side */}
+        <div className="about-visual" aria-hidden="true">
+          <AboutLandscape />
         </div>
 
-        {group && (
-          <div
-            ref={cardRef}
-            className="tilt-card"
-            style={{
-              background: 'var(--bg-card)',
-              border: '1px solid var(--border-subtle)',
-              borderRadius: '20px',
-              padding: '36px',
-              display: 'flex',
-              flexDirection: 'column',
-              justify: 'space-between',
-              backdropFilter: 'blur(16px)'
-            }}
-          >
-            <div>
-              <span className="hero-badge" style={{ marginBottom: 16 }}>{group.affiliation}</span>
-              <h3 className="section-title" style={{ fontSize: '1.75rem', marginBottom: 12 }}>{group.name}</h3>
-              <p className="project-desc">{group.summary}</p>
+        {/* Editorial content side */}
+        <div className="about-content">
+          <Reveal>
+            <div className="section-label">
+              <span className="section-label-num">01</span>
+              WHO I AM
             </div>
+          </Reveal>
 
-            <a
-              href={group.inviteUrl}
-              target="_blank"
-              rel="noreferrer"
-              className="btn btn-glass"
-              style={{ marginTop: 24, width: 'fit-content' }}
-            >
-              JOIN COMMUNITY ({group.inviteLabel})
-            </a>
-          </div>
-        )}
+          {/* Identity block */}
+          <Reveal delay={80}>
+            <div className="about-identity">
+              <h2 className="about-name">
+                Audrey<br />
+                <em>Faisal Riza</em>
+              </h2>
+
+              {/* Stats row: Age / Location / Experience */}
+              <div className="about-stats-row">
+                <div className="about-stat">
+                  <span className="about-stat-num">{profile.age}</span>
+                  <span className="about-stat-label">Years Old</span>
+                </div>
+                <div className="about-stat">
+                  <span className="about-stat-num">{profile.yearsExperience}</span>
+                  <span className="about-stat-label">Years Building</span>
+                </div>
+                <div className="about-stat">
+                  <span className="about-stat-num" style={{ fontSize: "clamp(1rem, 2vw, 1.5rem)", lineHeight: 1.2 }}>
+                    JAWA<br />TIMUR
+                  </span>
+                  <span className="about-stat-label">Indonesia</span>
+                </div>
+              </div>
+            </div>
+          </Reveal>
+
+          {/* Bio */}
+          <Reveal delay={160}>
+            <div className="about-bio">
+              {profile.about.map((p, i) => (
+                <p key={i}>{p}</p>
+              ))}
+            </div>
+          </Reveal>
+
+          {/* Metadata */}
+          <Reveal delay={240}>
+            <div className="about-meta-list">
+              <div className="about-meta-row">
+                <span className="about-meta-key">Based In</span>
+                <span className="about-meta-val">{profile.location}</span>
+              </div>
+              <div className="about-meta-row">
+                <span className="about-meta-key">Focus</span>
+                <span className="about-meta-val">Fullstack · Bot Dev · Lua</span>
+              </div>
+              <div className="about-meta-row">
+                <span className="about-meta-key">University</span>
+                <span className="about-meta-val">Universitas Terbuka</span>
+              </div>
+              <div className="about-meta-row">
+                <span className="about-meta-key">Discord</span>
+                <span className="about-meta-val">{profile.discordHandle}</span>
+              </div>
+              <div className="about-meta-row">
+                <span className="about-meta-key">Community</span>
+                <span className="about-meta-val">
+                  <a
+                    href={profile.groups[0].inviteUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    style={{ color: "var(--accent-warm)", textDecoration: "none" }}
+                  >
+                    {profile.groups[0].name} ↗
+                  </a>
+                </span>
+              </div>
+            </div>
+          </Reveal>
+        </div>
       </div>
     </section>
   );

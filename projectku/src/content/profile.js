@@ -5,7 +5,7 @@ export const profile = {
   location: "Jawa Timur, Indonesia",
   tagline:
     "I enjoy making things that are both useful and fun. Whether it's a Discord bot that flirts with chaos or a clean-looking dashboard, I'm all about learning through building.",
-  yearsExperience: 3,
+  yearsExperience: 6,
   heroChips: ["Next.js", "React", "Lua", "Vercel", "Tailwind CSS", "Discord.js"],
   aboutBadges: [],
   discordHandle: "@voixera",

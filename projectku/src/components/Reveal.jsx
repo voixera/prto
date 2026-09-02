@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import useReducedMotion from "../hooks/useReducedMotion";
 
-export default function Reveal({ children, className = "", delay = 0, as: Tag = "div" }) {
+export default function Reveal({ children, className = "", delay = 0, as: Tag = "div", variant = "fade", duration = 400 }) {
   const ref = useRef(null);
   const reduced = useReducedMotion();
   const [visible, setVisible] = useState(reduced);
@@ -29,11 +29,21 @@ export default function Reveal({ children, className = "", delay = 0, as: Tag = 
     return () => observer.disconnect();
   }, [reduced]);
 
+  // compute style based on variant
+  const baseStyle = delay ? { transitionDelay: `${delay}ms` } : {};
+  const variantStyle = variant === "clip"
+    ? {
+        clipPath: visible ? "inset(0% 0% 0% 0%)" : "inset(100% 0% 0% 0%)",
+        transition: `clip-path ${duration}ms ease`,
+      }
+    : {};
+  const combinedStyle = { ...baseStyle, ...variantStyle };
+
   return (
     <Tag
       ref={ref}
       className={`reveal ${visible ? "is-visible" : ""} ${className}`.trim()}
-      style={delay ? { transitionDelay: `${delay}ms` } : undefined}
+      style={combinedStyle}
     >
       {children}
     </Tag>

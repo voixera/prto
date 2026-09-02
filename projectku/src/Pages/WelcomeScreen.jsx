@@ -1,89 +1,115 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import gsap from "gsap";
+import { HeroLandscape } from "../components/LandscapeSVG";
 
-const TOTAL_STEPS = 100;
-const TICK_MS = 16;
-const EXIT_MS = 700;
+const TOTAL = 100;
+const TICK_MS = 14;
 
 export default function WelcomeScreen({ entered = false, onEnter }) {
   const didEnterRef = useRef(false);
-  const exitTimerRef = useRef(0);
   const loaderRef = useRef(null);
+  const nameFirstRef = useRef(null);
+  const nameLastRef = useRef(null);
+  const eyebrowRef = useRef(null);
+  const barRef = useRef(null);
+  const statusRef = useRef(null);
   const [progress, setProgress] = useState(0);
   const [isExiting, setIsExiting] = useState(false);
   const [isGone, setIsGone] = useState(false);
 
-  useEffect(() => {
-    didEnterRef.current = entered;
-  }, [entered]);
+  useEffect(() => { didEnterRef.current = entered; }, [entered]);
 
+  // Progress ticker
   useEffect(() => {
-    if (entered || isExiting || progress >= TOTAL_STEPS) return;
+    if (entered || isExiting || progress >= TOTAL) return;
     const timer = setInterval(() => {
-      setProgress((prev) => Math.min(prev + 2, TOTAL_STEPS));
+      setProgress(p => Math.min(p + 1.5, TOTAL));
     }, TICK_MS);
     return () => clearInterval(timer);
   }, [entered, isExiting, progress]);
 
   const requestEnter = useCallback(() => {
-    if (progress < TOTAL_STEPS || isExiting || didEnterRef.current) return;
+    if (progress < TOTAL || isExiting || didEnterRef.current) return;
     didEnterRef.current = true;
     setIsExiting(true);
 
-    if (loaderRef.current) {
-      gsap.to(loaderRef.current, {
-        opacity: 0,
-        scale: 1.05,
-        duration: 0.7,
-        ease: "power2.inOut",
-        onComplete: () => {
-          setIsGone(true);
-          onEnter?.();
-        }
-      });
-    } else {
-      onEnter?.();
-      exitTimerRef.current = window.setTimeout(() => setIsGone(true), EXIT_MS);
-    }
+    const el = loaderRef.current;
+    if (!el) { onEnter?.(); return; }
+
+    // Cinematic exit: clip from bottom up + fade
+    gsap.to(el, {
+      clipPath: "inset(100% 0 0 0)",
+      duration: 1.1,
+      ease: "power4.inOut",
+      onComplete: () => {
+        setIsGone(true);
+        onEnter?.();
+      }
+    });
   }, [isExiting, onEnter, progress]);
 
+  // Auto-enter after loading completes
   useEffect(() => {
-    if (progress >= TOTAL_STEPS && !isExiting && !entered) {
-      const auto = window.setTimeout(requestEnter, 350);
-      return () => window.clearTimeout(auto);
+    if (progress >= TOTAL && !isExiting && !entered) {
+      const t = window.setTimeout(requestEnter, 600);
+      return () => clearTimeout(t);
     }
-    return undefined;
   }, [progress, isExiting, entered, requestEnter]);
 
-  useEffect(() => () => {
-    if (exitTimerRef.current) clearTimeout(exitTimerRef.current);
-  }, []);
-
   if (isGone) return null;
+
+  const pct = Math.round(progress);
 
   return (
     <div
       ref={loaderRef}
-      className={`screen-loader ${progress >= TOTAL_STEPS ? "is-ready" : ""} ${isExiting ? "is-exiting" : ""}`}
-      aria-label="Loading cinematic experience"
+      className="screen-loader"
+      style={{ clipPath: "inset(0% 0 0 0)" }}
+      aria-label="Loading portfolio"
+      aria-live="polite"
     >
+      {/* Cinematic landscape backdrop */}
+      <div className="loader-landscape">
+        <HeroLandscape />
+      </div>
+
+      {/* Content: bottom-left, editorial layout */}
       <div className="loader-content">
-        <p className="loader-ticker">SYS // PORTOAZURE48 // ONLINE</p>
-        <h2 className="loader-title">INITIALIZING ENVIRONMENT</h2>
-        
-        <div className="loader-progress-bar" role="progressbar" aria-valuenow={progress} aria-valuemin={0} aria-valuemax={TOTAL_STEPS}>
-          <div className="loader-progress-fill" style={{ width: `${progress}%` }} />
+        <p ref={eyebrowRef} className="loader-eyebrow">
+          ENTERING DIGITAL SPACE
+        </p>
+
+        <div style={{ overflow: "hidden" }}>
+          <span ref={nameFirstRef} className="loader-name-first">
+            AUDREY
+          </span>
+        </div>
+        <div style={{ overflow: "hidden" }}>
+          <span ref={nameLastRef} className="loader-name-last">
+            Faisal
+          </span>
         </div>
 
-        <p className="loader-counter">{String(progress).padStart(3, "0")} %</p>
+        <div
+          ref={barRef}
+          className="loader-bar-track"
+          role="progressbar"
+          aria-valuenow={pct}
+          aria-valuemin={0}
+          aria-valuemax={100}
+          aria-label="Loading progress"
+        >
+          <div
+            className="loader-bar-fill"
+            style={{ width: `${pct}%` }}
+          />
+        </div>
 
-        {progress >= TOTAL_STEPS ? (
-          <button type="button" className="btn btn-solid" style={{ marginTop: 24 }} onClick={requestEnter} autoFocus>
-            ENTER ENVIRONMENT
-          </button>
-        ) : (
-          <p className="loader-counter" style={{ marginTop: 12, fontSize: '0.75rem' }}>ESTABLISHING CONNECTION...</p>
-        )}
+        <p ref={statusRef} className="loader-status">
+          {pct < 100
+            ? `${String(pct).padStart(3, "0")} — INITIALIZING`
+            : "100 — READY"}
+        </p>
       </div>
     </div>
   );

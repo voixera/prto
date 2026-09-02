@@ -1,4 +1,4 @@
-import { profile } from "../content/profile";
+import Reveal from "./Reveal";
 
 export default function JourneySection() {
   return (
@@ -15,28 +15,32 @@ export default function JourneySection() {
 
       <div className="journey-timeline">
         {profile.experience.map((item) => (
-          <div key={item.title} className="journey-item">
-            <span className="journey-period">{item.period}</span>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 4 }}>
-              {item.logo && (
-                <img src={item.logo} alt={item.title} style={{ width: 24, height: 24, borderRadius: '50%', objectFit: 'cover' }} />
-              )}
-              <h3 className="journey-role">{item.title} — {item.subtitle}</h3>
+          <Reveal key={item.title} delay={100} variant="clip" duration={600} className="journey-item-reveal">
+            <div className="journey-item">
+              <span className="journey-period">{item.period}</span>
+              <div className="journey-header" style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 4 }}>
+                {item.logo && (
+                  <img src={item.logo} alt={item.title} className="journey-logo" />
+                )}
+                <h3 className="journey-role">{item.title} — {item.subtitle}</h3>
+              </div>
+              <p className="project-desc journey-details">{item.details}</p>
             </div>
-            <p className="project-desc" style={{ fontSize: '0.9375rem' }}>{item.details}</p>
-          </div>
+          </Reveal>
         ))}
       </div>
 
       <div style={{ marginTop: 64 }}>
         <h3 className="section-title" style={{ fontSize: '1.75rem' }}>Education & Self-Learning</h3>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 20, marginTop: 24 }}>
+        <div className="education-grid">
           {profile.education.map((item) => (
-            <div key={item.title} style={{ background: 'var(--bg-card)', border: '1px solid var(--border-subtle)', borderRadius: '12px', padding: '24px' }}>
-              <span className="project-num">{item.period}</span>
-              <h4 style={{ fontFamily: 'var(--font-display)', fontSize: '1.1rem', margin: '8px 0 4px' }}>{item.title}</h4>
-              <p className="project-desc" style={{ fontSize: '0.875rem' }}>{item.subtitle}</p>
-            </div>
+            <Reveal key={item.title} delay={100} className="education-item-reveal">
+              <div className="education-item">
+                <span className="project-num">{item.period}</span>
+                <h4 className="education-title">{item.title}</h4>
+                <p className="project-desc education-subtitle">{item.subtitle}</p>
+              </div>
+            </Reveal>
           ))}
         </div>
       </div>

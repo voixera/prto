@@ -1,10 +1,10 @@
-import { profile } from "../content/profile";
+import Reveal from "./Reveal";
 
 export default function ContactSection() {
   const githubSocial = profile.socials.find((s) => s.label === "GitHub");
 
   return (
-    <section id="contact" className="section">
+    <Reveal className="contact-section-reveal" as="section" id="contact" variant="fade" duration={500}>
       <div className="contact-wrapper">
         <div className="section-index" style={{ justifyContent: 'center' }}>
           <span className="index-num">05</span>
@@ -44,6 +44,6 @@ export default function ContactSection() {
           )}
         </div>
       </div>
-    </section>
+    </Reveal>
   );
 }
