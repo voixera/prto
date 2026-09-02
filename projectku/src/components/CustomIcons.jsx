@@ -124,8 +124,8 @@ export function LinkedInBrandIcon({ size = 20, className = "" }) {
 export function SectionDecorSVG() {
   return (
     <svg width="48" height="12" viewBox="0 0 48 12" fill="none" className="section-decor-svg" aria-hidden="true">
-      <circle cx="6" cy="6" r="3" fill="#70baff" />
-      <line x1="16" y1="6" x2="48" y2="6" stroke="rgba(112, 186, 255, 0.35)" strokeWidth="1.5" strokeDasharray="4 4" />
+    <circle cx="6" cy="6" r="3" fill="currentColor" />
+    <line x1="16" y1="6" x2="48" y2="6" stroke="currentColor" strokeOpacity="0.35" strokeWidth="1.5" strokeDasharray="4 4" />
     </svg>
   );
 }

@@ -8,7 +8,7 @@ export default function DiscordBots() {
   const bots = profile.discordBots ?? [];
 
   return (
-    <div className="page subpage">
+    <div className="page subpage discord">
       <SiteHeader />
       <main>
         <section className="sub-hero">
@@ -18,8 +18,8 @@ export default function DiscordBots() {
             <LaunchArrow size={13} />
           </a>
           <h1 className="display">
-            Discord Bots
-            <span>for calmer servers.</span>
+            <em>Discord</em>
+            <span>Bots for calmer servers.</span>
           </h1>
           <p className="lede">
             Permission-aware utilities, ticket systems, and assistant workflows 

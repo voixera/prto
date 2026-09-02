@@ -98,7 +98,6 @@ export default defineConfig(({ mode }) => {
       rollupOptions: {
         output: {
           manualChunks: {
-            three: ["three"],
             react: ["react", "react-dom"],
           },
         },

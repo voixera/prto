@@ -69,7 +69,7 @@ export default function StackSection() {
             <line x1="20" y1="80" x2="260" y2="80" stroke="currentColor" strokeWidth="0.5" strokeDasharray="4 6" opacity="0.5" />
             <circle cx="20" cy="80" r="3" fill="currentColor" />
             <circle cx="260" cy="80" r="3" fill="currentColor" />
-            <text x="30" y="50" fill="currentColor" fontSize="9" fontFamily="DM Mono, monospace" opacity="0.4">ACTIVE: {active}</text>
+            <text x="30" y="50" fill="currentColor" fontSize="9" fontFamily="Roboto Mono, monospace" opacity="0.4">ACTIVE: {active}</text>
           </svg>
         </div>
 

@@ -7,7 +7,7 @@ export default function RobloxScripts() {
   const scripts = profile.robloxScripts ?? [];
 
   return (
-    <div className="page subpage">
+    <div className="page subpage roblox">
       <SiteHeader />
       <main>
         <section className="sub-hero">
@@ -16,8 +16,8 @@ export default function RobloxScripts() {
             Back to work
           </a>
           <h1 className="display">
-            Lua Scripts
-            <span>from game tooling.</span>
+            <em>Lua</em>
+            <span>Scripts from game tooling.</span>
           </h1>
           <p className="lede">
             A secondary catalog of Roblox Lua experiments, 
