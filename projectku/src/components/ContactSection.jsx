@@ -1,3 +1,4 @@
+import { profile } from "../content/profile";
 import Reveal from "./Reveal";
 
 export default function ContactSection() {
