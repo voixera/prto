@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { profile } from "../content/profile";
 import { WEB_PROJECTS, DISCORD_PROJECT, ROBLOX_PROJECT, isExternalHref } from "../content/site";
+import Reveal from "./Reveal";
 
 function TiltProjectCard({ project, index }) {
   const cardRef = useRef(null);
