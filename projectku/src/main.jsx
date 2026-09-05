@@ -6,6 +6,8 @@ import "./art-direction.css";
 import "./circle-free.css";
 import "./project-section.css";
 import "./final-layout.css";
+import "./project-collage.css";
+import "./stack-layout.css";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>

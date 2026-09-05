@@ -1,0 +1,48 @@
+.tech-orbit {
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: 0 42px !important;
+  height: auto !important;
+  min-height: 0 !important;
+  margin: 35px 0 0 !important;
+}
+
+.tech-orbit-center {
+  display: none !important;
+}
+
+.tech-orbit-item,
+.tech-orbit-item[class*="tech-orbit-item-"] {
+  position: static !important;
+  display: flex !important;
+  align-items: center !important;
+  width: 100% !important;
+  min-height: 58px;
+  padding: 12px 0 !important;
+  border-bottom: 1px solid rgba(241, 239, 232, .1) !important;
+  transform: none !important;
+}
+
+.tech-orbit-item:hover,
+.tech-orbit-item:focus-visible,
+.tech-orbit-item.is-active {
+  transform: translateX(7px) !important;
+}
+
+.tech-note {
+  min-height: 48px !important;
+  padding-top: 18px !important;
+}
+
+@media (max-width: 800px) {
+  .tech-orbit {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 0 24px !important;
+    margin-top: 20px !important;
+  }
+
+  .tech-orbit-item,
+  .tech-orbit-item[class*="tech-orbit-item-"] {
+    min-height: 52px;
+  }
+}
