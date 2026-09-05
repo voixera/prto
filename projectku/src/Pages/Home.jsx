@@ -9,6 +9,7 @@ import JourneySection from "../components/JourneySection";
 import ContactSection from "../components/ContactSection";
 import SiteFooter from "../components/SiteFooter";
 import { Arc, FloatingOrb, OrganicShape, Ring } from "../components/ArtShapes";
+import landscapeBackground from "../../gallery/download.jpg";
 
 export default function Home({ entered = true }) {
   useEffect(() => {
@@ -25,7 +26,7 @@ export default function Home({ entered = true }) {
   }, [entered]);
 
   return (
-    <div className="page">
+    <div className="page" style={{ "--landscape-background": `url("${landscapeBackground}")` }}>
       {/* Custom cursor (desktop only) */}
       <CustomCursor />
 
