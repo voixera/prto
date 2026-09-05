@@ -59,3 +59,21 @@
   .overview-orbit { width: 230px !important; height: 230px !important; }
   .overview-line { left: 4%; width: 130px; }
 }
+
+/* Final visual overrides: full-bleed landscape, no circular ornaments. */
+.overview-photo-wrap {
+  inset: -8% !important;
+}
+.overview-orbit,
+.script-orbit,
+.bot-objects,
+.gallery-interlude::before,
+.gallery-interlude::after {
+  display: none !important;
+}
+.overview-hero .overview-wash {
+  background: linear-gradient(90deg, rgba(16,17,15,.82), rgba(16,17,15,.36) 52%, rgba(16,17,15,.56)), linear-gradient(0deg, rgba(16,17,15,.92), transparent 48%) !important;
+}
+.overview-hero .overview-line {
+  display: none !important;
+}
