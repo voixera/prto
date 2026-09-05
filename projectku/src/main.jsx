@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client";
 import App from "./App";
 import "./cinematic.css";
 import "./art-direction.css";
+import "./circle-free.css";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>

@@ -2,7 +2,7 @@ import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 import { profile } from "../content/profile";
 import { WEB_PROJECTS, isExternalHref } from "../content/site";
 import Reveal from "./Reveal";
-import { Arc, FloatingBadge, OrganicShape, Ring } from "./ArtShapes";
+import { FloatingBadge, OrganicShape } from "./ArtShapes";
 
 function ProjectStage({ project, index }) {
   const { scrollYProgress } = useScroll();
@@ -34,7 +34,7 @@ function ProjectStage({ project, index }) {
           {link.label}<span aria-hidden="true">↗</span>
         </a>}
       </div>
-      <div className="project-stage-shape" aria-hidden="true"><OrganicShape size={110} color="rgba(216,255,101,.7)" /><Ring size={160} color="rgba(241,239,232,.25)" /></div>
+      <div className="project-stage-shape" aria-hidden="true"><OrganicShape size={110} color="rgba(216,255,101,.7)" /></div>
     </motion.article>
   );
 }

@@ -1,0 +1,61 @@
+/* Circle-free art direction: keep organic image masks, remove orbit/ring motifs. */
+.art-ring,
+.art-arc,
+.floating-orb,
+.hero-ring,
+.hero-arc,
+.hero-orb,
+.overview-ring,
+.overview-arc,
+.overview-orb,
+.script-orbit,
+.ambient-ring,
+.ambient-arc,
+.ambient-orb,
+.bot-objects .art-ring,
+.bot-objects .floating-orb,
+.project-stage-shape .art-ring {
+  display: none !important;
+}
+
+.about-visual::before,
+.contact-section-reveal::before,
+.stack-field::before,
+.stack-field::after {
+  display: none !important;
+}
+
+.stack-core {
+  width: auto !important;
+  height: auto !important;
+  margin: 0 !important;
+  top: 44% !important;
+  left: 50% !important;
+  padding: 12px 18px;
+  border: 0 !important;
+  border-left: 2px solid var(--accent) !important;
+  border-radius: 0 !important;
+  transform: translate(-50%, -50%);
+  text-align: left !important;
+}
+
+.overview-orbit {
+  width: 320px !important;
+  height: 320px !important;
+}
+
+.overview-line {
+  position: absolute;
+  top: 46%;
+  left: 18%;
+  width: 180px;
+  height: 1px;
+  background: var(--accent);
+  transform: rotate(-18deg);
+  transform-origin: left;
+}
+
+@media (max-width: 800px) {
+  .overview-orbit { width: 230px !important; height: 230px !important; }
+  .overview-line { left: 4%; width: 130px; }
+}

@@ -8,7 +8,7 @@ import ProjectsSection from "../components/ProjectsSection";
 import JourneySection from "../components/JourneySection";
 import ContactSection from "../components/ContactSection";
 import SiteFooter from "../components/SiteFooter";
-import { Arc, FloatingOrb, OrganicShape, Ring } from "../components/ArtShapes";
+import { OrganicShape } from "../components/ArtShapes";
 import landscapeBackground from "../../gallery/download.jpg";
 import GalleryInterlude from "../components/GalleryInterlude";
 
@@ -35,9 +35,6 @@ export default function Home({ entered = true }) {
       <SiteHeader />
       <div className="ambient-art" aria-hidden="true">
         <OrganicShape className="ambient-blob" size={320} color="rgba(216,255,101,.07)" />
-        <Ring className="ambient-ring" size={300} color="rgba(216,255,101,.18)" />
-        <Arc className="ambient-arc" size={180} color="rgba(241,239,232,.12)" />
-        <FloatingOrb className="ambient-orb" size={9} />
       </div>
 
       {/* Main content */}

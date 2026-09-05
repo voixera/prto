@@ -54,7 +54,7 @@ export default function StackSection() {
       {/* Horizontal editorial tech strip */}
       <Reveal delay={160}>
         <div className="stack-field" role="list" aria-label="Technology stack">
-          <motion.div className="stack-core" animate={{ rotate: 360 }} transition={{ duration: 35, repeat: Infinity, ease: "linear" }} aria-hidden="true">TOOLS<br />I USE</motion.div>
+          <motion.div className="stack-core" animate={{ y: [0, -8, 0] }} transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }} aria-hidden="true">TOOLS<br />I USE</motion.div>
           <div className="stack-strip">
             {STACK_GROUPS.map((group) => (
               <div key={group.id} className="stack-group" role="group" aria-label={group.label}>

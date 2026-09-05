@@ -3,7 +3,7 @@ import { profile } from "../content/profile";
 import SiteHeader from "../components/SiteHeader";
 import SiteFooter from "../components/SiteFooter";
 import Reveal from "../components/Reveal";
-import { Arc, OrganicShape, Ring } from "../components/ArtShapes";
+import { OrganicShape } from "../components/ArtShapes";
 import scriptLandscape from "../../gallery/PWS 211 Hardscape Materials Handbook.jpg";
 
 function ScriptShowcase({ script, index }) {
@@ -13,7 +13,7 @@ function ScriptShowcase({ script, index }) {
     <div className="script-heading"><span className="case-num">{String(index + 1).padStart(2, "0")}</span><span className="kicker">{script.category}</span><span className="script-status">{script.status}</span></div>
     <Reveal delay={index * 50}><motion.div className="script-media" style={{ y }}>
       {script.videoSrc ? <video controls muted loop playsInline preload="metadata" poster={script.iconSrc} aria-label={`${script.name} preview`}><source src={script.videoSrc} type="video/mp4" /></video> : <img src={scriptLandscape} alt={script.name} loading="lazy" />}
-      <div className="script-orbit" aria-hidden="true"><Ring size={220} color="rgba(216,255,101,.36)" /><Arc size={150} color="var(--accent)" /></div>
+      <div className="script-orbit" aria-hidden="true" />
     </motion.div></Reveal>
     <div className="script-copy"><h2>{script.name}</h2><p>{script.description}</p><ul className="tech-line">{script.stack.map((item) => <li key={item}>{item}</li>)}</ul></div>
   </article>;
