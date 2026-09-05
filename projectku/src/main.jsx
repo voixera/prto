@@ -8,6 +8,7 @@ import "./project-section.css";
 import "./final-layout.css";
 import "./project-collage.css";
 import "./stack-layout.css";
+import "./journey-section.css";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>

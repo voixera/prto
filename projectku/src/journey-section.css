@@ -1,0 +1,19 @@
+.journey-section { position: relative; z-index: 2; }
+.journey-section .section-title { margin-top: 28px; }
+.journey-timeline { position: relative; max-width: 980px; margin-top: 62px; padding-left: 34px; border-left: 1px solid rgba(216,255,101,.45); }
+.journey-item { position: relative; display: grid; grid-template-columns: 210px 1fr; gap: 32px; padding: 0 0 48px; }
+.journey-item + .journey-item { padding-top: 48px; border-top: 1px solid rgba(241,239,232,.1); }
+.journey-item::before { content: ''; position: absolute; top: 5px; left: -39px; width: 8px; height: 8px; background: var(--accent); }
+.journey-item + .journey-item::before { top: 53px; }
+.journey-content { min-width: 0; }
+.journey-header { display: flex; align-items: center; gap: 14px; }
+.journey-logo { width: 34px; height: 34px; border-radius: 50%; object-fit: cover; }
+.journey-role { color: var(--ink); font: 600 clamp(1.35rem, 2.5vw, 2.2rem)/1 var(--display); letter-spacing: -.06em; }
+.journey-role-sub { margin-top: 9px; color: var(--accent); font: 500 .65rem var(--mono); text-transform: uppercase; letter-spacing: .08em; }
+.journey-details { margin-top: 14px; }
+.journey-education { margin-top: 70px; }
+.journey-subtitle { margin-bottom: 26px; color: var(--ink); font: 600 clamp(2rem, 4vw, 4rem)/.95 var(--display); letter-spacing: -.08em; }
+.education-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px; }
+.education-item { min-height: 150px; padding-top: 18px; border-top: 1px solid rgba(241,239,232,.18); }
+.education-title { margin: 12px 0 8px; color: var(--ink); font: 600 1.2rem/1.1 var(--display); letter-spacing: -.04em; }
+@media (max-width: 800px) { .journey-timeline { margin-top: 42px; padding-left: 24px; }.journey-item { grid-template-columns: 1fr; gap: 12px; padding-bottom: 34px; }.journey-item + .journey-item { padding-top: 34px; }.journey-item::before,.journey-item + .journey-item::before { left: -29px; top: 5px; }.journey-item + .journey-item::before { top: 39px; }.education-grid { grid-template-columns: 1fr; gap: 22px; }.journey-education { margin-top: 54px; } }
