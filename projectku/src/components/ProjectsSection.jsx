@@ -2,62 +2,28 @@ import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 import { profile } from "../content/profile";
 import { WEB_PROJECTS, isExternalHref } from "../content/site";
 import Reveal from "./Reveal";
-import { FloatingBadge } from "./ArtShapes";
 
-function ProjectStage({ project, index }) {
+function ProjectFeature({ project, index }) {
   const { scrollYProgress } = useScroll();
-  const mediaY = useSpring(useTransform(scrollYProgress, [index * .1, .5 + index * .06], [30, -30]), { stiffness: 65, damping: 22 });
-  const x = useSpring(0, { stiffness: 180, damping: 24 });
-  const y = useSpring(0, { stiffness: 180, damping: 24 });
-  const move = (event) => {
-    const box = event.currentTarget.getBoundingClientRect();
-    x.set((event.clientX - box.left - box.width / 2) / 70);
-    y.set(-(event.clientY - box.top - box.height / 2) / 70);
-  };
-  const reset = () => { x.set(0); y.set(0); };
+  const imageY = useSpring(useTransform(scrollYProgress, [index * .1, .55 + index * .06], [35, -35]), { stiffness: 65, damping: 22 });
   const link = project.links?.[0];
-
-  return (
-    <motion.article className={`project-stage stage-${index + 1}`} onMouseMove={move} onMouseLeave={reset}>
-      <div className="project-stage-heading">
-        <span className="project-stage-number">0{index + 1}</span>
-        <span className="project-stage-kind">{project.tags?.join(" / ")}</span>
-      </div>
-      <motion.div className="project-stage-media" style={{ y: mediaY, rotateX: y, rotateY: x }}>
-        {project.thumbnail ? <img src={project.thumbnail} alt={project.title} loading="lazy" /> : <span>{project.title}</span>}
-        <FloatingBadge className="project-stage-badge">FEATURED PROJECT</FloatingBadge>
-      </motion.div>
-      <div className="project-stage-copy">
-        <h3>{project.title}</h3>
-        <p>{project.description}</p>
-        {link && <a className="project-stage-link" href={link.href} target={isExternalHref(link.href) ? "_blank" : undefined} rel={isExternalHref(link.href) ? "noreferrer" : undefined} data-cursor-label="VIEW PROJECT">
-          {link.label}<span aria-hidden="true">↗</span>
-        </a>}
-      </div>
-    </motion.article>
-  );
+  return <article className={`project-feature feature-${index + 1}`}>
+    <div className="project-feature-top"><span>PROJECT {String(index + 1).padStart(2, "0")}</span><span>{project.tags?.join(" / ")}</span></div>
+    <motion.div className="project-feature-media" style={{ y: imageY }} whileHover={{ scale: 1.02 }}>
+      {project.thumbnail && <img src={project.thumbnail} alt={project.title} loading="lazy" />}
+      <span className="project-feature-caption">{project.showcase?.[0] || "Web experience"}</span>
+    </motion.div>
+    <Reveal className="project-feature-copy" delay={90}>
+      <span className="project-feature-year">2026</span><h3>{project.title}</h3><p>{project.description}</p>
+      {link && <a className="project-feature-link" href={link.href} target={isExternalHref(link.href) ? "_blank" : undefined} rel={isExternalHref(link.href) ? "noreferrer" : undefined} data-cursor-label="OPEN">{link.label}<span>↗</span></a>}
+    </Reveal>
+  </article>;
 }
 
 export default function ProjectsSection() {
-  return (
-    <section id="project" className="section projects-section">
-      <Reveal><div className="section-index"><span className="index-num">03</span><span>SELECTED PROJECTS</span></div></Reveal>
-      <Reveal delay={100}><h2 className="section-title">Things made to be <em>used.</em></h2></Reveal>
-      <div className="project-stages">
-        {WEB_PROJECTS.map((project, index) => <Reveal key={project.title} delay={index * 70}><ProjectStage project={project} index={index} /></Reveal>)}
-      </div>
-      <Reveal delay={160}>
-        <div className="auxiliary-work">
-          <div><span className="section-index"><span className="index-num">03.B</span> BOT SYSTEMS</span><h3>Discord bots that make busy servers quieter.</h3></div>
-          <a className="project-stage-link" href="#/discord-bots">Explore bot systems <span aria-hidden="true">↗</span></a>
-        </div>
-      </Reveal>
-      <Reveal delay={220}>
-        <div className="auxiliary-work auxiliary-script">
-          <div><span className="section-index"><span className="index-num">03.C</span> AUTOMATION</span><h3>Lua tools, interfaces, and game experiments.</h3></div>
-          <a className="project-stage-link" href="#/roblox-scripts">Open script archive <span aria-hidden="true">↗</span></a>
-        </div>
-      </Reveal>
-    </section>
-  );
+  return <section id="project" className="projects-section">
+    <div className="project-intro"><Reveal><div className="section-index"><span className="index-num">03</span><span>PROJECT INDEX</span></div></Reveal><Reveal delay={100}><h2>Things made to be<br /><em>used.</em></h2></Reveal><p>Selected web applications, tools, and systems.</p></div>
+    <div className="project-features">{WEB_PROJECTS.map((project, index) => <ProjectFeature key={project.title} project={project} index={index} />)}</div>
+    <div className="project-archive-links"><a href="#/discord-bots">Discord bot systems <span>↗</span></a><a href="#/roblox-scripts">Lua script archive <span>↗</span></a></div>
+  </section>;
 }
