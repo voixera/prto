@@ -4,6 +4,7 @@ import App from "./App";
 import "./cinematic.css";
 import "./art-direction.css";
 import "./circle-free.css";
+import "./project-section.css";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>

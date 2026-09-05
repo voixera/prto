@@ -1,0 +1,27 @@
+.project-intro { max-width: 900px !important; padding-bottom: 70px !important; }
+.project-intro h2 { font-size: clamp(3.6rem, 8vw, 8rem) !important; }
+.project-intro p { max-width: 42ch; font-size: .95rem; line-height: 1.7; }
+.project-feature { min-height: 0 !important; padding: 40px 0 105px !important; }
+.project-feature-top { justify-content: flex-start; margin-bottom: 20px; }
+.project-feature-top span:nth-child(3) { margin-left: auto; max-width: 45%; text-align: right; }
+.project-feature-number { color: var(--accent); font-size: 1rem; }
+.project-feature-media { width: 100% !important; height: min(62vw, 720px) !important; min-height: 360px !important; margin: 0 !important; }
+.feature-1 .project-feature-media { border-radius: 0 0 34% 0 !important; }
+.feature-2 .project-feature-media { border-radius: 35% 0 0 0 !important; }
+.feature-3 .project-feature-media { border-radius: 0 30% 0 0 !important; }
+.feature-4 .project-feature-media { width: 88% !important; margin-left: 12% !important; border-radius: 0 0 0 38% !important; }
+.project-feature-copy,.feature-2 .project-feature-copy { position: relative !important; right: auto !important; left: auto !important; width: min(560px, 72%) !important; margin: -44px 0 0 auto !important; padding: 28px 0 0 35px !important; background: linear-gradient(90deg, transparent, var(--bg) 14%) !important; }
+.project-feature-copy h3 { font-size: clamp(2.8rem, 6vw, 6.5rem) !important; }
+.project-feature-tech { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 20px; color: var(--muted); font: 500 .62rem var(--mono); }
+.project-feature-tech span { display: inline-flex; align-items: center; gap: 6px; }
+.project-feature-tech img { width: 20px; height: 20px; object-fit: contain; filter: grayscale(1); opacity: .72; }
+.project-feature-corner { position: absolute; top: 20px; right: 22px; color: rgba(241,239,232,.7); font: 500 .58rem var(--mono); letter-spacing: .08em; }
+.project-archive-links { max-width: 1100px; margin: auto; }
+@media (max-width: 800px) {
+  .project-intro { padding: 100px 20px 50px !important; }
+  .project-features { padding: 0 20px !important; }
+  .project-feature { padding-bottom: 75px !important; }
+  .project-feature-media,.feature-2 .project-feature-media,.feature-3 .project-feature-media,.feature-4 .project-feature-media { width: 100% !important; height: 64vw !important; min-height: 245px !important; margin: 0 !important; border-radius: 0 0 28% 0 !important; }
+  .project-feature-copy,.feature-2 .project-feature-copy { width: 90% !important; margin: -28px 0 0 auto !important; padding: 24px 0 0 20px !important; }
+  .project-feature-top span:nth-child(3) { max-width: 42%; }
+}
