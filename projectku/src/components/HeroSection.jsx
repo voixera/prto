@@ -6,21 +6,19 @@ import { FloatingBadge } from "./ArtShapes";
 const reveal = { hidden: { opacity: 0, y: 42 }, visible: { opacity: 1, y: 0 } };
 
 export default function HeroSection() {
-  const { scrollY } = useScroll();
-  const photoY = useSpring(useTransform(scrollY, [0, 900], [0, 150]), { stiffness: 70, damping: 24 });
-  const orbitY = useSpring(useTransform(scrollY, [0, 900], [0, -90]), { stiffness: 70, damping: 24 });
+  const { scrollYProgress } = useScroll();
+  const photoY = useSpring(useTransform(scrollYProgress, [0, 0.3], [0, 100]), { stiffness: 70, damping: 24 });
+  const photoScale = useSpring(useTransform(scrollYProgress, [0, 0.3], [1.04, 1.15]), { stiffness: 70, damping: 24 });
+  const photoFilter = useTransform(scrollYProgress, [0, 0.3], [0, 3], (value) => `blur(${value}px)`);
   const words = profile.name.split(" ");
 
   return (
     <section id="home" className="overview-hero">
-      <motion.div className="overview-photo-wrap" style={{ y: photoY }} aria-hidden="true">
+      <motion.div className="overview-photo-wrap" style={{ y: photoY, scale: photoScale, filter: photoFilter }} aria-hidden="true">
         <img className="overview-photo" src={heroLandscape} alt="" />
       </motion.div>
       <div className="overview-wash" aria-hidden="true" />
-      <div className="overview-orbit" aria-hidden="true">
-        <motion.div className="overview-line" style={{ y: orbitY }} />
-        <FloatingBadge className="overview-badge">JAWA TIMUR / ID</FloatingBadge>
-      </div>
+      <div className="overview-orbit" aria-hidden="true"><FloatingBadge className="overview-badge">JAWA TIMUR / ID</FloatingBadge></div>
 
       <div className="overview-kicker"><span className="hero-availability-dot" />FULL STACK / CREATIVE ENGINEERING</div>
       <div className="overview-title" aria-label={profile.name}>

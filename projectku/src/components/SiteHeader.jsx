@@ -11,8 +11,12 @@ export default function SiteHeader() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 24);
-      const sections = ["home", ...NAV_ITEMS.map(i => i.href.substring(1))];
+        setScrolled(window.scrollY > 24);
+        const sections = ["home", ...NAV_ITEMS.map(i => i.href.substring(1))];
+        if (window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 20) {
+          setActiveSection("contact");
+          return;
+        }
       const scrollPos = window.scrollY + window.innerHeight * 0.35;
       for (const id of sections) {
         const el = document.getElementById(id);
