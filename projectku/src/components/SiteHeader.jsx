@@ -56,7 +56,7 @@ export default function SiteHeader() {
       <nav className={`site-nav ${scrolled ? "is-scrolled" : ""}`} aria-label="Primary navigation">
         {/* Brand mark */}
         <a href="#home" className="nav-brand-vertical" aria-label="Back to top">
-          <div className="nav-brand-mark">AF</div>
+          <div className="nav-brand-mark">AF<span aria-hidden="true">/</span></div>
           <div className="nav-status-dot" title="Available for projects" />
         </a>
 
