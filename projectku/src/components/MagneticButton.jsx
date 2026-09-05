@@ -1,4 +1,5 @@
-import { useRef, useCallback } from "react";
+import { useRef } from "react";
+import { motion, useMotionValue, useSpring } from "framer-motion";
 
 /**
  * MagneticButton — Wraps children with subtle magnetic pull effect
@@ -6,8 +7,9 @@ import { useRef, useCallback } from "react";
  */
 export default function MagneticButton({ children, strength = 0.3 }) {
   const ref = useRef(null);
-
-  const onMouseMove = useCallback((event) => {
+  const x = useSpring(useMotionValue(0), { stiffness: 300, damping: 24 });
+  const y = useSpring(useMotionValue(0), { stiffness: 300, damping: 24 });
+  const onMouseMove = (event) => {
     const el = ref.current;
     if (!el) return;
 
@@ -18,14 +20,9 @@ export default function MagneticButton({ children, strength = 0.3 }) {
     const deltaX = (event.clientX - centerX) * strength;
     const deltaY = (event.clientY - centerY) * strength;
 
-    el.style.transform = `translate3d(${deltaX}px, ${deltaY}px, 0)`;
-  }, [strength]);
-
-  const onMouseLeave = useCallback(() => {
-    const el = ref.current;
-    if (!el) return;
-    el.style.transform = `translate3d(0px, 0px, 0)`;
-  }, []);
+    x.set(deltaX); y.set(deltaY);
+  };
+  const onMouseLeave = () => { x.set(0); y.set(0); };
 
   // Check for fine pointer support
   const isFinePointer =
@@ -38,13 +35,13 @@ export default function MagneticButton({ children, strength = 0.3 }) {
   }
 
   return (
-    <div
+    <motion.div
       ref={ref}
       onMouseMove={onMouseMove}
       onMouseLeave={onMouseLeave}
-      style={{ display: "inline-flex" }}
+      style={{ display: "inline-flex", x, y }}
     >
       {children}
-    </div>
+    </motion.div>
   );
 }

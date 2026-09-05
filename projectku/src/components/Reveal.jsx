@@ -1,54 +1,22 @@
-import { useEffect, useRef, useState } from "react";
+import { motion } from "framer-motion";
 import useReducedMotion from "../hooks/useReducedMotion";
 
-export default function Reveal({ children, className = "", delay = 0, as: Tag = "div", variant = "fade", duration = 400 }) {
-  const ref = useRef(null);
+export default function Reveal({ children, className = "", delay = 0, as: Tag = "div", variant = "fade" }) {
   const reduced = useReducedMotion();
-  const [visible, setVisible] = useState(reduced);
-
-  useEffect(() => {
-    if (reduced) {
-      setVisible(true);
-      return;
-    }
-
-    const el = ref.current;
-    if (!el) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setVisible(true);
-          observer.unobserve(el);
-        }
-      },
-      { threshold: 0.12, rootMargin: "0px 0px -8% 0px" }
-    );
-
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, [reduced]);
-
-  // compute style based on variant and visibility
-  const baseStyle = delay ? { transitionDelay: `${delay}ms` } : {};
-  const variantStyle = (() => {
-    if (variant === "clip") {
-      return {
-        clipPath: visible ? "inset(0% 0% 0% 0%)" : "inset(100% 0% 0% 0%)",
-        transition: `clip-path ${duration}ms ease`,
-      };
-    }
-    return {};
-  })();
-  const combinedStyle = { ...baseStyle, ...variantStyle };
-
+  const Component = motion[Tag] || motion.div;
+  const hidden = reduced ? {} : variant === "clip"
+    ? { opacity: 0, clipPath: "inset(0 0 100% 0)" }
+    : { opacity: 0, y: 28 };
+  const shown = reduced ? {} : { opacity: 1, y: 0, clipPath: "inset(0 0 0% 0)" };
   return (
-    <Tag
-      ref={ref}
-      className={`reveal ${variant === "clip" ? "clip-reveal" : ""} ${visible ? "is-visible" : ""} ${className}`.trim()}
-      style={combinedStyle}
+    <Component
+      className={className}
+      initial={hidden}
+      whileInView={shown}
+      viewport={{ once: true, amount: 0.16 }}
+      transition={{ duration: 0.8, delay: delay / 1000, ease: [0.16, 1, 0.3, 1] }}
     >
       {children}
-    </Tag>
+    </Component>
   );
 }

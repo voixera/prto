@@ -1,81 +1,43 @@
-import { useEffect, useRef } from "react";
-import gsap from "gsap";
+import { motion } from "framer-motion";
 import { profile } from "../content/profile";
 import { HeroLandscape } from "./LandscapeSVG";
-import Reveal from "./Reveal";
 
 export default function HeroSection() {
-  const wrapRef = useRef(null);
-  const parallaxRef = useRef(null);
-
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      // Staggered entrance for hero elements
-      gsap.from(".hero-anim-el", {
-        y: 36,
-        opacity: 0,
-        duration: 1.2,
-        stagger: 0.12,
-        ease: "power3.out",
-        delay: 0.1,
-      });
-
-      // Mouse parallax on the landscape
-      const handleMouseMove = (e) => {
-        const xPct = (e.clientX / window.innerWidth - 0.5);
-        const yPct = (e.clientY / window.innerHeight - 0.5);
-        if (parallaxRef.current) {
-          gsap.to(parallaxRef.current, {
-            x: xPct * 24,
-            y: yPct * 16,
-            duration: 1.4,
-            ease: "power2.out",
-          });
-        }
-      };
-
-      window.addEventListener("mousemove", handleMouseMove, { passive: true });
-      return () => window.removeEventListener("mousemove", handleMouseMove);
-    }, wrapRef);
-
-    return () => ctx.revert();
-  }, []);
-
   const nameParts = profile.name.split(" ");
   const firstName = nameParts[0]; // Audrey
   const lastName = nameParts.slice(1).join(" "); // Faisal Riza
 
   return (
-    <section ref={wrapRef} id="home" className="hero-wrapper">
+    <section id="home" className="hero-wrapper">
       {/* Left: editorial content */}
       <div className="hero-content">
         {/* Availability */}
-        <div className="hero-availability hero-anim-el">
+        <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: .15 }} className="hero-availability">
           <span className="hero-availability-dot" aria-hidden="true" />
           AVAILABLE FOR PROJECTS
-        </div>
+        </motion.div>
 
         {/* Name — massive display type */}
         <div aria-label={profile.name}>
-          <span className="hero-name hero-anim-el">
+          <motion.span initial={{ opacity: 0, y: 32 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: .25, duration: .8 }} className="hero-name">
             <span className="hero-name-first">{firstName.toUpperCase()}</span>
             <span className="hero-name-last">{lastName}</span>
-          </span>
+          </motion.span>
         </div>
 
-        <div className="hero-divider hero-anim-el" aria-hidden="true" />
+        <motion.div initial={{ scaleX: 0 }} animate={{ scaleX: 1 }} transition={{ delay: .65 }} className="hero-divider" aria-hidden="true" />
 
         {/* Role + tagline */}
-        <p className="hero-role hero-anim-el">
+        <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: .7 }} className="hero-role">
           {profile.role}
-        </p>
+        </motion.p>
 
-        <p className="hero-tagline hero-anim-el">
+        <motion.p initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: .78 }} className="hero-tagline">
           {profile.tagline}
-        </p>
+        </motion.p>
 
         {/* CTA */}
-        <div className="hero-anim-el" style={{ display: "flex", gap: "14px", flexWrap: "wrap" }}>
+        <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: .88 }} className="hero-actions">
           <a
             href="#work"
             className="btn btn-outline"
@@ -93,10 +55,10 @@ export default function HeroSection() {
           >
             {profile.discordHandle}
           </a>
-        </div>
+        </motion.div>
 
         {/* Metadata strip */}
-        <div className="hero-meta-strip hero-anim-el">
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1 }} className="hero-meta-strip">
           <div className="hero-meta-item">
             <span className="hero-meta-label">Location</span>
             <span className="hero-meta-value">{profile.location}</span>
@@ -113,12 +75,12 @@ export default function HeroSection() {
             <span className="hero-meta-label">Status</span>
             <span className="hero-meta-value">UT Student</span>
           </div>
-        </div>
+        </motion.div>
       </div>
 
       {/* Right: cinematic landscape */}
       <div className="hero-visual" aria-hidden="true">
-        <div ref={parallaxRef} style={{ position: "absolute", inset: "-5%", width: "110%", height: "110%" }}>
+        <div className="hero-art">
           <HeroLandscape style={{ width: "100%", height: "100%" }} />
         </div>
 

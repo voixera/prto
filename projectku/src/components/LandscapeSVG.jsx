@@ -62,7 +62,7 @@ export function HeroLandscape({ className = "" }) {
         [55,240],[220,220],[390,255],[550,235],[730,250],[890,225],[1060,240],[1220,260],
         [160,295],[320,280],[480,305],[640,285],[800,300],[960,275],[1120,295],[1380,270],
       ].map(([x,y],i) => (
-        <circle key={i} cx={x} cy={y} r={Math.random() > 0.7 ? 1.2 : 0.7} fill="#f0e8d8" opacity={0.3 + (i % 5) * 0.08} />
+        <circle key={i} cx={x} cy={y} r={i % 4 === 0 ? 1.2 : 0.7} fill="#f0e8d8" opacity={0.3 + (i % 5) * 0.08} />
       ))}
 
       {/* Far mountains — layer 5 (most distant, bluest) */}
@@ -238,7 +238,7 @@ export function ContactLandscape({ className = "" }) {
         [140,120],[330,105],[510,135],[690,115],[870,130],[1050,100],[1230,120],[1400,140],
         [60,195],[220,175],[400,205],[570,185],[750,200],[930,175],[1100,195],[1280,180],
       ].map(([x,y],i) => (
-        <circle key={i} cx={x} cy={y} r={Math.random() > 0.6 ? 1.1 : 0.6} fill="#f0e8d8" opacity={0.28 + (i % 6) * 0.06} />
+        <circle key={i} cx={x} cy={y} r={i % 3 === 0 ? 1.1 : 0.6} fill="#f0e8d8" opacity={0.28 + (i % 6) * 0.06} />
       ))}
 
       {/* Vast distant plain / horizon mountains */}

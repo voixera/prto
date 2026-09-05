@@ -9,7 +9,7 @@ export default function SiteFooter() {
       <footer className="site-footer">
         <div className="footer-inner">
           <span className="footer-brand">
-            PORTO<span style={{ color: 'var(--accent-cyan)' }}>AZURE</span>48
+            PORTO<span>AZURE</span>48
           </span>
 
           <div className="footer-socials">
@@ -17,7 +17,7 @@ export default function SiteFooter() {
             <a href="https://github.com/voixera" target="_blank" rel="noreferrer">GitHub</a>
           </div>
 
-          <p className="mono" style={{ fontSize: '0.8125rem', color: 'var(--text-muted)' }}>
+          <p>
             © {new Date().getFullYear()} {profile.name}. Built with intent.
           </p>
         </div>

@@ -1,16 +1,17 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import { NAV_ITEMS } from "../content/site";
 import { profile } from "../content/profile";
 import { GithubBrandIcon, DiscordBrandIcon } from "./CustomIcons";
 
 export default function SiteHeader() {
   const [activeSection, setActiveSection] = useState("home");
-  const [scrollProgress, setScrollProgress] = useState(0);
+  const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      // Active section tracking
+      setScrolled(window.scrollY > 24);
       const sections = ["home", ...NAV_ITEMS.map(i => i.href.substring(1))];
       const scrollPos = window.scrollY + window.innerHeight * 0.35;
       for (const id of sections) {
@@ -24,9 +25,6 @@ export default function SiteHeader() {
         }
       }
 
-      // Scroll progress
-      const docH = document.documentElement.scrollHeight - window.innerHeight;
-      setScrollProgress(docH > 0 ? (window.scrollY / docH) * 100 : 0);
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
@@ -45,12 +43,10 @@ export default function SiteHeader() {
   return (
     <>
       {/* ── Scroll progress line ── */}
-      <div className="scroll-progress" aria-hidden="true">
-        <div className="scroll-progress-fill" style={{ width: `${scrollProgress}%` }} />
-      </div>
+      <div className="scroll-progress" aria-hidden="true" />
 
       {/* ── Desktop vertical nav ── */}
-      <nav className="site-nav" aria-label="Primary navigation">
+      <nav className={`site-nav ${scrolled ? "is-scrolled" : ""}`} aria-label="Primary navigation">
         {/* Brand mark */}
         <a href="#home" className="nav-brand-vertical" aria-label="Back to top">
           <div className="nav-brand-mark">AF</div>
@@ -107,7 +103,7 @@ export default function SiteHeader() {
       </nav>
 
       {/* ── Mobile nav ── */}
-      <div className="mobile-nav" role="banner">
+      <div className={`mobile-nav ${scrolled ? "is-scrolled" : ""}`} role="banner">
         <span className="mobile-nav-brand">AF</span>
         <button
           className="mobile-nav-toggle"
@@ -121,8 +117,10 @@ export default function SiteHeader() {
         </button>
       </div>
 
-      <div
-        className={`mobile-nav-menu ${mobileOpen ? "is-open" : ""}`}
+      <AnimatePresence>
+      {mobileOpen && <motion.div
+        initial={{ opacity: 0, y: -16 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -16 }}
+        transition={{ duration: .25 }} className="mobile-nav-menu"
         role="dialog"
         aria-modal="true"
         aria-label="Navigation menu"
@@ -136,7 +134,8 @@ export default function SiteHeader() {
             {item.label}
           </a>
         ))}
-      </div>
+      </motion.div>}
+      </AnimatePresence>
     </>
   );
 }
