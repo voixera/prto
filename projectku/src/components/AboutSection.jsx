@@ -2,6 +2,7 @@ import { profile } from "../content/profile";
 import { AboutLandscape } from "./LandscapeSVG";
 import Reveal from "./Reveal";
 import { motion, useScroll, useSpring, useTransform } from "framer-motion";
+import aboutLandscape from "../../gallery/download (1).jpg";
 
 export default function AboutSection() {
   const { scrollYProgress } = useScroll();
@@ -13,7 +14,7 @@ export default function AboutSection() {
       <div className="about-grid">
         {/* Visual side */}
         <div className="about-visual" aria-hidden="true">
-          <motion.div className="about-art" style={{ y: imageY }}><AboutLandscape /></motion.div>
+          <motion.div className="about-art" style={{ y: imageY }}><img src={aboutLandscape} alt="Mountain landscape" /><AboutLandscape /></motion.div>
         </div>
 
         {/* Editorial content side */}

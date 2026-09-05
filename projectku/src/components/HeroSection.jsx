@@ -1,18 +1,31 @@
+import { useLayoutEffect, useRef } from "react";
+import gsap from "gsap";
 import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 import { profile } from "../content/profile";
 import { HeroLandscape } from "./LandscapeSVG";
 import { Arc, FloatingBadge, FloatingOrb, OrganicShape, Ring } from "./ArtShapes";
+import heroLandscape from "../../gallery/download.jpg";
 
 export default function HeroSection() {
+  const heroRef = useRef(null);
   const { scrollY } = useScroll();
   const artY = useSpring(useTransform(scrollY, [0, 700], [0, 110]), { stiffness: 80, damping: 24 });
   const titleY = useTransform(scrollY, [0, 600], [0, -28]);
+  useLayoutEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.timeline({ defaults: { ease: "power4.out" } })
+        .from(".hero-art-photo", { scale: 1.18, opacity: 0, duration: 1.8 })
+        .from(".hero-shape, .hero-ring, .hero-arc", { scale: 0.55, rotate: -20, opacity: 0, stagger: .12, duration: 1.2 }, "-=1.1")
+        .from(".hero-availability, .hero-name, .hero-divider, .hero-role, .hero-tagline, .hero-actions, .hero-meta-strip", { y: 26, opacity: 0, stagger: .07, duration: .7 }, "-=.7");
+    }, heroRef);
+    return () => ctx.revert();
+  }, []);
   const nameParts = profile.name.split(" ");
   const firstName = nameParts[0]; // Audrey
   const lastName = nameParts.slice(1).join(" "); // Faisal Riza
 
   return (
-    <section id="home" className="hero-wrapper">
+    <section ref={heroRef} id="home" className="hero-wrapper">
       {/* Left: editorial content */}
       <motion.div className="hero-content" style={{ y: titleY }}>
         {/* Availability */}
@@ -85,6 +98,7 @@ export default function HeroSection() {
       {/* Right: cinematic landscape */}
       <motion.div className="hero-visual" aria-hidden="true" style={{ y: artY }}>
         <div className="hero-art">
+          <img className="hero-art-photo" src={heroLandscape} alt="" />
           <HeroLandscape style={{ width: "100%", height: "100%" }} />
         </div>
         <OrganicShape className="hero-shape" size={230} color="rgba(216,255,101,.86)" rotate={18} />
