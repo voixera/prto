@@ -57,8 +57,8 @@ export default function StackSection() {
         ))}
       </div>
 
-      <motion.div className="tech-note" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: .35 }} aria-live="polite">
-        {active ? <><strong>{active}</strong><span>{descriptions[active] || "Part of the working toolkit."}</span></> : <span>Move cursor across stack to inspect each tool.</span>}
+      <motion.div className={`tech-note${active ? " has-selection" : ""}`} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: .35 }} aria-live="polite">
+        {active && <><strong>{active}</strong><span>{descriptions[active] || "Part of the working toolkit."}</span></>}
       </motion.div>
     </section>
   );

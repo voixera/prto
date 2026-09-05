@@ -77,7 +77,7 @@ export default function SiteHeader() {
         </ul>
 
         {/* Social links */}
-        <div className="nav-socials">
+        <div className="nav-socials" aria-label="Social links">
           {githubSocial && (
             <a
               href={githubSocial.href}

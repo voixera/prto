@@ -33,7 +33,6 @@ export default function HeroSection() {
       <motion.div className="overview-meta" variants={reveal} initial="hidden" animate="visible" transition={{ delay: .75, duration: .8 }}>
         <span>SCROLL TO EXPLORE</span><span>{profile.location}</span><span>{new Date().getFullYear()} / AVAILABLE</span>
       </motion.div>
-      <div className="overview-index" aria-hidden="true">00<span>/06</span></div>
     </section>
   );
 }

@@ -60,6 +60,13 @@
   .overview-line { left: 4%; width: 130px; }
 }
 
+.nav-socials{display:flex!important;align-items:center;gap:16px!important;padding-left:24px;border-left:1px solid rgba(241,239,232,.18)}
+.nav-social-link{display:flex;align-items:center;justify-content:center;width:22px;height:22px;color:var(--muted);transition:color .25s,transform .25s}
+.nav-social-link:hover{color:var(--accent);transform:translateY(-2px)}
+.tech-note:not(.has-selection){visibility:hidden;min-height:20px}
+.tech-orbit-item{z-index:2}
+.tech-orbit-item-1{top:5%;left:13%}.tech-orbit-item-2{top:5%;left:41%}.tech-orbit-item-3{top:5%;left:70%}.tech-orbit-item-4{top:25%;left:83%}.tech-orbit-item-5{top:51%;left:83%}.tech-orbit-item-6{top:76%;left:70%}.tech-orbit-item-7{top:88%;left:42%}.tech-orbit-item-8{top:88%;left:15%}.tech-orbit-item-9{top:76%;left:1%}.tech-orbit-item-10{top:51%;left:1%}.tech-orbit-item-11{top:25%;left:7%}.tech-orbit-item-12{top:14%;left:25%}.tech-orbit-item-13{top:40%;left:68%}.tech-orbit-item-14{top:40%;left:24%}
+
 /* Final visual overrides: full-bleed landscape, no circular ornaments. */
 .overview-photo-wrap {
   inset: -8% !important;
