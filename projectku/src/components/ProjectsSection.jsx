@@ -1,147 +1,64 @@
-import { motion, useSpring, useMotionValue } from "framer-motion";
+import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 import { profile } from "../content/profile";
-import { WEB_PROJECTS, DISCORD_PROJECT, ROBLOX_PROJECT, isExternalHref } from "../content/site";
+import { WEB_PROJECTS, isExternalHref } from "../content/site";
 import Reveal from "./Reveal";
+import { Arc, FloatingBadge, OrganicShape, Ring } from "./ArtShapes";
 
-function TiltProjectCard({ project, index }) {
-  const x = useSpring(useMotionValue(0), { stiffness: 180, damping: 22 });
-  const y = useSpring(useMotionValue(0), { stiffness: 180, damping: 22 });
+function ProjectStage({ project, index }) {
+  const { scrollYProgress } = useScroll();
+  const mediaY = useSpring(useTransform(scrollYProgress, [index * .1, .5 + index * .06], [30, -30]), { stiffness: 65, damping: 22 });
+  const x = useSpring(0, { stiffness: 180, damping: 24 });
+  const y = useSpring(0, { stiffness: 180, damping: 24 });
   const move = (event) => {
-    const rect = event.currentTarget.getBoundingClientRect();
-    x.set((event.clientX - rect.left - rect.width / 2) / 45);
-    y.set(-(event.clientY - rect.top - rect.height / 2) / 45);
+    const box = event.currentTarget.getBoundingClientRect();
+    x.set((event.clientX - box.left - box.width / 2) / 70);
+    y.set(-(event.clientY - box.top - box.height / 2) / 70);
   };
   const reset = () => { x.set(0); y.set(0); };
+  const link = project.links?.[0];
 
   return (
-    <motion.article style={{ rotateX: y, rotateY: x }} onMouseMove={move} onMouseLeave={reset} className={`project-card project-${index + 1}`}>
-      <div className="project-media">
-        {project.thumbnail ? (
-          <img src={project.thumbnail} alt={project.title} loading="lazy" />
-        ) : (
-          <div style={{ width: '100%', height: '100%', display: 'grid', placeItems: 'center', background: '#0f172a', color: '#64748b' }}>
-            {project.title}
-          </div>
-        )}
+    <motion.article className={`project-stage stage-${index + 1}`} onMouseMove={move} onMouseLeave={reset}>
+      <div className="project-stage-heading">
+        <span className="project-stage-number">0{index + 1}</span>
+        <span className="project-stage-kind">{project.tags?.join(" / ")}</span>
       </div>
-
-      <div className="project-info">
-        <div>
-          <span className="project-num">PROJECT {String(index + 1).padStart(2, '0')}</span>
-          <h3 className="project-name">{project.title}</h3>
-          <p className="project-desc">{project.description}</p>
-
-          <div className="project-tags">
-            {project.tags.map((tag) => (
-              <span key={tag} className="project-tag">{tag}</span>
-            ))}
-          </div>
-        </div>
-
-        {project.links?.[0] && (
-          <a
-            href={project.links[0].href}
-            target={isExternalHref(project.links[0].href) ? "_blank" : undefined}
-            rel={isExternalHref(project.links[0].href) ? "noreferrer" : undefined}
-            className="btn btn-solid"
-            style={{ width: 'fit-content', padding: '10px 20px', fontSize: '0.875rem' }}
-          >
-            {project.links[0].label} →
-          </a>
-        )}
+      <motion.div className="project-stage-media" style={{ y: mediaY, rotateX: y, rotateY: x }}>
+        {project.thumbnail ? <img src={project.thumbnail} alt={project.title} loading="lazy" /> : <span>{project.title}</span>}
+        <FloatingBadge className="project-stage-badge">SELECTED WORK</FloatingBadge>
+      </motion.div>
+      <div className="project-stage-copy">
+        <h3>{project.title}</h3>
+        <p>{project.description}</p>
+        {link && <a className="project-stage-link" href={link.href} target={isExternalHref(link.href) ? "_blank" : undefined} rel={isExternalHref(link.href) ? "noreferrer" : undefined} data-cursor-label="VIEW PROJECT">
+          {link.label}<span aria-hidden="true">↗</span>
+        </a>}
       </div>
+      <div className="project-stage-shape" aria-hidden="true"><OrganicShape size={110} color="rgba(216,255,101,.7)" /><Ring size={160} color="rgba(241,239,232,.25)" /></div>
     </motion.article>
   );
 }
 
 export default function ProjectsSection() {
   return (
-    <section id="work" className="section">
-      <Reveal as="div" className="section-index-reveal" variant="fade" duration={400}>
-        <div className="section-index">
-          <span className="index-num">03</span>
-          <span>SELECTED WORK</span>
+    <section id="work" className="section projects-section">
+      <Reveal><div className="section-index"><span className="index-num">03</span><span>SELECTED WORK</span></div></Reveal>
+      <Reveal delay={100}><h2 className="section-title">Things made to be <em>used.</em></h2></Reveal>
+      <div className="project-stages">
+        {WEB_PROJECTS.map((project, index) => <Reveal key={project.title} delay={index * 70}><ProjectStage project={project} index={index} /></Reveal>)}
+      </div>
+      <Reveal delay={160}>
+        <div className="auxiliary-work">
+          <div><span className="section-index"><span className="index-num">03.B</span> BOT SYSTEMS</span><h3>Discord bots that make busy servers quieter.</h3></div>
+          <a className="project-stage-link" href="#/discord-bots">Explore bot systems <span aria-hidden="true">↗</span></a>
         </div>
       </Reveal>
-
-      <Reveal as="h2" className="section-title-reveal" variant="fade" duration={500} delay={100}>
-        <h2 className="section-title">
-          Featured Projects.
-          <em>Web applications & tools.</em>
-        </h2>
-      </Reveal>
-
-      <Reveal as="div" className="projects-list-reveal" variant="fade" duration={500} delay={200}>
-        <div className="projects-list showcase-stage">
-          {WEB_PROJECTS.map((project, index) => (
-            <TiltProjectCard key={project.title} project={project} index={index} />
-          ))}
+      <Reveal delay={220}>
+        <div className="auxiliary-work auxiliary-script">
+          <div><span className="section-index"><span className="index-num">03.C</span> AUTOMATION</span><h3>Lua tools, interfaces, and game experiments.</h3></div>
+          <a className="project-stage-link" href="#/roblox-scripts">Open script archive <span aria-hidden="true">↗</span></a>
         </div>
       </Reveal>
-
-      {DISCORD_PROJECT && (
-        <Reveal as="div" className="discord-section-reveal" variant="fade" duration={500} delay={300}>
-            <div className="sub-showcase">
-            <div className="section-index">
-              <span className="index-num">03.B</span>
-              <span>BOT SYSTEMS</span>
-            </div>
-            <h3 className="section-title" style={{ fontSize: '2rem' }}>Discord Bots</h3>
-
-            <div className="sub-showcase-grid">
-              {profile.discordBots.map((bot) => (
-                <div key={bot.name} className="sub-card">
-                  <div>
-                    <span className="project-num">{bot.category}</span>
-                    <h4 style={{ fontSize: '1.25rem', fontFamily: 'var(--font-display)', marginBottom: 8 }}>{bot.name}</h4>
-                    <p className="project-desc" style={{ fontSize: '0.875rem' }}>{bot.description}</p>
-                  </div>
-                  <a
-                    href={bot.inviteUrl}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="btn btn-glass"
-                    style={{ marginTop: 16, fontSize: '0.8125rem', padding: '8px 16px' }}
-                  >
-                    Invite Bot →
-                  </a>
-                </div>
-              ))}
-            </div>
-          </div>
-        </Reveal>
-      )}
-
-      {ROBLOX_PROJECT && (
-        <Reveal as="div" className="roblox-section-reveal" variant="fade" duration={500} delay={400}>
-            <div className="sub-showcase">
-            <div className="section-index">
-              <span className="index-num">03.C</span>
-              <span>AUTOMATION</span>
-            </div>
-            <h3 className="section-title" style={{ fontSize: '2rem' }}>Roblox Lua Scripts</h3>
-
-            <div className="sub-showcase-grid">
-              {profile.robloxScripts.slice(0, 4).map((script) => (
-                <div key={script.name} className="sub-card">
-                  <div>
-                    <span className="project-num">{script.category}</span>
-                    <h4 style={{ fontSize: '1.25rem', fontFamily: 'var(--font-display)', marginBottom: 8 }}>{script.name}</h4>
-                    <p className="project-desc" style={{ fontSize: '0.875rem' }}>{script.description}</p>
-                  </div>
-                  <a
-                    href="#/roblox-scripts"
-                    className="btn btn-glass"
-                    style={{ marginTop: 16, fontSize: '0.8125rem', padding: '8px 16px' }}
-                  >
-                    View Showcase →
-                  </a>
-                </div>
-              ))}
-            </div>
-          </div>
-        </Reveal>
-      )}
     </section>
   );
 }
