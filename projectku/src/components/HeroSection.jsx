@@ -3,7 +3,7 @@ import gsap from "gsap";
 import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 import { profile } from "../content/profile";
 import heroLandscape from "../../gallery/download.jpg";
-import { FloatingBadge, OrganicShape } from "./ArtShapes";
+import { FloatingBadge } from "./ArtShapes";
 
 const reveal = { hidden: { opacity: 0, y: 42 }, visible: { opacity: 1, y: 0 } };
 
@@ -31,7 +31,6 @@ export default function HeroSection() {
       </motion.div>
       <div className="overview-wash" aria-hidden="true" />
       <div className="overview-orbit" aria-hidden="true">
-        <OrganicShape className="overview-blob" size={300} color="rgba(216,255,101,.84)" />
         <motion.div className="overview-line" style={{ y: orbitY }} />
         <FloatingBadge className="overview-badge">JAWA TIMUR / ID</FloatingBadge>
       </div>

@@ -8,7 +8,6 @@ import ProjectsSection from "../components/ProjectsSection";
 import JourneySection from "../components/JourneySection";
 import ContactSection from "../components/ContactSection";
 import SiteFooter from "../components/SiteFooter";
-import { OrganicShape } from "../components/ArtShapes";
 import landscapeBackground from "../../gallery/download.jpg";
 import GalleryInterlude from "../components/GalleryInterlude";
 
@@ -33,10 +32,6 @@ export default function Home({ entered = true }) {
 
       {/* Fixed navigation */}
       <SiteHeader />
-      <div className="ambient-art" aria-hidden="true">
-        <OrganicShape className="ambient-blob" size={320} color="rgba(216,255,101,.07)" />
-      </div>
-
       {/* Main content */}
       <main>
         <HeroSection />
