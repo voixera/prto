@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import Home from "./Pages/Home";
+import WelcomeScreen from "./Pages/WelcomeScreen";
 import DiscordBots from "./Pages/DiscordBots";
 import RobloxScripts from "./Pages/RobloxScripts";
 import useHashRoute from "./hooks/useHashRoute";
@@ -9,7 +10,7 @@ import useReducedMotion from "./hooks/useReducedMotion";
 export default function App() {
   const route = useHashRoute();
   const reduced = useReducedMotion();
-  const [entered, setEntered] = useState(true);
+  const [entered, setEntered] = useState(route !== "home");
 
   useEffect(() => {
     if (route !== "home") setEntered(true);
@@ -21,6 +22,9 @@ export default function App() {
 
   return (
     <LenisProvider enabled={!reduced && entered && route === "home"}>
+      {route === "home" && !entered ? (
+        <WelcomeScreen entered={entered} onEnter={() => setEntered(true)} />
+      ) : null}
       {route === "home" ? <Home entered={entered} /> : null}
       {route === "discord-bots" ? <DiscordBots /> : null}
       {route === "roblox-scripts" ? <RobloxScripts /> : null}
