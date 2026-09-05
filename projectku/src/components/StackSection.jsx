@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { STACK_GROUPS, TECH_ASSETS } from "../content/site";
 import Reveal from "./Reveal";
 
@@ -57,8 +57,10 @@ export default function StackSection() {
         ))}
       </div>
 
-      <motion.div className={`tech-note${active ? " has-selection" : ""}`} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: .35 }} aria-live="polite">
-        {active && <><strong>{active}</strong><span>{descriptions[active] || "Part of the working toolkit."}</span></>}
+      <motion.div className="tech-note" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: .35 }} aria-live="polite">
+        <AnimatePresence mode="wait" initial={false}>
+          {active && <motion.span key={active} className="tech-note-content" initial={{ opacity: 0, filter: "blur(7px)", y: 4 }} animate={{ opacity: 1, filter: "blur(0px)", y: 0 }} exit={{ opacity: 0, filter: "blur(7px)", y: -4 }} transition={{ duration: .24, ease: [0.16, 1, .3, 1] }}><strong>{active}</strong><span>{descriptions[active] || "Part of the working toolkit."}</span></motion.span>}
+        </AnimatePresence>
       </motion.div>
     </section>
   );
