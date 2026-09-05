@@ -121,6 +121,46 @@
 .nav-links a.active .nav-link-line,
 .nav-links a:hover .nav-link-line { transform: scaleX(1); }
 
+.tech-orbit {
+  position: relative;
+  height: min(54vw, 620px);
+  min-height: 520px;
+  margin: 35px -3vw 0;
+}
+.tech-orbit-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  height: auto;
+  transform: translate(-50%, -50%) rotate(-6deg);
+}
+.tech-orbit-center span { color: var(--dim); font: 500 .58rem var(--mono); letter-spacing: .14em; }
+.tech-orbit-center strong { color: var(--accent); font: 600 1rem var(--display); letter-spacing: -.04em; }
+.tech-orbit-item {
+  position: absolute;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 8px 0;
+  border: 0;
+  color: var(--muted);
+  background: transparent;
+  font: 500 .67rem var(--mono);
+  white-space: nowrap;
+  transition: color .25s;
+}
+.tech-orbit-item:hover,.tech-orbit-item:focus-visible,.tech-orbit-item.is-active { color: var(--accent); outline: none; }
+.tech-orbit-item img { width: 30px; height: 30px; object-fit: contain; filter: grayscale(1); opacity: .7; transition: filter .25s, opacity .25s, transform .35s var(--ease); }
+.tech-orbit-item:hover img,.tech-orbit-item:focus-visible img,.tech-orbit-item.is-active img { filter: none; opacity: 1; transform: rotate(-10deg) scale(1.15); }
+.tech-orbit-item-1{top:7%;left:38%}.tech-orbit-item-2{top:14%;left:67%}.tech-orbit-item-3{top:34%;right:5%}.tech-orbit-item-4{top:59%;right:2%}.tech-orbit-item-5{bottom:9%;right:19%}.tech-orbit-item-6{bottom:2%;left:42%}.tech-orbit-item-7{bottom:12%;left:14%}.tech-orbit-item-8{top:57%;left:2%}.tech-orbit-item-9{top:32%;left:4%}.tech-orbit-item-10{top:14%;left:13%}.tech-orbit-item-11{bottom:21%;left:29%}.tech-orbit-item-12{bottom:30%;right:29%}.tech-orbit-item-13{top:23%;right:28%}.tech-orbit-item-14{top:42%;left:25%}
+@media (max-width:800px){.tech-orbit{height:520px;min-height:0;margin:20px 0 0}.tech-orbit-center{display:none}.tech-orbit-item{padding:7px 0;font-size:.62rem}.tech-orbit-item-1{top:2%;left:2%}.tech-orbit-item-2{top:2%;left:auto;right:2%}.tech-orbit-item-3{top:15%;right:2%}.tech-orbit-item-4{top:28%;right:2%}.tech-orbit-item-5{top:41%;right:2%;bottom:auto}.tech-orbit-item-6{top:54%;right:2%;bottom:auto;left:auto}.tech-orbit-item-7{top:67%;right:2%;bottom:auto;left:auto}.tech-orbit-item-8{top:80%;right:2%;bottom:auto;left:auto}.tech-orbit-item-9{top:15%;left:2%}.tech-orbit-item-10{top:28%;left:2%}.tech-orbit-item-11{top:41%;left:2%;bottom:auto}.tech-orbit-item-12{top:54%;left:2%;bottom:auto;right:auto}.tech-orbit-item-13{top:67%;left:2%}.tech-orbit-item-14{top:80%;left:2%}}
+
 .overview-hero .hero-art svg,
 .about-art > svg { display: none !important; }
 .hero-content { align-self: center !important; text-align: left !important; margin-left: 0 !important; }
