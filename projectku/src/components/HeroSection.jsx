@@ -2,136 +2,53 @@ import { useLayoutEffect, useRef } from "react";
 import gsap from "gsap";
 import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 import { profile } from "../content/profile";
-import { HeroLandscape } from "./LandscapeSVG";
-import { Arc, FloatingBadge, FloatingOrb, OrganicShape, Ring } from "./ArtShapes";
 import heroLandscape from "../../gallery/download.jpg";
+import { Arc, FloatingBadge, FloatingOrb, OrganicShape, Ring } from "./ArtShapes";
+
+const reveal = { hidden: { opacity: 0, y: 42 }, visible: { opacity: 1, y: 0 } };
 
 export default function HeroSection() {
-  const heroRef = useRef(null);
+  const ref = useRef(null);
   const { scrollY } = useScroll();
-  const artY = useSpring(useTransform(scrollY, [0, 700], [0, 110]), { stiffness: 80, damping: 24 });
-  const titleY = useTransform(scrollY, [0, 600], [0, -28]);
+  const photoY = useSpring(useTransform(scrollY, [0, 900], [0, 150]), { stiffness: 70, damping: 24 });
+  const orbitY = useSpring(useTransform(scrollY, [0, 900], [0, -90]), { stiffness: 70, damping: 24 });
+  const words = profile.name.split(" ");
+
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
       gsap.timeline({ defaults: { ease: "power4.out" } })
-        .from(".hero-art-photo", { scale: 1.18, opacity: 0, duration: 1.8 })
-        .from(".hero-shape, .hero-ring, .hero-arc", { scale: 0.55, rotate: -20, opacity: 0, stagger: .12, duration: 1.2 }, "-=1.1")
-        .from(".hero-availability, .hero-name, .hero-divider, .hero-role, .hero-tagline, .hero-actions, .hero-meta-strip", { y: 26, opacity: 0, stagger: .07, duration: .7 }, "-=.7");
-    }, heroRef);
+        .from(".overview-photo", { scale: 1.16, duration: 1.8, opacity: 0 })
+        .from(".overview-orbit", { scale: .5, rotation: -25, opacity: 0, duration: 1.2 }, "-=1.2")
+        .from(".overview-kicker, .overview-title-line, .overview-intro, .overview-meta", { y: 24, opacity: 0, stagger: .08, duration: .75 }, "-=.75");
+    }, ref);
     return () => ctx.revert();
   }, []);
-  const nameParts = profile.name.split(" ");
-  const firstName = nameParts[0]; // Audrey
-  const lastName = nameParts.slice(1).join(" "); // Faisal Riza
 
   return (
-    <section ref={heroRef} id="home" className="hero-wrapper">
-      {/* Left: editorial content */}
-      <motion.div className="hero-content" style={{ y: titleY }}>
-        {/* Availability */}
-        <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: .15 }} className="hero-availability">
-          <span className="hero-availability-dot" aria-hidden="true" />
-          AVAILABLE FOR PROJECTS
-        </motion.div>
-
-        {/* Name — massive display type */}
-        <div aria-label={profile.name}>
-          <motion.span initial={{ opacity: 0, y: 32 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: .25, duration: .8 }} className="hero-name">
-            <span className="hero-name-first">{firstName.toUpperCase()}</span>
-            <span className="hero-name-last">{lastName}</span>
-          </motion.span>
-        </div>
-
-        <motion.div initial={{ scaleX: 0 }} animate={{ scaleX: 1 }} transition={{ delay: .65 }} className="hero-divider" aria-hidden="true" />
-
-        {/* Role + tagline */}
-        <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: .7 }} className="hero-role">
-          {profile.role}
-        </motion.p>
-
-        <motion.p initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: .78 }} className="hero-tagline">
-          {profile.tagline}
-        </motion.p>
-
-        {/* CTA */}
-        <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: .88 }} className="hero-actions">
-          <a
-            href="#work"
-            className="btn btn-outline"
-            data-cursor-label="EXPLORE"
-          >
-            Selected Work
-            <span style={{ width: 16, height: 1, background: "currentColor", display: "inline-block" }} aria-hidden="true" />
-          </a>
-          <a
-            href={profile.discordInvite}
-            target="_blank"
-            rel="noreferrer"
-            className="btn btn-ghost"
-            data-cursor-label="DISCORD"
-          >
-            {profile.discordHandle}
-          </a>
-        </motion.div>
-
-        {/* Metadata strip */}
-        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1 }} className="hero-meta-strip">
-          <div className="hero-meta-item">
-            <span className="hero-meta-label">Location</span>
-            <span className="hero-meta-value">{profile.location}</span>
-          </div>
-          <div className="hero-meta-item">
-            <span className="hero-meta-label">Age</span>
-            <span className="hero-meta-value">{profile.age}</span>
-          </div>
-          <div className="hero-meta-item">
-            <span className="hero-meta-label">Experience</span>
-            <span className="hero-meta-value">{profile.yearsExperience} Years</span>
-          </div>
-          <div className="hero-meta-item">
-            <span className="hero-meta-label">Status</span>
-            <span className="hero-meta-value">UT Student</span>
-          </div>
-        </motion.div>
+    <section ref={ref} id="home" className="overview-hero">
+      <motion.div className="overview-photo-wrap" style={{ y: photoY }} aria-hidden="true">
+        <img className="overview-photo" src={heroLandscape} alt="" />
       </motion.div>
-
-      {/* Right: cinematic landscape */}
-      <motion.div className="hero-visual" aria-hidden="true" style={{ y: artY }}>
-        <div className="hero-art">
-          <img className="hero-art-photo" src={heroLandscape} alt="" />
-          <HeroLandscape style={{ width: "100%", height: "100%" }} />
-        </div>
-        <OrganicShape className="hero-shape" size={230} color="rgba(216,255,101,.86)" rotate={18} />
-        <Ring className="hero-ring" size={310} color="rgba(241,239,232,.42)" />
-        <Arc className="hero-arc" size={150} color="var(--accent)" />
-        <FloatingOrb className="hero-orb" size={12} />
-        <FloatingBadge className="hero-badge">BUILD / PLAY / REPEAT</FloatingBadge>
-
-        {/* Coordinate decoration */}
-        <span className="hero-coord">
-          07°15'S / 112°44'E<br />
-          JAWA TIMUR
-        </span>
-      </motion.div>
-
-      {/* Scroll cue — centered below */}
-      <div
-        className="hero-scroll-cue"
-        aria-hidden="true"
-        style={{ gridColumn: "1 / -1" }}
-      >
-        <span className="hero-scroll-line" />
-        <span style={{
-          fontFamily: "var(--font-mono)",
-          fontSize: "0.5rem",
-          letterSpacing: "0.25em",
-          color: "var(--text-dim)",
-          textTransform: "uppercase",
-          marginTop: 8,
-        }}>
-          SCROLL
-        </span>
+      <div className="overview-wash" aria-hidden="true" />
+      <div className="overview-orbit" aria-hidden="true">
+        <OrganicShape className="overview-blob" size={300} color="rgba(216,255,101,.84)" />
+        <motion.div style={{ y: orbitY }}><Ring className="overview-ring" size={420} color="rgba(241,239,232,.55)" /><Arc className="overview-arc" size={190} color="var(--accent)" /></motion.div>
+        <FloatingOrb className="overview-orb" size={11} />
+        <FloatingBadge className="overview-badge">JAWA TIMUR / ID</FloatingBadge>
       </div>
+
+      <div className="overview-kicker"><span className="hero-availability-dot" />FULL STACK / CREATIVE ENGINEERING</div>
+      <div className="overview-title" aria-label={profile.name}>
+        {words.map((word, index) => <motion.span key={word} className={`overview-title-line ${index === 1 ? "is-accent" : ""}`} variants={reveal} initial="hidden" animate="visible" transition={{ delay: .18 + index * .12, duration: .9, ease: [0.16, 1, .3, 1] }}>{word.toUpperCase()}</motion.span>)}
+      </div>
+      <motion.div className="overview-intro" variants={reveal} initial="hidden" animate="visible" transition={{ delay: .55, duration: .8 }}>
+        <p>{profile.tagline}</p>
+        <div className="overview-actions"><a href="#work" className="overview-link" data-cursor-label="EXPLORE">Explore work <span>↘</span></a><a href={profile.discordInvite} target="_blank" rel="noreferrer" className="overview-link overview-link-muted">{profile.discordHandle}</a></div>
+      </motion.div>
+      <motion.div className="overview-meta" variants={reveal} initial="hidden" animate="visible" transition={{ delay: .75, duration: .8 }}>
+        <span>SCROLL TO EXPLORE</span><span>{profile.location}</span><span>{new Date().getFullYear()} / AVAILABLE</span>
+      </motion.div>
+      <div className="overview-index" aria-hidden="true">00<span>/06</span></div>
     </section>
   );
 }

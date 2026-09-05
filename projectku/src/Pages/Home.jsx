@@ -10,6 +10,7 @@ import ContactSection from "../components/ContactSection";
 import SiteFooter from "../components/SiteFooter";
 import { Arc, FloatingOrb, OrganicShape, Ring } from "../components/ArtShapes";
 import landscapeBackground from "../../gallery/download.jpg";
+import GalleryInterlude from "../components/GalleryInterlude";
 
 export default function Home({ entered = true }) {
   useEffect(() => {
@@ -42,6 +43,7 @@ export default function Home({ entered = true }) {
       {/* Main content */}
       <main>
         <HeroSection />
+        <GalleryInterlude />
         <AboutSection />
         <StackSection />
         <ProjectsSection />
