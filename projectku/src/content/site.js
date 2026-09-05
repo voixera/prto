@@ -34,10 +34,9 @@ export const TECH_ASSETS = {
 };
 
 export const NAV_ITEMS = [
-  { label: "Work", href: "#work" },
+  { label: "Home", href: "#home" },
   { label: "About", href: "#about" },
-  { label: "Stack", href: "#stack" },
-  { label: "Journey", href: "#journey" },
+  { label: "Project", href: "#project" },
   { label: "Contact", href: "#contact" },
 ];
 

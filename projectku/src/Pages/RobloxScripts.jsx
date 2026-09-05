@@ -20,7 +20,7 @@ function ScriptShowcase({ script, index }) {
 
 export default function RobloxScripts() {
   return <div className="page subpage roblox"><SiteHeader /><main>
-    <section className="sub-hero script-hero"><a className="text-link" href="#work"><span className="link-line" />Back to work</a><h1 className="display"><em>Lua</em><span>made visible.</span></h1><p className="lede">Roblox Lua experiments, automation patterns, and interface designs. A visual archive of tools built through play.</p></section>
+    <section className="sub-hero script-hero"><a className="text-link" href="#project"><span className="link-line" />Back to projects</a><h1 className="display"><em>Lua</em><span>made visible.</span></h1><p className="lede">Roblox Lua experiments, automation patterns, and interface designs. A visual archive of tools built through play.</p></section>
     <section className="script-archive">{(profile.robloxScripts ?? []).map((script, index) => <ScriptShowcase key={script.name} script={script} index={index} />)}</section>
   </main><SiteFooter /></div>;
 }

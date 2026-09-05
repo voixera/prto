@@ -25,7 +25,7 @@ function ProjectStage({ project, index }) {
       </div>
       <motion.div className="project-stage-media" style={{ y: mediaY, rotateX: y, rotateY: x }}>
         {project.thumbnail ? <img src={project.thumbnail} alt={project.title} loading="lazy" /> : <span>{project.title}</span>}
-        <FloatingBadge className="project-stage-badge">SELECTED WORK</FloatingBadge>
+        <FloatingBadge className="project-stage-badge">FEATURED PROJECT</FloatingBadge>
       </motion.div>
       <div className="project-stage-copy">
         <h3>{project.title}</h3>
@@ -40,8 +40,8 @@ function ProjectStage({ project, index }) {
 
 export default function ProjectsSection() {
   return (
-    <section id="work" className="section projects-section">
-      <Reveal><div className="section-index"><span className="index-num">03</span><span>SELECTED WORK</span></div></Reveal>
+    <section id="project" className="section projects-section">
+      <Reveal><div className="section-index"><span className="index-num">03</span><span>SELECTED PROJECTS</span></div></Reveal>
       <Reveal delay={100}><h2 className="section-title">Things made to be <em>used.</em></h2></Reveal>
       <div className="project-stages">
         {WEB_PROJECTS.map((project, index) => <Reveal key={project.title} delay={index * 70}><ProjectStage project={project} index={index} /></Reveal>)}
