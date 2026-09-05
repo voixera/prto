@@ -77,3 +77,46 @@
 .overview-hero .overview-line {
   display: none !important;
 }
+
+.screen-loader {
+  display: grid !important;
+  place-items: center !important;
+  align-items: center !important;
+  padding: 24px !important;
+}
+.screen-loader .loader-landscape,
+.screen-loader .loader-eyebrow,
+.screen-loader .loader-name-first,
+.screen-loader .loader-name-last {
+  display: none !important;
+}
+.screen-loader .loader-content {
+  width: min(430px, calc(100% - 48px)) !important;
+  text-align: center !important;
+}
+.screen-loader .loader-bar-track {
+  width: 100% !important;
+  margin-top: 0 !important;
+}
+.screen-loader .loader-status {
+  display: block !important;
+  margin-top: 16px !important;
+  color: var(--muted) !important;
+  font: 500 .65rem var(--mono) !important;
+  letter-spacing: .12em !important;
+  text-transform: uppercase !important;
+}
+.nav-links a.active:after { display: none !important; }
+.nav-link-line {
+  position: absolute;
+  right: 0;
+  bottom: 2px;
+  left: 0;
+  height: 1px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .35s var(--ease);
+}
+.nav-links a.active .nav-link-line,
+.nav-links a:hover .nav-link-line { transform: scaleX(1); }

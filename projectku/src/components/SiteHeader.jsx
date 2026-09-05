@@ -72,7 +72,7 @@ export default function SiteHeader() {
                   aria-current={activeSection === sec ? "true" : undefined}
                   title={item.label}
                 >
-                  <span className="nav-link-dot" aria-hidden="true" />
+                  <span className="nav-link-line" aria-hidden="true" />
                   <span className="nav-link-label">{item.label}</span>
                 </a>
               </li>
