@@ -1,5 +1,3 @@
-import { useLayoutEffect, useRef } from "react";
-import gsap from "gsap";
 import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 import { profile } from "../content/profile";
 import heroLandscape from "../../gallery/download.jpg";
@@ -8,24 +6,13 @@ import { FloatingBadge } from "./ArtShapes";
 const reveal = { hidden: { opacity: 0, y: 42 }, visible: { opacity: 1, y: 0 } };
 
 export default function HeroSection() {
-  const ref = useRef(null);
   const { scrollY } = useScroll();
   const photoY = useSpring(useTransform(scrollY, [0, 900], [0, 150]), { stiffness: 70, damping: 24 });
   const orbitY = useSpring(useTransform(scrollY, [0, 900], [0, -90]), { stiffness: 70, damping: 24 });
   const words = profile.name.split(" ");
 
-  useLayoutEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.timeline({ defaults: { ease: "power4.out" } })
-        .from(".overview-photo", { scale: 1.16, duration: 1.8, opacity: 0 })
-        .from(".overview-orbit", { scale: .5, rotation: -25, opacity: 0, duration: 1.2 }, "-=1.2")
-        .from(".overview-kicker, .overview-title-line, .overview-intro, .overview-meta", { y: 24, opacity: 0, stagger: .08, duration: .75 }, "-=.75");
-    }, ref);
-    return () => ctx.revert();
-  }, []);
-
   return (
-    <section ref={ref} id="home" className="overview-hero">
+    <section id="home" className="overview-hero">
       <motion.div className="overview-photo-wrap" style={{ y: photoY }} aria-hidden="true">
         <img className="overview-photo" src={heroLandscape} alt="" />
       </motion.div>
