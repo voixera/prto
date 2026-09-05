@@ -4,7 +4,6 @@ export default function JourneySection() {
   return (
     <section id="journey" className="section">
       <div className="section-index">
-        <span className="index-num">04</span>
         <span>JOURNEY</span>
       </div>
 
@@ -30,8 +29,8 @@ export default function JourneySection() {
         ))}
       </div>
 
-      <div style={{ marginTop: 64 }}>
-        <h3 className="section-title" style={{ fontSize: '1.75rem' }}>Education & Self-Learning</h3>
+      <div className="journey-education">
+        <h3 className="journey-subtitle">Education &amp; Self-Learning</h3>
         <div className="education-grid">
           {profile.education.map((item) => (
             <Reveal key={item.title} delay={100} className="education-item-reveal">

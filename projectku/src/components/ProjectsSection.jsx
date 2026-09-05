@@ -41,7 +41,6 @@ function ProjectFeature({ project, index }) {
   return (
     <article ref={stageRef} className={`project-feature feature-${index + 1}`}>
       <Reveal className="project-feature-top" delay={index * 70}>
-        <span className="project-feature-number">{String(index + 1).padStart(2, "0")}</span>
         <span>PROJECT</span>
         <span>{project.tags?.join(" / ")}</span>
       </Reveal>

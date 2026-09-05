@@ -27,7 +27,7 @@ export default function StackSection() {
   return (
     <section id="stack" className="stack-section section">
       <Reveal>
-        <div className="section-label"><span className="section-label-num">02</span> THE TOOLKIT</div>
+        <div className="section-label">THE TOOLKIT</div>
       </Reveal>
       <div className="stack-intro">
         <Reveal delay={80}><h2 className="section-title">Tools for<br /><em>making.</em></h2></Reveal>

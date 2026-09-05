@@ -20,7 +20,6 @@ export default function AboutSection() {
         <div className="about-content">
           <Reveal>
             <div className="section-label">
-              <span className="section-label-num">01</span>
               WHO I AM
             </div>
           </Reveal>

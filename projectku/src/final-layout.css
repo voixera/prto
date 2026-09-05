@@ -1,0 +1,23 @@
+/* Final composition pass: compact project media, visible archive paths, ordered toolkit. */
+.project-intro { padding-bottom: 45px !important; }
+.project-intro h2 { margin-bottom: 22px !important; }
+.project-feature { padding: 34px 0 70px !important; }
+.project-feature-media { width: 88% !important; height: min(46vw, 520px) !important; min-height: 280px !important; }
+.feature-1 .project-feature-media { margin-left: 0 !important; }
+.feature-2 .project-feature-media { margin-left: 12% !important; }
+.feature-3 .project-feature-media { width: 92% !important; margin-left: 4% !important; }
+.feature-4 .project-feature-media { width: 82% !important; margin-left: 18% !important; }
+.project-feature-copy { width: min(520px, 64%) !important; margin: 20px 0 0 auto !important; }
+.feature-2 .project-feature-copy { margin-left: 0 !important; }
+.project-feature-copy h3 { font-size: clamp(2.4rem, 4.8vw, 5rem) !important; }
+.project-archive-links { padding-top: 34px !important; padding-bottom: 90px !important; }
+.journey-subtitle { margin-top: 65px; font: 600 clamp(2rem, 4vw, 4rem)/.95 var(--display); letter-spacing: -.08em; }
+.tech-orbit.tech-list { display: grid !important; grid-template-columns: repeat(3, 1fr) !important; gap: 0 6vw !important; height: auto !important; min-height: 0 !important; margin: 28px 0 0 !important; }
+.tech-orbit.tech-list .tech-orbit-center { display: none !important; }
+.tech-orbit.tech-list .tech-list-item { position: static !important; display: flex !important; transform: none !important; padding: 14px 0 !important; border-bottom: 1px solid rgba(241,239,232,.1); }
+.tech-orbit.tech-list .tech-list-item:nth-child(n) { top: auto; right: auto; bottom: auto; left: auto; }
+@media (max-width: 800px) {
+  .project-feature-media,.feature-2 .project-feature-media,.feature-3 .project-feature-media,.feature-4 .project-feature-media { width: 100% !important; height: 56vw !important; min-height: 220px !important; margin-left: 0 !important; }
+  .project-feature-copy,.feature-2 .project-feature-copy { width: 90% !important; margin: 18px 0 0 auto !important; }
+  .tech-orbit.tech-list { display: grid !important; grid-template-columns: repeat(2, minmax(0,1fr)) !important; gap: 0 20px !important; }
+}

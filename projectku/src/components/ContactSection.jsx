@@ -8,8 +8,7 @@ export default function ContactSection() {
     <Reveal className="contact-section-reveal" as="section" id="contact" variant="fade" duration={500}>
       <div className="contact-wrapper">
         <div className="section-index" style={{ justifyContent: 'center' }}>
-          <span className="index-num">05</span>
-          <span>INITIATE CONTACT</span>
+           <span>INITIATE CONTACT</span>
         </div>
 
         <h2 className="contact-hero-text">
