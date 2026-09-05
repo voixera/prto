@@ -9,7 +9,6 @@ import JourneySection from "../components/JourneySection";
 import ContactSection from "../components/ContactSection";
 import SiteFooter from "../components/SiteFooter";
 import landscapeBackground from "../../gallery/download.jpg";
-import GalleryInterlude from "../components/GalleryInterlude";
 
 export default function Home({ entered = true }) {
   useEffect(() => {
@@ -35,7 +34,6 @@ export default function Home({ entered = true }) {
       {/* Main content */}
       <main>
         <HeroSection />
-        <GalleryInterlude />
         <AboutSection />
         <StackSection />
         <ProjectsSection />
