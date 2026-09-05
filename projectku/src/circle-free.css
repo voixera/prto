@@ -77,6 +77,32 @@
 .overview-hero .overview-line {
   display: none !important;
 }
+.site-nav .nav-brand-vertical,
+.mobile-nav .mobile-nav-brand { display: none !important; }
+.site-nav { justify-content: center !important; }
+.site-nav .nav-links { gap: 38px; }
+.project-intro { max-width: 900px !important; padding-bottom: 85px !important; }
+.project-features { padding: 0 7vw !important; }
+.project-feature { min-height: 0 !important; padding: 40px 0 125px !important; }
+.project-feature-top { justify-content: space-between; margin-bottom: 24px; }
+.project-feature-media,
+.feature-2 .project-feature-media,
+.feature-3 .project-feature-media,
+.feature-4 .project-feature-media { width: 100% !important; height: min(62vw, 720px) !important; min-height: 360px !important; margin: 0 !important; border-radius: 0 0 34% 0 !important; }
+.feature-2 .project-feature-media { border-radius: 35% 0 0 0 !important; }
+.feature-3 .project-feature-media { border-radius: 0 30% 0 0 !important; }
+.feature-4 .project-feature-media { width: 88% !important; margin-left: 12% !important; border-radius: 0 0 0 38% !important; }
+.project-feature-copy,
+.feature-2 .project-feature-copy { position: relative !important; right: auto !important; left: auto !important; width: min(560px, 72%) !important; margin: -44px 0 0 auto !important; padding: 28px 0 0 35px !important; background: linear-gradient(90deg, transparent, var(--bg) 14%) !important; }
+.project-feature-copy h3 { font-size: clamp(2.8rem, 6vw, 6.5rem) !important; }
+.project-archive-links { max-width: 1100px; margin: auto; }
+.tech-orbit-center { border: 0 !important; }
+@media (max-width:800px) {
+  .site-nav { display: none !important; }
+  .mobile-nav { justify-content: flex-end !important; }
+  .project-feature-media,.feature-2 .project-feature-media,.feature-3 .project-feature-media,.feature-4 .project-feature-media { width:100% !important; height:64vw !important; min-height:245px !important; margin:0 !important; border-radius:0 0 28% 0 !important; }
+  .project-feature-copy,.feature-2 .project-feature-copy { width:90% !important; margin:-28px 0 0 auto !important; padding:24px 0 0 20px !important; }
+}
 
 .screen-loader {
   display: grid !important;

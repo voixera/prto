@@ -1,15 +1,24 @@
+import { useLayoutEffect, useRef } from "react";
+import gsap from "gsap";
 import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 import { profile } from "../content/profile";
 import { WEB_PROJECTS, isExternalHref } from "../content/site";
 import Reveal from "./Reveal";
 
 function ProjectFeature({ project, index }) {
+  const mediaRef = useRef(null);
   const { scrollYProgress } = useScroll();
   const imageY = useSpring(useTransform(scrollYProgress, [index * .1, .55 + index * .06], [35, -35]), { stiffness: 65, damping: 22 });
   const link = project.links?.[0];
+  useLayoutEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.from(mediaRef.current, { clipPath: "inset(0 18% 18% 0)", duration: 1.1, ease: "power4.out", scrollTrigger: undefined });
+    }, mediaRef);
+    return () => ctx.revert();
+  }, []);
   return <article className={`project-feature feature-${index + 1}`}>
     <div className="project-feature-top"><span>PROJECT {String(index + 1).padStart(2, "0")}</span><span>{project.tags?.join(" / ")}</span></div>
-    <motion.div className="project-feature-media" style={{ y: imageY }} whileHover={{ scale: 1.02 }}>
+    <motion.div ref={mediaRef} className="project-feature-media" style={{ y: imageY }} whileHover={{ scale: 1.02 }}>
       {project.thumbnail && <img src={project.thumbnail} alt={project.title} loading="lazy" />}
       <span className="project-feature-caption">{project.showcase?.[0] || "Web experience"}</span>
     </motion.div>

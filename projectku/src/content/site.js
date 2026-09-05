@@ -37,6 +37,7 @@ export const NAV_ITEMS = [
   { label: "Home", href: "#home" },
   { label: "About", href: "#about" },
   { label: "Project", href: "#project" },
+  { label: "Journey", href: "#journey" },
   { label: "Contact", href: "#contact" },
 ];
 

@@ -54,10 +54,7 @@ export default function SiteHeader() {
       {/* ── Desktop vertical nav ── */}
       <nav className={`site-nav ${scrolled ? "is-scrolled" : ""}`} aria-label="Primary navigation">
         {/* Brand mark */}
-        <a href="#home" className="nav-brand-vertical" aria-label="Back to top">
-          <div className="nav-brand-mark">AF<span aria-hidden="true">/</span></div>
-          <div className="nav-status-dot" title="Available for projects" />
-        </a>
+        <a href="#home" className="nav-brand-vertical" aria-label="Back to top" />
 
         {/* Section links */}
         <ul className="nav-links" role="list">
@@ -110,7 +107,7 @@ export default function SiteHeader() {
 
       {/* ── Mobile nav ── */}
       <div className={`mobile-nav ${scrolled ? "is-scrolled" : ""}`} role="banner">
-        <span className="mobile-nav-brand">AF</span>
+        <span className="mobile-nav-brand" aria-hidden="true" />
         <button
           className="mobile-nav-toggle"
           onClick={() => setMobileOpen(v => !v)}
