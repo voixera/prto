@@ -1,8 +1,12 @@
-import { motion } from "framer-motion";
+import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 import { profile } from "../content/profile";
 import { HeroLandscape } from "./LandscapeSVG";
+import { Arc, FloatingBadge, FloatingOrb, OrganicShape, Ring } from "./ArtShapes";
 
 export default function HeroSection() {
+  const { scrollY } = useScroll();
+  const artY = useSpring(useTransform(scrollY, [0, 700], [0, 110]), { stiffness: 80, damping: 24 });
+  const titleY = useTransform(scrollY, [0, 600], [0, -28]);
   const nameParts = profile.name.split(" ");
   const firstName = nameParts[0]; // Audrey
   const lastName = nameParts.slice(1).join(" "); // Faisal Riza
@@ -10,7 +14,7 @@ export default function HeroSection() {
   return (
     <section id="home" className="hero-wrapper">
       {/* Left: editorial content */}
-      <div className="hero-content">
+      <motion.div className="hero-content" style={{ y: titleY }}>
         {/* Availability */}
         <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: .15 }} className="hero-availability">
           <span className="hero-availability-dot" aria-hidden="true" />
@@ -76,20 +80,25 @@ export default function HeroSection() {
             <span className="hero-meta-value">UT Student</span>
           </div>
         </motion.div>
-      </div>
+      </motion.div>
 
       {/* Right: cinematic landscape */}
-      <div className="hero-visual" aria-hidden="true">
+      <motion.div className="hero-visual" aria-hidden="true" style={{ y: artY }}>
         <div className="hero-art">
           <HeroLandscape style={{ width: "100%", height: "100%" }} />
         </div>
+        <OrganicShape className="hero-shape" size={230} color="rgba(216,255,101,.86)" rotate={18} />
+        <Ring className="hero-ring" size={310} color="rgba(241,239,232,.42)" />
+        <Arc className="hero-arc" size={150} color="var(--accent)" />
+        <FloatingOrb className="hero-orb" size={12} />
+        <FloatingBadge className="hero-badge">BUILD / PLAY / REPEAT</FloatingBadge>
 
         {/* Coordinate decoration */}
         <span className="hero-coord">
           07°15'S / 112°44'E<br />
           JAWA TIMUR
         </span>
-      </div>
+      </motion.div>
 
       {/* Scroll cue — centered below */}
       <div

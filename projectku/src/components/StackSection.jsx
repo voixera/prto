@@ -1,4 +1,5 @@
-import { useState, useRef } from "react";
+import { useState } from "react";
+import { motion } from "framer-motion";
 import { STACK_GROUPS, TECH_ASSETS } from "../content/site";
 import Reveal from "./Reveal";
 
@@ -22,7 +23,6 @@ const techDescriptions = {
 
 export default function StackSection() {
   const [activeTech, setActiveTech] = useState(null);
-  const stripRef = useRef(null);
 
   return (
     <section id="stack" style={{ padding: 0, paddingTop: "clamp(80px, 10vh, 140px)", paddingBottom: "clamp(80px, 10vh, 140px)" }}>
@@ -53,8 +53,9 @@ export default function StackSection() {
 
       {/* Horizontal editorial tech strip */}
       <Reveal delay={160}>
-        <div className="stack-strip-wrapper" role="list" aria-label="Technology stack">
-          <div className="stack-strip" ref={stripRef}>
+        <div className="stack-field" role="list" aria-label="Technology stack">
+          <motion.div className="stack-core" animate={{ rotate: 360 }} transition={{ duration: 35, repeat: Infinity, ease: "linear" }} aria-hidden="true">TOOLS<br />I USE</motion.div>
+          <div className="stack-strip">
             {STACK_GROUPS.map((group) => (
               <div key={group.id} className="stack-group" role="group" aria-label={group.label}>
                 <div className="stack-group-label">{group.label}</div>
@@ -63,14 +64,11 @@ export default function StackSection() {
                     const imgSrc = TECH_ASSETS[tech];
                     const isActive = activeTech === tech;
                     return (
-                      <div
+                      <motion.div
                         key={tech}
                         className="stack-tech-item"
                         role="listitem"
-                        style={{
-                          background: isActive ? "rgba(200, 130, 74, 0.05)" : undefined,
-                          borderBottom: isActive ? "1px solid var(--accent-warm)" : "1px solid transparent",
-                        }}
+                        animate={{ scale: isActive ? 1.06 : 1, y: isActive ? -4 : 0 }}
                         onMouseEnter={() => setActiveTech(tech)}
                         onMouseLeave={() => setActiveTech(null)}
                         onFocus={() => setActiveTech(tech)}
@@ -103,7 +101,7 @@ export default function StackSection() {
                           </div>
                         )}
                         <span className="stack-tech-name">{tech}</span>
-                      </div>
+                      </motion.div>
                     );
                   })}
                 </div>

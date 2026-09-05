@@ -28,7 +28,14 @@ export default function SiteHeader() {
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
     return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useEffect(() => {
+    const close = (event) => event.key === "Escape" && setMobileOpen(false);
+    window.addEventListener("keydown", close);
+    return () => window.removeEventListener("keydown", close);
   }, []);
 
   // Lock body scroll when mobile menu open

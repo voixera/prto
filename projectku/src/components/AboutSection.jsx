@@ -1,15 +1,19 @@
 import { profile } from "../content/profile";
 import { AboutLandscape } from "./LandscapeSVG";
 import Reveal from "./Reveal";
+import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 
 export default function AboutSection() {
+  const { scrollYProgress } = useScroll();
+  const imageY = useSpring(useTransform(scrollYProgress, [0.12, 0.42], [-30, 35]), { stiffness: 70, damping: 22 });
+  const titleX = useTransform(scrollYProgress, [0.12, 0.4], [0, 18]);
   return (
     <section id="about" style={{ padding: 0 }}>
       {/* Full-bleed grid layout */}
       <div className="about-grid">
         {/* Visual side */}
         <div className="about-visual" aria-hidden="true">
-          <AboutLandscape />
+          <motion.div className="about-art" style={{ y: imageY }}><AboutLandscape /></motion.div>
         </div>
 
         {/* Editorial content side */}
@@ -24,10 +28,10 @@ export default function AboutSection() {
           {/* Identity block */}
           <Reveal delay={80}>
             <div className="about-identity">
-              <h2 className="about-name">
+              <motion.h2 className="about-name" style={{ x: titleX }}>
                 Audrey<br />
                 <em>Faisal Riza</em>
-              </h2>
+              </motion.h2>
 
               {/* Stats row: Age / Location / Experience */}
               <div className="about-stats-row">

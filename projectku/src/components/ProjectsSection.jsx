@@ -1,49 +1,20 @@
-import { useEffect, useRef } from "react";
-import gsap from "gsap";
+import { motion, useSpring, useMotionValue } from "framer-motion";
 import { profile } from "../content/profile";
 import { WEB_PROJECTS, DISCORD_PROJECT, ROBLOX_PROJECT, isExternalHref } from "../content/site";
 import Reveal from "./Reveal";
 
 function TiltProjectCard({ project, index }) {
-  const cardRef = useRef(null);
-
-  useEffect(() => {
-    const el = cardRef.current;
-    if (!el) return;
-
-    const handleMouseMove = (e) => {
-      const rect = el.getBoundingClientRect();
-      const x = e.clientX - rect.left - rect.width / 2;
-      const y = e.clientY - rect.top - rect.height / 2;
-
-      gsap.to(el, {
-        rotateY: x / 25,
-        rotateX: -y / 25,
-        ease: "power2.out",
-        duration: 0.4
-      });
-    };
-
-    const handleMouseLeave = () => {
-      gsap.to(el, {
-        rotateY: 0,
-        rotateX: 0,
-        ease: "power2.out",
-        duration: 0.6
-      });
-    };
-
-    el.addEventListener("mousemove", handleMouseMove);
-    el.addEventListener("mouseleave", handleMouseLeave);
-
-    return () => {
-      el.removeEventListener("mousemove", handleMouseMove);
-      el.removeEventListener("mouseleave", handleMouseLeave);
-    };
-  }, []);
+  const x = useSpring(useMotionValue(0), { stiffness: 180, damping: 22 });
+  const y = useSpring(useMotionValue(0), { stiffness: 180, damping: 22 });
+  const move = (event) => {
+    const rect = event.currentTarget.getBoundingClientRect();
+    x.set((event.clientX - rect.left - rect.width / 2) / 45);
+    y.set(-(event.clientY - rect.top - rect.height / 2) / 45);
+  };
+  const reset = () => { x.set(0); y.set(0); };
 
   return (
-    <article ref={cardRef} className="project-card tilt-card">
+    <motion.article style={{ rotateX: y, rotateY: x }} onMouseMove={move} onMouseLeave={reset} className={`project-card project-${index + 1}`}>
       <div className="project-media">
         {project.thumbnail ? (
           <img src={project.thumbnail} alt={project.title} loading="lazy" />
@@ -79,7 +50,7 @@ function TiltProjectCard({ project, index }) {
           </a>
         )}
       </div>
-    </article>
+    </motion.article>
   );
 }
 
@@ -101,7 +72,7 @@ export default function ProjectsSection() {
       </Reveal>
 
       <Reveal as="div" className="projects-list-reveal" variant="fade" duration={500} delay={200}>
-        <div className="projects-list">
+        <div className="projects-list showcase-stage">
           {WEB_PROJECTS.map((project, index) => (
             <TiltProjectCard key={project.title} project={project} index={index} />
           ))}
@@ -110,7 +81,7 @@ export default function ProjectsSection() {
 
       {DISCORD_PROJECT && (
         <Reveal as="div" className="discord-section-reveal" variant="fade" duration={500} delay={300}>
-          <div style={{ marginTop: 64 }}>
+            <div className="sub-showcase">
             <div className="section-index">
               <span className="index-num">03.B</span>
               <span>BOT SYSTEMS</span>
@@ -143,7 +114,7 @@ export default function ProjectsSection() {
 
       {ROBLOX_PROJECT && (
         <Reveal as="div" className="roblox-section-reveal" variant="fade" duration={500} delay={400}>
-          <div style={{ marginTop: 64 }}>
+            <div className="sub-showcase">
             <div className="section-index">
               <span className="index-num">03.C</span>
               <span>AUTOMATION</span>
