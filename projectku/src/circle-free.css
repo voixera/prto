@@ -120,6 +120,7 @@
 }
 .nav-links a.active .nav-link-line,
 .nav-links a:hover .nav-link-line { transform: scaleX(1); }
+.scroll-progress,.cursor-dot,.cursor-ring,.cursor-label { display: none !important; }
 
 .tech-orbit {
   position: relative;
@@ -158,8 +159,8 @@
 .tech-orbit-item:hover,.tech-orbit-item:focus-visible,.tech-orbit-item.is-active { color: var(--accent); outline: none; }
 .tech-orbit-item img { width: 30px; height: 30px; object-fit: contain; filter: grayscale(1); opacity: .7; transition: filter .25s, opacity .25s, transform .35s var(--ease); }
 .tech-orbit-item:hover img,.tech-orbit-item:focus-visible img,.tech-orbit-item.is-active img { filter: none; opacity: 1; transform: rotate(-10deg) scale(1.15); }
-.tech-orbit-item-1{top:7%;left:38%}.tech-orbit-item-2{top:14%;left:67%}.tech-orbit-item-3{top:34%;right:5%}.tech-orbit-item-4{top:59%;right:2%}.tech-orbit-item-5{bottom:9%;right:19%}.tech-orbit-item-6{bottom:2%;left:42%}.tech-orbit-item-7{bottom:12%;left:14%}.tech-orbit-item-8{top:57%;left:2%}.tech-orbit-item-9{top:32%;left:4%}.tech-orbit-item-10{top:14%;left:13%}.tech-orbit-item-11{bottom:21%;left:29%}.tech-orbit-item-12{bottom:30%;right:29%}.tech-orbit-item-13{top:23%;right:28%}.tech-orbit-item-14{top:42%;left:25%}
-@media (max-width:800px){.tech-orbit{height:520px;min-height:0;margin:20px 0 0}.tech-orbit-center{display:none}.tech-orbit-item{padding:7px 0;font-size:.62rem}.tech-orbit-item-1{top:2%;left:2%}.tech-orbit-item-2{top:2%;left:auto;right:2%}.tech-orbit-item-3{top:15%;right:2%}.tech-orbit-item-4{top:28%;right:2%}.tech-orbit-item-5{top:41%;right:2%;bottom:auto}.tech-orbit-item-6{top:54%;right:2%;bottom:auto;left:auto}.tech-orbit-item-7{top:67%;right:2%;bottom:auto;left:auto}.tech-orbit-item-8{top:80%;right:2%;bottom:auto;left:auto}.tech-orbit-item-9{top:15%;left:2%}.tech-orbit-item-10{top:28%;left:2%}.tech-orbit-item-11{top:41%;left:2%;bottom:auto}.tech-orbit-item-12{top:54%;left:2%;bottom:auto;right:auto}.tech-orbit-item-13{top:67%;left:2%}.tech-orbit-item-14{top:80%;left:2%}}
+.tech-orbit-item-1{top:7%;left:10%}.tech-orbit-item-2{top:3%;left:39%}.tech-orbit-item-3{top:7%;left:68%}.tech-orbit-item-4{top:25%;left:84%}.tech-orbit-item-5{top:48%;left:88%}.tech-orbit-item-6{top:71%;left:75%}.tech-orbit-item-7{top:86%;left:51%}.tech-orbit-item-8{top:86%;left:27%}.tech-orbit-item-9{top:71%;left:8%}.tech-orbit-item-10{top:48%;left:2%}.tech-orbit-item-11{top:25%;left:8%}.tech-orbit-item-12{top:15%;left:25%}.tech-orbit-item-13{top:38%;left:69%}
+@media (max-width:800px){.tech-orbit{height:auto;min-height:0;margin:20px 0 0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 24px}.tech-orbit-center{display:none}.tech-orbit-item{position:static!important;padding:12px 0;font-size:.62rem;transform:none!important}}
 
 .overview-hero .hero-art svg,
 .about-art > svg { display: none !important; }

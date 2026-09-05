@@ -50,7 +50,6 @@ export default function SiteHeader() {
   return (
     <>
       {/* ── Scroll progress line ── */}
-      <div className="scroll-progress" aria-hidden="true" />
 
       {/* ── Desktop vertical nav ── */}
       <nav className={`site-nav ${scrolled ? "is-scrolled" : ""}`} aria-label="Primary navigation">

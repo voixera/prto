@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import CustomCursor from "../components/CustomCursor";
 import SiteHeader from "../components/SiteHeader";
 import HeroSection from "../components/HeroSection";
 import AboutSection from "../components/AboutSection";
@@ -26,9 +25,6 @@ export default function Home({ entered = true }) {
 
   return (
     <div className="page" style={{ "--landscape-background": `url("${landscapeBackground}")` }}>
-      {/* Custom cursor (desktop only) */}
-      <CustomCursor />
-
       {/* Fixed navigation */}
       <SiteHeader />
       {/* Main content */}
