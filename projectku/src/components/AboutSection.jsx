@@ -31,6 +31,7 @@ export default function AboutSection() {
     </aside>
     <div className="about-story-copy">
       <h2 className="about-story-title">Hello I'm <em>Faisal.</em></h2>
+      <div className="about-story-block"><span className="about-story-label">PROFILE</span><div className="about-story-content"><RevealText>I enjoy making things that are both useful and fun, from Discord bots to clean, interactive interfaces.</RevealText><RevealText>My approach stays focused on thoughtful UI, performance, and the details that make digital experiences feel good to use.</RevealText></div></div>
       <div className="about-story-block about-currently"><span className="about-story-label">CURRENTLY</span><div className="about-story-content"><RevealText>Exploring animation, WebGL, and interactive web experiences.</RevealText></div></div>
     </div>
   </section>;
