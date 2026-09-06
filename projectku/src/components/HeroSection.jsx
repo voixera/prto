@@ -1,3 +1,4 @@
+import { useRef } from "react";
 import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 import { profile } from "../content/profile";
 import heroLandscape from "../../gallery/download.jpg";
@@ -6,15 +7,17 @@ import { FloatingBadge } from "./ArtShapes";
 const reveal = { hidden: { opacity: 0, y: 42 }, visible: { opacity: 1, y: 0 } };
 
 export default function HeroSection() {
-  const { scrollYProgress } = useScroll();
-  const photoY = useSpring(useTransform(scrollYProgress, [0, 0.3], [0, 100]), { stiffness: 70, damping: 24 });
-  const photoScale = useSpring(useTransform(scrollYProgress, [0, 0.3], [1.04, 1.15]), { stiffness: 70, damping: 24 });
-  const photoFilter = useTransform(scrollYProgress, [0, 0.3], [0, 3], (value) => `blur(${value}px)`);
+  const ref = useRef(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
+  const photoY = useSpring(useTransform(scrollYProgress, [0, 1], [0, 140]), { stiffness: 70, damping: 24 });
+  const photoScale = useSpring(useTransform(scrollYProgress, [0, 1], [1.04, 1.28]), { stiffness: 70, damping: 24 });
+  const photoOpacity = useTransform(scrollYProgress, [0, 1], [1, .58]);
+  const photoFilter = useTransform(scrollYProgress, [0, 1], [0, 2], (value) => `blur(${value}px)`);
   const words = profile.name.split(" ");
 
   return (
-    <section id="home" className="overview-hero">
-      <motion.div className="overview-photo-wrap" style={{ y: photoY, scale: photoScale, filter: photoFilter }} aria-hidden="true">
+    <section ref={ref} id="home" className="overview-hero">
+      <motion.div className="overview-photo-wrap" style={{ y: photoY, scale: photoScale, opacity: photoOpacity, filter: photoFilter }} aria-hidden="true">
         <img className="overview-photo" src={heroLandscape} alt="" />
       </motion.div>
       <div className="overview-wash" aria-hidden="true" />

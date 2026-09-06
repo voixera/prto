@@ -1,4 +1,4 @@
-.about-story { position: relative; display: grid; grid-template-columns: 260px minmax(0, 680px); justify-content: center; gap: clamp(60px, 9vw, 150px); min-height: 720px; padding: 150px 7vw 160px; overflow: hidden; }
+.about-story { position: relative; z-index: 2; display: grid; grid-template-columns: 260px minmax(0, 680px); justify-content: center; gap: clamp(60px, 9vw, 150px); min-height: 720px; margin-top: -13vh; padding: calc(150px + 13vh) 7vw 160px; overflow: hidden; background: linear-gradient(180deg, rgba(16,17,15,0) 0, rgba(16,17,15,.7) 130px, rgba(16,17,15,.9) 300px, transparent 520px); }
 .about-identity { align-self: start; padding-top: 36px; }
 .about-story-portrait-wrap { position: relative; height: 230px; }
 .about-story-portrait { position: absolute; top: 0; left: 0; width: 210px; height: 210px; overflow: visible; border-radius: 50%; transform-style: preserve-3d; }
@@ -24,4 +24,4 @@
 .about-story-line { display: block; color: var(--muted); font: 400 1rem/1.75 var(--sans); }
 .about-story-block .about-story-line + .about-story-line { margin-top: 14px; }
 .about-currently { margin-top: 30px; }
-@media (max-width: 800px) { .about-story { display: block; min-height: 0; padding: 110px 20px 100px; }.about-identity { padding-top: 0; }.about-story-portrait-wrap { width: 210px; height: 230px; margin: 0 auto; }.about-story-portrait { left: 0; }.about-story-copy { padding-top: 65px; }.about-story-title { margin: 18px 0 48px; font-size: clamp(2.8rem, 15vw, 5rem); }.about-story-block { grid-template-columns: 1fr; gap: 14px; }.about-currently { margin-top: 20px; }.about-facts { max-width: 320px; } }
+@media (max-width: 800px) { .about-story { display: block; min-height: 0; margin-top: -10vh; padding: calc(110px + 10vh) 20px 100px; background: linear-gradient(180deg, rgba(16,17,15,0) 0, rgba(16,17,15,.78) 100px, rgba(16,17,15,.94) 240px, transparent 440px); }.about-identity { padding-top: 0; }.about-story-portrait-wrap { width: 210px; height: 230px; margin: 0 auto; }.about-story-portrait { left: 0; }.about-story-copy { padding-top: 65px; }.about-story-title { margin: 18px 0 48px; font-size: clamp(2.8rem, 15vw, 5rem); }.about-story-block { grid-template-columns: 1fr; gap: 14px; }.about-currently { margin-top: 20px; }.about-facts { max-width: 320px; } }
