@@ -32,6 +32,7 @@ export default function AboutSection() {
      <div className="about-story-portrait-wrap">
       <motion.div className="about-story-portrait" style={{ y: imageY, scale: imageScale, rotateX: pointerY, rotateY: pointerX }} onPointerMove={(event) => { const box = event.currentTarget.getBoundingClientRect(); pointerX.set((event.clientX - box.left - box.width / 2) / 150); pointerY.set(-(event.clientY - box.top - box.height / 2) / 150); }} onPointerLeave={() => { pointerX.set(0); pointerY.set(0); }}>
          <img src={profileImage} alt="Faisal" loading="lazy" />
+         <span className="about-online-status"><i aria-hidden="true" />Online</span>
       </motion.div>
     </div>
     <div className="about-story-copy">
