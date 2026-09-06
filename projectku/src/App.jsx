@@ -6,6 +6,7 @@ import RobloxScripts from "./Pages/RobloxScripts";
 import useHashRoute from "./hooks/useHashRoute";
 import LenisProvider from "./components/LenisProvider";
 import useReducedMotion from "./hooks/useReducedMotion";
+import GlobalAtmosphere from "./components/GlobalAtmosphere";
 
 export default function App() {
   const route = useHashRoute();
@@ -22,6 +23,7 @@ export default function App() {
 
   return (
     <LenisProvider enabled={!reduced && entered && route === "home"}>
+      <GlobalAtmosphere />
       {route === "home" && !entered ? (
         <WelcomeScreen entered={entered} onEnter={() => setEntered(true)} />
       ) : null}
