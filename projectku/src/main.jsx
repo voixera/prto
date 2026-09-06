@@ -11,6 +11,7 @@ import "./stack-layout.css";
 import "./journey-section.css";
 import "./global-environment.css";
 import "./tech-stack.css";
+import "./about-story.css";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
