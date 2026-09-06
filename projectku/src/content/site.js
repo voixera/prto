@@ -45,6 +45,8 @@ export const TECH_ASSETS = {
   "VS Code": "https://cdn.simpleicons.org/visualstudiocode/007ACC",
   "Figma": "https://cdn.simpleicons.org/figma/F24E1E",
   "AWS": "https://cdn.simpleicons.org/amazonaws/FF9900",
+  "Framer Motion": "https://cdn.simpleicons.org/framer/0055FF",
+  "GSAP": "https://cdn.simpleicons.org/greensock/88CE02",
 };
 
 export const NAV_ITEMS = [
@@ -69,7 +71,7 @@ export const STACK_GROUPS = [
   {
     id: "systems",
     label: "Systems & Tools",
-    items: ["Swift", "Kotlin", "Docker", "Git", "VS Code", "Figma", "AWS", "Vercel", "Lua"],
+    items: ["Swift", "Kotlin", "Docker", "Git", "VS Code", "Figma", "AWS", "Vercel", "Lua", "Framer Motion", "GSAP"],
   },
 ];
 
