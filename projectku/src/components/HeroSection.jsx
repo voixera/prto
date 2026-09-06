@@ -29,7 +29,7 @@ export default function HeroSection() {
         <div className="overview-actions"><a href="#project" className="overview-link" data-cursor-label="EXPLORE">Explore projects <span>↘</span></a><a href={profile.discordInvite} target="_blank" rel="noreferrer" className="overview-link overview-link-muted">{profile.discordHandle}</a></div>
       </motion.div>
       <motion.div className="overview-meta" variants={reveal} initial="hidden" animate="visible" transition={{ delay: .75, duration: .8 }}>
-        <span>SCROLL TO EXPLORE</span><span>{profile.location}</span><span>{new Date().getFullYear()} / AVAILABLE</span>
+         <span>{profile.location}</span><span>{new Date().getFullYear()} / AVAILABLE</span>
       </motion.div>
     </section>
   );

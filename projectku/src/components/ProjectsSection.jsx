@@ -60,7 +60,6 @@ export default function ProjectsSection() {
     </div>
     <div className="project-collage-stage">
       <div className="collage-grid-lines" aria-hidden="true" />
-      <span className="collage-stage-note">SCROLL TO SURF / 04</span>
       {WEB_PROJECTS.slice(0, 4).map((project, index) => <CollageProject key={project.title} project={project} index={index} />)}
     </div>
     <div className="project-collage-footer"><span>WEB / INTERFACE / SYSTEM</span><a href="#/discord-bots">More systems <span>↗</span></a><a href="#/roblox-scripts">Lua archive <span>↗</span></a></div>

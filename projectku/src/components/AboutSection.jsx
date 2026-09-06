@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { AnimatePresence, motion, useMotionValue, useScroll, useSpring, useTransform } from "framer-motion";
 import { profile } from "../content/profile";
-import aboutLandscape from "../../gallery/download (1).jpg";
+import profileImage from "../../gallery/profil.jpeg";
 
 const storyLines = [
   "I'm an Information System student",
@@ -29,15 +29,13 @@ export default function AboutSection() {
 
   return <section ref={ref} id="about" className="about-story">
     <div className="about-story-index">01 <span>/ ABOUT</span></div>
-    <div className="about-story-portrait-wrap">
+     <div className="about-story-portrait-wrap">
       <motion.div className="about-story-portrait" style={{ y: imageY, scale: imageScale, rotateX: pointerY, rotateY: pointerX }} onPointerMove={(event) => { const box = event.currentTarget.getBoundingClientRect(); pointerX.set((event.clientX - box.left - box.width / 2) / 150); pointerY.set(-(event.clientY - box.top - box.height / 2) / 150); }} onPointerLeave={() => { pointerX.set(0); pointerY.set(0); }}>
-        <img src={aboutLandscape} alt="Mountain landscape" loading="lazy" />
-        <span className="about-portrait-mark">AF / 01</span>
+         <img src={profileImage} alt="Faisal" loading="lazy" />
       </motion.div>
     </div>
     <div className="about-story-copy">
-      <motion.p className="about-story-kicker" initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}>A LITTLE ABOUT ME</motion.p>
-      <h2 className="about-story-title"><span>Learning by</span><em>building.</em></h2>
+       <h2 className="about-story-title"><span>Hello I'm</span><em>Faisal.</em></h2>
       <p className="about-story-lede">{profile.tagline}</p>
       <div className="about-story-body">{storyLines.map((line, index) => <StoryLine key={line} index={index}>{line}</StoryLine>)}<span className="about-story-line"><span className="about-story-muted">Currently exploring animation, WebGL, and interactive web experiences.</span></span></div>
       <div className="about-facts">

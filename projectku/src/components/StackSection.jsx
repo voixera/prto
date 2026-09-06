@@ -28,7 +28,7 @@ export default function StackSection() {
   const sectionRef = useRef(null); const [active, setActive] = useState(null);
   useLayoutEffect(() => { const ctx = gsap.context(() => { gsap.fromTo(".stack-rail", { scaleX: 0 }, { scaleX: 1, duration: 1.2, ease: "power3.out", scrollTrigger: { trigger: sectionRef.current, start: "top 78%", once: true } }); }, sectionRef); return () => ctx.revert(); }, []);
   return <section ref={sectionRef} id="stack" className="stack-section section living-stack">
-     <div className="living-stack-heading"><div className="section-label">TOOLS I'VE USED</div><h2 className="section-title">Tools I've<br /><em>used.</em></h2><p>Chosen for the job. Kept close through the build.</p></div>
+     <div className="living-stack-heading"><h2 className="section-title">Tools I've<br /><em>used.</em></h2><p>Chosen for the job. Kept close through the build.</p></div>
     <div className="stack-rail" aria-hidden="true" />
     <div className="living-tech-field" role="list" aria-label="Technology stack">{stack.map((tech, index) => <TechItem key={tech} tech={tech} index={index} active={active} setActive={setActive} />)}</div>
     <div className="living-tech-detail" aria-live="polite"><AnimatePresence mode="wait" initial={false}>{active && <motion.div key={active} initial={{ opacity: 0, y: 7, filter: "blur(5px)" }} animate={{ opacity: 1, y: 0, filter: "blur(0px)" }} exit={{ opacity: 0, y: -7, filter: "blur(5px)" }} transition={{ duration: .25 }}><strong>{active}</strong><span>{descriptions[active]}</span></motion.div>}</AnimatePresence></div>
