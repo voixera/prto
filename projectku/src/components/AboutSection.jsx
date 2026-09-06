@@ -19,7 +19,7 @@ export default function AboutSection() {
       <div className="about-story-portrait-wrap">
         <motion.div className="about-story-portrait" style={{ y: imageY, scale: imageScale, rotateX: pointerY, rotateY: pointerX }} onPointerMove={(event) => { const box = event.currentTarget.getBoundingClientRect(); pointerX.set((event.clientX - box.left - box.width / 2) / 150); pointerY.set(-(event.clientY - box.top - box.height / 2) / 150); }} onPointerLeave={() => { pointerX.set(0); pointerY.set(0); }}>
           <img src={profileImage} alt="Faisal" loading="lazy" />
-          <span className="about-online-status"><i aria-hidden="true" />Available</span>
+          <span className="about-online-status" aria-label="Online"><i aria-hidden="true" /></span>
         </motion.div>
       </div>
       <div className="about-identity-details"><h2>{profile.name}</h2><p>{profile.role}</p><span>{profile.location}</span></div>
@@ -31,9 +31,9 @@ export default function AboutSection() {
     </aside>
     <div className="about-story-copy">
       <p className="about-story-eyebrow">Hello, I'm</p>
-      <h2 className="about-story-title">Here to build<br /><em>useful things.</em></h2>
-      <div className="about-story-block"><span className="about-story-label">PROFILE</span><RevealText>{profile.tagline}</RevealText><RevealText>I'm an Information System student and developer focused on modern UI, performance, and user experience.</RevealText></div>
-      <div className="about-story-block about-currently"><span className="about-story-label">CURRENTLY</span><RevealText>Exploring animation, WebGL, and interactive web experiences.</RevealText></div>
+      <h2 className="about-story-title">Hello I'm <em>Faisal.</em></h2>
+      <div className="about-story-block"><span className="about-story-label">PROFILE</span><div className="about-story-content"><RevealText>{profile.tagline}</RevealText><RevealText>I'm an Information System student and developer focused on modern UI, performance, and user experience.</RevealText></div></div>
+      <div className="about-story-block about-currently"><span className="about-story-label">CURRENTLY</span><div className="about-story-content"><RevealText>Exploring animation, WebGL, and interactive web experiences.</RevealText></div></div>
     </div>
   </section>;
 }
