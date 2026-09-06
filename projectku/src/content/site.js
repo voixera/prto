@@ -31,6 +31,20 @@ export const TECH_ASSETS = {
   "Vercel": vercelImg,
   "Three.js": threejsImg,
   "Git": gitImg,
+  "JavaScript": "https://cdn.simpleicons.org/javascript/F7DF1E",
+  "Vue.js": "https://cdn.simpleicons.org/vuedotjs/4FC08D",
+  "PowerShell": "https://cdn.simpleicons.org/powershell/5391FE",
+  "Python": "https://cdn.simpleicons.org/python/3776AB",
+  "PostgreSQL": "https://cdn.simpleicons.org/postgresql/4169E1",
+  "Redis": "https://cdn.simpleicons.org/redis/DC382D",
+  "C++": "https://cdn.simpleicons.org/cplusplus/00599C",
+  "MySQL": "https://cdn.simpleicons.org/mysql/4479A1",
+  "Swift": "https://cdn.simpleicons.org/swift/F05138",
+  "Kotlin": "https://cdn.simpleicons.org/kotlin/7F52FF",
+  "Docker": "https://cdn.simpleicons.org/docker/2496ED",
+  "VS Code": "https://cdn.simpleicons.org/visualstudiocode/007ACC",
+  "Figma": "https://cdn.simpleicons.org/figma/F24E1E",
+  "AWS": "https://cdn.simpleicons.org/amazonaws/FF9900",
 };
 
 export const NAV_ITEMS = [
@@ -45,17 +59,17 @@ export const STACK_GROUPS = [
   {
     id: "frontend",
     label: "Frontend",
-    items: ["HTML", "CSS", "React", "Next.js", "TypeScript", "Tailwind CSS"],
+    items: ["React", "Next.js", "Vue.js", "TypeScript", "JavaScript", "Tailwind CSS", "HTML", "CSS"],
   },
   {
     id: "backend",
     label: "Backend",
-    items: ["Node.js", "PHP", "SQL", "MongoDB", "Discord.js"],
+    items: ["Node.js", "PowerShell", "Python", "MongoDB", "PostgreSQL", "Redis", "C++", "MySQL", "Discord.js"],
   },
   {
     id: "systems",
     label: "Systems & Tools",
-    items: ["Lua", "Vercel"],
+    items: ["Swift", "Kotlin", "Docker", "Git", "VS Code", "Figma", "AWS", "Vercel", "Lua"],
   },
 ];
 
