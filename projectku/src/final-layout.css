@@ -1,6 +1,8 @@
 /* Final composition pass: compact project media, visible archive paths, ordered toolkit. */
 .project-intro { padding-bottom: 45px !important; }
 .overview-photo { opacity: .78 !important; filter: saturate(.78) contrast(1.02) !important; }
+.contact-section-reveal { background: linear-gradient(180deg, rgba(16,17,15,.38), rgba(16,17,15,.7)), var(--landscape-background) center / cover no-repeat !important; }
+.contact-section-reveal .contact-wrapper { background: linear-gradient(180deg, transparent, rgba(16,17,15,.28)); }
 .project-intro h2 { margin-bottom: 22px !important; }
 .project-feature { padding: 34px 0 70px !important; }
 .project-feature-media { width: 88% !important; height: min(46vw, 520px) !important; min-height: 280px !important; }

@@ -23,7 +23,7 @@ function CollageProject({ project, index }) {
 
   useLayoutEffect(() => {
     const context = gsap.context(() => {
-      gsap.fromTo(cardRef.current, { opacity: 0, scale: .82, y: 45, rotate: item.rotate - 3 }, { opacity: 1, scale: 1, y: 0, rotate: item.rotate, duration: 1.1, delay: index * .11, ease: "power4.out", scrollTrigger: { trigger: cardRef.current, start: "top 92%", once: true } });
+      gsap.fromTo(cardRef.current, { opacity: 0, scale: .82, y: 45 }, { opacity: 1, scale: 1, y: 0, duration: 1.1, delay: index * .11, ease: "power4.out", scrollTrigger: { trigger: cardRef.current, start: "top 92%", once: true } });
     }, cardRef);
     return () => context.revert();
   }, [index, item.rotate]);
@@ -36,6 +36,8 @@ function CollageProject({ project, index }) {
     rel={link && isExternalHref(link.href) ? "noreferrer" : undefined}
     data-cursor-label="VIEW"
     style={{ left: item.left, top: item.top, width: item.width, zIndex: item.depth, rotate: item.rotate, y: moveY, rotateX: y, rotateY: x }}
+    whileHover={{ scale: 1.035, zIndex: 20 }}
+    transition={{ type: "spring", stiffness: 180, damping: 22 }}
     onPointerMove={(event) => {
       const rect = event.currentTarget.getBoundingClientRect();
       x.set((event.clientX - rect.left - rect.width / 2) / 80);

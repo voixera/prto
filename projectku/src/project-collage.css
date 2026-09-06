@@ -7,7 +7,7 @@
 .project-collage-stage { position: relative; height: 100svh; min-height: 720px; margin: 0; overflow: hidden; background: #080908; perspective: 1200px; }
 .collage-grid-lines { position: absolute; inset: 0; opacity: .16; background: linear-gradient(90deg, transparent 0 24.9%, var(--line) 25% 25.1%, transparent 25.2% 49.9%, var(--line) 50% 50.1%, transparent 50.2% 74.9%, var(--line) 75% 75.1%, transparent 75.2%), linear-gradient(0deg, transparent 0 49.9%, var(--line) 50% 50.1%, transparent 50.2%); pointer-events: none; }
 .collage-stage-note { position: absolute; z-index: 6; right: 7vw; bottom: 8vh; color: var(--muted); font: 500 .6rem var(--mono); letter-spacing: .13em; text-transform: uppercase; }
-.collage-project { position: absolute; display: block; aspect-ratio: 1.38; overflow: hidden; opacity: 0; transform-style: preserve-3d; box-shadow: 18px 24px 0 -17px rgba(216,255,101,.2); transition: box-shadow .4s, filter .4s; }
+.collage-project { position: absolute; display: block; aspect-ratio: 1.38; overflow: hidden; opacity: 0; transform-style: preserve-3d; box-shadow: 18px 24px 0 -17px rgba(216,255,101,.2); transition: box-shadow .4s, filter .4s; will-change: transform; }
 .collage-project:hover { z-index: 10 !important; box-shadow: 26px 34px 0 -18px rgba(216,255,101,.42); filter: brightness(1.12); }
 .collage-project img { width: 100%; height: 100%; object-fit: cover; filter: saturate(.72); transition: transform .9s var(--ease), filter .6s; }
 .collage-project:hover img { transform: scale(1.06); filter: saturate(1); }
