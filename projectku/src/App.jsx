@@ -7,11 +7,16 @@ import useHashRoute from "./hooks/useHashRoute";
 import LenisProvider from "./components/LenisProvider";
 import useReducedMotion from "./hooks/useReducedMotion";
 import GlobalAtmosphere from "./components/GlobalAtmosphere";
+import faviconImage from "../gallery/FAVICON.png";
 
 export default function App() {
   const route = useHashRoute();
   const reduced = useReducedMotion();
   const [entered, setEntered] = useState(route !== "home");
+
+  useEffect(() => {
+    document.querySelectorAll('link[rel="icon"], link[rel="apple-touch-icon"]').forEach((link) => { link.href = faviconImage; });
+  }, []);
 
   useEffect(() => {
     if (route !== "home") setEntered(true);

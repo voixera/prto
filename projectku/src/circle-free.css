@@ -86,7 +86,7 @@
   display: none !important;
 }
 .site-nav .nav-brand-vertical,
-.mobile-nav .mobile-nav-brand { display: none !important; }
+.mobile-nav .mobile-nav-brand { display: flex !important; }
 .site-nav { justify-content: center !important; }
 .site-nav .nav-links { gap: 38px; }
 .project-intro { max-width: 900px !important; padding-bottom: 85px !important; }

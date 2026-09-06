@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { NAV_ITEMS } from "../content/site";
 import { profile } from "../content/profile";
 import { GithubBrandIcon, DiscordBrandIcon } from "./CustomIcons";
+import BrandMark from "./BrandMark";
 
 export default function SiteHeader({ archive = false }) {
   const [activeSection, setActiveSection] = useState(archive ? "project" : "home");
@@ -59,7 +60,7 @@ export default function SiteHeader({ archive = false }) {
       {/* ── Desktop vertical nav ── */}
       <nav className={`site-nav ${scrolled ? "is-scrolled" : ""}`} aria-label="Primary navigation">
         {/* Brand mark */}
-        <a href="#home" className="nav-brand-vertical" aria-label="Back to top" />
+        <a href="#home" className="nav-brand-vertical" aria-label="Back to top"><BrandMark size={30} /><span>AFR</span></a>
 
         {/* Section links */}
         <ul className="nav-links" role="list">
@@ -112,7 +113,7 @@ export default function SiteHeader({ archive = false }) {
 
       {/* ── Mobile nav ── */}
       <div className={`mobile-nav ${scrolled ? "is-scrolled" : ""}`} role="banner">
-        <span className="mobile-nav-brand" aria-hidden="true" />
+        <a href="#home" className="mobile-nav-brand" aria-label="Back to top"><BrandMark size={26} /><span>AFR</span></a>
         <button
           className="mobile-nav-toggle"
           onClick={() => setMobileOpen(v => !v)}
