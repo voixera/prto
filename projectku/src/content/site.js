@@ -14,6 +14,9 @@ import luaImg from "../assets/tech-stack/lua.jpg";
 import htmlImg from "../assets/tech-stack/html.jpg";
 import gitImg from "../assets/tech-stack/git.jpg";
 import cssImg from "../assets/tech-stack/css.jpg";
+import awsImg from "../../gallery/aws.webp";
+import powershellImg from "../../gallery/powershell.png";
+import vscodeImg from "../../gallery/vscode.webp";
 
 export const TECH_ASSETS = {
   "HTML": htmlImg,
@@ -33,7 +36,7 @@ export const TECH_ASSETS = {
   "Git": gitImg,
   "JavaScript": "https://cdn.simpleicons.org/javascript/F7DF1E",
   "Vue.js": "https://cdn.simpleicons.org/vuedotjs/4FC08D",
-  "PowerShell": "https://cdn.simpleicons.org/powershell/5391FE",
+  "PowerShell": powershellImg,
   "Python": "https://cdn.simpleicons.org/python/3776AB",
   "PostgreSQL": "https://cdn.simpleicons.org/postgresql/4169E1",
   "Redis": "https://cdn.simpleicons.org/redis/DC382D",
@@ -42,9 +45,9 @@ export const TECH_ASSETS = {
   "Swift": "https://cdn.simpleicons.org/swift/F05138",
   "Kotlin": "https://cdn.simpleicons.org/kotlin/7F52FF",
   "Docker": "https://cdn.simpleicons.org/docker/2496ED",
-  "VS Code": "https://cdn.simpleicons.org/visualstudiocode/007ACC",
+  "VS Code": vscodeImg,
   "Figma": "https://cdn.simpleicons.org/figma/F24E1E",
-  "AWS": "https://cdn.simpleicons.org/amazonaws/FF9900",
+  "AWS": awsImg,
   "Framer Motion": "https://cdn.simpleicons.org/framer/0055FF",
   "GSAP": "https://cdn.simpleicons.org/greensock/88CE02",
 };
