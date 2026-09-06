@@ -4,6 +4,7 @@ import SiteHeader from "../components/SiteHeader";
 import SiteFooter from "../components/SiteFooter";
 import Reveal from "../components/Reveal";
 import scriptLandscape from "../../gallery/PWS 211 Hardscape Materials Handbook.jpg";
+import landscapeBackground from "../../gallery/download.jpg";
 
 function ScriptShowcase({ script, index }) {
   const { scrollYProgress } = useScroll();
@@ -19,7 +20,7 @@ function ScriptShowcase({ script, index }) {
 }
 
 export default function RobloxScripts() {
-  return <div className="page subpage roblox"><SiteHeader /><main>
+  return <div className="page subpage roblox" style={{ "--landscape-background": `url("${landscapeBackground}")` }}><SiteHeader archive /><main>
     <section className="sub-hero script-hero"><a className="text-link" href="#project"><span className="link-line" />Back to projects</a><h1 className="display"><em>Lua</em><span>made visible.</span></h1><p className="lede">Roblox Lua experiments, automation patterns, and interface designs. A visual archive of tools built through play.</p></section>
     <section className="script-archive">{(profile.robloxScripts ?? []).map((script, index) => <ScriptShowcase key={script.name} script={script} index={index} />)}</section>
   </main><SiteFooter /></div>;

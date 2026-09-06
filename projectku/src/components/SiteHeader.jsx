@@ -4,12 +4,13 @@ import { NAV_ITEMS } from "../content/site";
 import { profile } from "../content/profile";
 import { GithubBrandIcon, DiscordBrandIcon } from "./CustomIcons";
 
-export default function SiteHeader() {
-  const [activeSection, setActiveSection] = useState("home");
+export default function SiteHeader({ archive = false }) {
+  const [activeSection, setActiveSection] = useState(archive ? "project" : "home");
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
   useEffect(() => {
+    if (archive) return undefined;
     const handleScroll = () => {
         setScrolled(window.scrollY > 24);
         const sections = ["home", ...NAV_ITEMS.map(i => i.href.substring(1))];
@@ -34,7 +35,7 @@ export default function SiteHeader() {
     window.addEventListener("scroll", handleScroll, { passive: true });
     handleScroll();
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [archive]);
 
   useEffect(() => {
     const close = (event) => event.key === "Escape" && setMobileOpen(false);
