@@ -1,0 +1,19 @@
+.living-stack { position: relative; }
+.living-stack-heading { display: grid; grid-template-columns: 1fr .8fr; gap: 28px; align-items: end; max-width: 850px; }
+.living-stack-heading .section-label { grid-column: 1 / -1; }
+.living-stack-heading .section-title { margin: 0; }
+.living-stack-heading p { max-width: 28ch; color: var(--muted); line-height: 1.7; }
+.stack-rail { width: 100%; height: 1px; margin: 58px 0 12px; background: var(--accent); transform-origin: left; }
+.living-tech-field { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); column-gap: 36px; }
+.living-tech { position: relative; display: flex; align-items: center; gap: 12px; min-height: 62px; padding: 13px 0; border: 0; border-bottom: 1px solid rgba(241,239,232,.1); background: transparent; color: var(--muted); text-align: left; font: 500 .7rem var(--mono); transition: color .35s, opacity .35s, transform .35s var(--ease); }
+.living-tech::after { content: ''; position: absolute; right: 0; bottom: -1px; left: 0; height: 1px; background: var(--accent); transform: scaleX(0); transform-origin: left; transition: transform .35s var(--ease); }
+.living-tech:hover::after,.living-tech.is-focused::after { transform: scaleX(1); }
+.living-tech-index { width: 19px; color: var(--dim); font-size: .58rem; }
+.living-tech img { width: 28px; height: 28px; object-fit: contain; filter: grayscale(1); opacity: .7; transition: filter .35s, opacity .35s, transform .35s var(--ease); }
+.living-tech:hover,.living-tech.is-focused { color: var(--ink); }
+.living-tech:hover img,.living-tech.is-focused img,.living-tech.is-related img { filter: none; opacity: 1; transform: rotate(-7deg) scale(1.08); }
+.living-tech-field:has(.living-tech.is-focused) .living-tech:not(.is-focused):not(.is-related) { opacity: .35; }
+.living-tech-detail { min-height: 52px; padding-top: 21px; color: var(--muted); font-size: .86rem; }
+.living-tech-detail > div { display: flex; gap: 20px; }
+.living-tech-detail strong { color: var(--accent); font: 500 .65rem var(--mono); text-transform: uppercase; }
+@media (max-width: 800px) { .living-stack-heading { display: block; }.living-stack-heading .section-title { margin: 26px 0 18px; }.stack-rail { margin-top: 38px; }.living-tech-field { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 24px; }.living-tech { min-height: 56px; font-size: .62rem; }.living-tech-detail > div { display: block; }.living-tech-detail span { display: block; margin-top: 7px; } }
