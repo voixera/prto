@@ -19,7 +19,7 @@
 .about-story-eyebrow, .about-story-label { color: var(--accent); font: 500 .65rem var(--mono); letter-spacing: .12em; text-transform: uppercase; }
 .about-story-title { max-width: 680px; margin: 20px 0 68px; color: var(--ink); font: 800 clamp(3rem, 6vw, 6.4rem)/.86 var(--display); letter-spacing: -.12em; }
 .about-story-title em { color: var(--accent); font-style: normal; }
-.about-story-block { display: grid; grid-template-columns: 110px minmax(0, 1fr); gap: 28px; padding: 25px 0; border-top: 1px solid var(--line); text-align: right; }
+.about-story-block { display: grid; grid-template-columns: 110px minmax(0, 1fr); gap: 28px; padding: 25px 0; border-top: 1px solid var(--line); text-align: left; }
 .about-story-content { min-width: 0; }
 .about-story-line { display: block; color: var(--muted); font: 400 1rem/1.75 var(--sans); }
 .about-story-block .about-story-line + .about-story-line { margin-top: 14px; }

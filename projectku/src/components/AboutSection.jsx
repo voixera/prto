@@ -30,9 +30,7 @@ export default function AboutSection() {
       </div>
     </aside>
     <div className="about-story-copy">
-      <p className="about-story-eyebrow">Hello, I'm</p>
       <h2 className="about-story-title">Hello I'm <em>Faisal.</em></h2>
-      <div className="about-story-block"><span className="about-story-label">PROFILE</span><div className="about-story-content"><RevealText>{profile.tagline}</RevealText><RevealText>I'm an Information System student and developer focused on modern UI, performance, and user experience.</RevealText></div></div>
       <div className="about-story-block about-currently"><span className="about-story-label">CURRENTLY</span><div className="about-story-content"><RevealText>Exploring animation, WebGL, and interactive web experiences.</RevealText></div></div>
     </div>
   </section>;
