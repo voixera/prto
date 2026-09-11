@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { motion, useMotionValue, useScroll, useSpring, useTransform } from "framer-motion";
 import { profile } from "../content/profile";
-import profileImage from "../../gallery/profil.jpeg";
+import profileImage from "../../gallery/profil.jpg";
 
 function RevealText({ children }) {
   return <motion.span className="about-story-line" initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: .35 }} transition={{ duration: .65, ease: [0.16, 1, .3, 1] }}>{children}</motion.span>;
@@ -19,7 +19,6 @@ export default function AboutSection() {
       <div className="about-story-portrait-wrap">
         <motion.div className="about-story-portrait" style={{ y: imageY, scale: imageScale, rotateX: pointerY, rotateY: pointerX }} onPointerMove={(event) => { const box = event.currentTarget.getBoundingClientRect(); pointerX.set((event.clientX - box.left - box.width / 2) / 150); pointerY.set(-(event.clientY - box.top - box.height / 2) / 150); }} onPointerLeave={() => { pointerX.set(0); pointerY.set(0); }}>
           <img src={profileImage} alt="Faisal" loading="lazy" />
-          <span className="about-online-status" aria-label="Online"><i aria-hidden="true" /></span>
         </motion.div>
       </div>
       <div className="about-identity-details"><h2>{profile.name}</h2><p>{profile.role}</p><span>{profile.location}</span></div>

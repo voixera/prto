@@ -122,7 +122,7 @@ export const profile = {
       description:
         "An Atomic script focused on Exploiting Roblox map.",
       iconSrc: "/roblox-script-icons/vd.jpg",
-      videoSrc: "/roblox-script-videos/Violence District.mp4",
+      videoSrc: "/roblox-script-videos/ViolenceDistrict.mp4",
       features: [
         "Aimbot Feature",
         "Generator Auto Complete",
@@ -265,6 +265,13 @@ export const profile = {
         "Building and refining Lua script features with a focus on usability, interface clarity, and maintainable script behavior.",
       logo: "/experience-logos/Limehub.png",
     },
+    {
+      period: "07 July 2026 - Present",
+      title: "X0DEC0AT",
+      subtitle: "Founder,Developer",
+      details: "Found and refining Lua script with features focusing on Automation, Interface, Stability.",
+      logo: "/experience-logos/X0DEC0AT.webp",
+    }
   ],
   skills: [
     "Next.js",
