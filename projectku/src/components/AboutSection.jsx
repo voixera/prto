@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { motion, useMotionValue, useScroll, useSpring, useTransform } from "framer-motion";
 import { profile } from "../content/profile";
-import profileImage from "../../gallery/profil.jpg";
+import profileImage from "../../gallery/profil.png";
 
 function RevealText({ children }) {
   return <motion.span className="about-story-line" initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: .35 }} transition={{ duration: .65, ease: [0.16, 1, .3, 1] }}>{children}</motion.span>;
